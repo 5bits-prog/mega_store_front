@@ -8,7 +8,6 @@ import {useForm} from 'react-hook-form';
 import {zodResolver} from '@hookform/resolvers/zod';
 //importamos el esquema de validaciones de talle
 import { validationsTalle } from './validationsTalle'
-
 //Componete Get talles
 import ListaTalles from "./getTalles"
 
@@ -89,5 +88,3 @@ const RegistrarTalle: React.FC = () => {
     );
 };
 export default RegistrarTalle;
-
- 

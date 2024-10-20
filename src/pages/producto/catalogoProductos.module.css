@@ -1,0 +1,21 @@
+.container{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+}
+.container h2 {
+    color: #c99af3;
+    display: flex;
+    justify-content: center;
+}
+
+.listado{
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    padding: 30px 45px 30px 64px;
+    flex-wrap: wrap;
+    width: 100%;
+    height: auto;
+}

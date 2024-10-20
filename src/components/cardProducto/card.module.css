@@ -1,0 +1,8 @@
+.card{
+    overflow: hidden;
+}
+.imagen {
+    width: 70%;
+    justify-content: center;
+    display: flex;
+}

@@ -2,24 +2,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 body {
-  font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif;
+    
+}
+
+.header {
+    display: flex;
+    z-index: 100;
+    position: relative; /* Asegura que esté por encima */
+    align-items: center;
+    justify-content: space-between;
+    background-color: #c99af3;
+    width: 100%;
+    font-size:14px;
+    
+}
+.header img {
+    border: none;
 }
 
 .container1 {
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;  
+    position: relative;
 }
-
-.header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #c99af3;
-    width: 100%;
-    font-size:14px;
-}
-
 
 .title {
     color: white;
@@ -30,10 +37,8 @@ body {
     margin-right:auto;
     margin-left:auto;
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
-    left: 50%;                   /* Colocar el contenedor en el 50% de la pantalla */
-    transform: translateX(-50%);
+    left: 40%;                   /* Colocar el contenedor en el 50% de la pantalla */
     font-family:lato, arial;
-
 }
 
 .title:hover{
@@ -74,6 +79,7 @@ body {
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
     left: 10%;                   /* Colocar el contenedor en el 10% de la pantalla */
     transform: translateX(-50%); /* Ajuste para centrarlo correctamente si es necesario*/
+    
 }
 .dropdownContent {
     display: flex;
@@ -115,12 +121,6 @@ body {
     transform: scale(1.06); /* Escala el botón ligeramente */
 }
 
-
-.mainContent {
-    flex-grow: 1;
-    background-color: white;
-    padding: 20px;
-}
 
 
 .components{
@@ -166,8 +166,8 @@ body {
 }
 .seleccion1:hover{
     background-color:#a27eea;
-    /*background-image: linear-gradient(to bottom right, #8c52ff, #5ce1e6);*/
 }
 .seleccion2:hover{
     background-color:#a27eea;
 }
+

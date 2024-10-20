@@ -7,6 +7,7 @@ import RegistrarSucursal from'./pages/sucursal/registrarSucursal';
 import RegistrarTalle from'./pages/talle/registrarTalle'; 
 import RegistrarColor from'./pages/color/registrarColor'; 
 import RegistrarCategoria from'./pages/categoria/registrarCategoria'; 
+import CatalogoProducto from './pages/producto/catalogoProductos';
 
 
 export function App() {
@@ -14,12 +15,12 @@ export function App() {
   <Router>
     <MenuAdmin/> 
       <Routes>
-
         <Route path="/registrarMarca" element={<RegistrarMarca />} />
         <Route path="/registrarSucursal" element={<RegistrarSucursal />} />
         <Route path="/registrarTalle" element={<RegistrarTalle />} />
         <Route path="/registrarColor" element={<RegistrarColor />} />
         <Route path="/registrarCategoria" element={<RegistrarCategoria />} />
+        <Route path="/" element={<CatalogoProducto />} />
       </Routes>
     <Footer/>
   </Router>
