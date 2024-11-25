@@ -26,14 +26,31 @@ export default function AccordionUsage() {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1-content"
           id="panel1-header"
+          sx={{ // Color de fondo
+            color: 'black',  // Color del texto
+            padding: '10px',
+            textAlign:'center',
+          }}
         >
-          Registrar
+          REGISTRAR
         </AccordionSummary>
         {entidades.map((entidad,idx)=>(
           
-          <AccordionDetails key={idx}>
-            <Button onClick={() => handleNavigation(entidad.ruta)}>
+           <AccordionDetails key={idx} sx={{ color:'white',backgroundColor: 'white', padding: '10px', textAlign:'center', '&:hover': {
+                backgroundColor: '#c99af3'} }}>
+            <Button onClick={() => handleNavigation(entidad.ruta)}
+            sx={{
+                color: 'BLACK',  // Color del texto del botón
+                transition: 'background-color 0.3s',
+                display: 'block',  // Hace que el botón ocupe toda la línea disponible
+                width: '100%',
+                '&:hover': {
+             // Color al pasar el ratón sobre el botón
+                  color: 'WHITE'  // Cambia el color del texto cuando el ratón está sobre el botón
+                }
+              }}>
             {entidad.nombre}
+            
             </Button>
           </AccordionDetails>
         ))}

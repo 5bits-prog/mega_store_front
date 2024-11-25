@@ -6,9 +6,11 @@ import CallEndIcon from '@mui/icons-material/CallEnd';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import EmailIcon from '@mui/icons-material/Email';
 
+
 {/*Componente Footer*/}
 const Footer: React.FC = () => {
   return (
+  <body className={styles.body}>
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className ={styles.options}>< CallEndIcon /> </div>
@@ -16,6 +18,7 @@ const Footer: React.FC = () => {
         <div className={styles.options}> <EmailIcon /></div>
       </div>
     </footer>
+    </body>
   )
 }
 

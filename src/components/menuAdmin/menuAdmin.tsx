@@ -7,6 +7,10 @@ import { useState } from 'react';
 {/*Importación de íconos utilizados desde mui*/}
 import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import PersonIcon from '@mui/icons-material/Person';
+import { useNavigate } from 'react-router-dom';
+
+
+
 
 
 
@@ -21,7 +25,13 @@ const Menu = () => {
     const closeMenu = () => { //función para cerrar el desplegable
         setMenuOpen(false);  // Cerrar menú cuando el mouse salga del ícono o del menú
     };
-
+     // Función para cerrar el menú
+     const navigate = useNavigate(); // Hook para navegar a otras rutas
+  
+     const handleNavigation = () => {
+       navigate('/sesion'); // Navegar a la ruta especificada
+     };
+  
     return (
     <div className={styles.container1}>
         <div className={styles.header}>
@@ -38,7 +48,7 @@ const Menu = () => {
             </div> 
             <h1 className={styles.title}>MegaStore - Panel de Administración</h1> 
             <div className={styles.components}>
-                <div className={styles.seleccion1}> < PersonIcon /></div>
+                <div className={styles.seleccion1} onClick={handleNavigation}> < PersonIcon /></div>
                 <div className={styles.seleccion2}>Productos</div>
                 <div className={styles.seleccion2}>Sucursales</div>
                 <div className={styles.seleccion2}>Estadísticas</div>

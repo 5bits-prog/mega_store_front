@@ -83,7 +83,7 @@ body {
     left: 10%; 
     transform: translateX(-50%); 
     width: 200px;
-    border: 5px solid black;
+    border: none;
     background-color: white;
     z-index: 10;
     font-family: arial;
@@ -96,7 +96,7 @@ body {
     transform: translateX(-50%); /* Ajusta para que la flecha esté alineada al centro */
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 10px solid black; /* Color de la flecha */
+    border-bottom: 10px solid white; /* Color de la flecha */
     width: 0;
     height: 0;
 }
