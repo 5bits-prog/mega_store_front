@@ -1,13 +1,22 @@
+.body{
+  position:relative;
+  padding-bottom:3em;
+  min-height: 100vh;
+}
 .footer{
     
     background-color: #c99af3;
     color:white;
     text-align: center;
     justify-content: center;
-    height:50px;
-    width:100%;
-    position:fixed;
-    bottom:0%;
+    display: flex;
+    flex-direction: row;
+  position: absolute;
+  bottom:0;
+  width:100%;
+  height:50px;
+  padding-bottom:1em;
+ 
    
 }
 .container{
@@ -17,6 +26,7 @@
     text-align: center;
     justify-content: center;
     height:50px;
+    
 }
 .options{
     position: relative;

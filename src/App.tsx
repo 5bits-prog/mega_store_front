@@ -7,7 +7,10 @@ import RegistrarSucursal from'./pages/sucursal/registrarSucursal';
 import RegistrarTalle from'./pages/talle/registrarTalle'; 
 import RegistrarColor from'./pages/color/registrarColor'; 
 import RegistrarCategoria from'./pages/categoria/registrarCategoria'; 
-import CatalogoProducto from './pages/producto/catalogoProductos';
+import Login from'./pages/login/login'; 
+import Register from'./pages/register/register'; 
+import Sesion from'./pages/sesion/sesion'; 
+
 
 
 export function App() {
@@ -20,8 +23,12 @@ export function App() {
         <Route path="/registrarTalle" element={<RegistrarTalle />} />
         <Route path="/registrarColor" element={<RegistrarColor />} />
         <Route path="/registrarCategoria" element={<RegistrarCategoria />} />
-        <Route path="/" element={<CatalogoProducto />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/sesion" element={<Sesion />} />
+        
       </Routes>
+      
     <Footer/>
   </Router>
         

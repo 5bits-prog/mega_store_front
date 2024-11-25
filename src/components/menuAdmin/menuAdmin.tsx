@@ -11,6 +11,7 @@ import Button from '@mui/material/Button'; // Botón de Material UI
 import RegistrarProducto from '../../pages/producto/registrarProducto'; // Importación del formulario para registrar productos.
 import ZoomBoton from '../transitions/buttomzoom';    
 
+
 const Menu = () => {
     //estado para contrlar la visibilidad del Menu desplegable
     const [isMenuOpen, setMenuOpen] = useState(false);
@@ -25,15 +26,13 @@ const Menu = () => {
     const closeMenu = () => { //función para cerrar el desplegable
         setMenuOpen(false);  // Cerrar menú cuando el mouse salga del ícono o del menú
     };
-
-    const openDialog = () => { // Función para abrir el Dialog
-        setDialogOpen(true);
-    };
-
-    const closeDialog = () => {// Función para cerrar el Dialog
-        setDialogOpen(false);
-    };
-
+     // Función para cerrar el menú
+     const navigate = useNavigate(); // Hook para navegar a otras rutas
+  
+     const handleNavigation = () => {
+       navigate('/sesion'); // Navegar a la ruta especificada
+     };
+  
     return (
     <div className={styles.container1}>
         <div className={styles.header}>
@@ -51,8 +50,9 @@ const Menu = () => {
             </div> 
             <h1 className={styles.title}>MegaStore - Panel de Administración</h1> 
             <div className={styles.components}>
-                <div className={styles.seleccion1}>< PersonIcon /></div>
-                <div className={styles.seleccion2} onClick={openDialog}>Productos</div>
+                <div className={styles.seleccion1} onClick={handleNavigation}> < PersonIcon /></div>
+                <div className={styles.seleccion2}>Productos</div>
+
                 <div className={styles.seleccion2}>Sucursales</div>
                 <div className={styles.seleccion2}>Estadísticas</div>
             </div>

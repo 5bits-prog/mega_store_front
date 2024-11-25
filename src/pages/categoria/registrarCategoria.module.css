@@ -2,6 +2,7 @@
 
 body {
   font-family: 'Lato', sans-serif;
+  
 }
 
 .body{
@@ -13,6 +14,7 @@ body {
     flex-direction: column;
     gap: 30px;
     font-family: lato; /* Define la tipografía */
+    
    
 }
 .form{
@@ -73,6 +75,7 @@ input {/* Espaciado inferior si el input está seguido por otro elemento */
     align-items: center;
     flex-direction:column;
     padding:0;
+   
 }
 
           
