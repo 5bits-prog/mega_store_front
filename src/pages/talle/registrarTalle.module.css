@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
 
 body {
-  font-family: 'Lato', sans-serif;
+font-family: 'Lato', sans-serif;
 }
 
 .body{
@@ -13,7 +13,6 @@ body {
     flex-direction: column;
     gap: 30px;  
     font-family: lato; /* Define la tipografía */
-   
 }
 .form{
     display:flex; /*para que el contenido se ajuste de forma horizontal*/
@@ -78,7 +77,7 @@ input {/* Espaciado inferior si el input está seguido por otro elemento */
     flex-direction:column;
     padding:0;
 }
-          
+
 .alerts {
     font-size: 10px;
     color: red;

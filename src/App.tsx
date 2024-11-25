@@ -13,13 +13,11 @@ import Sesion from'./pages/sesion/sesion';
 
 
 
-
 export function App() {
   return (
   <Router>
     <MenuAdmin/> 
       <Routes>
-
         <Route path="/registrarMarca" element={<RegistrarMarca />} />
         <Route path="/registrarSucursal" element={<RegistrarSucursal />} />
         <Route path="/registrarTalle" element={<RegistrarTalle />} />
@@ -29,7 +27,6 @@ export function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/sesion" element={<Sesion />} />
         
-
       </Routes>
       
     <Footer/>
