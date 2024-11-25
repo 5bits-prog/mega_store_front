@@ -1,13 +1,15 @@
 import style from './registrarProducto.module.css';
 import React, { useState } from 'react';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, validarCampoRequerido, validarCampoSeleccionado, validarImagenProducto } from './validationsProducto';
-import { Producto } from './interfazProducto';
+import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, validarStock, validarCampoRequerido, 
+    validarCampoSeleccionado, validarImagenProducto, formatearNumero } from './validationsProducto';
+//import { Producto } from './interfazProducto';
+import InputAdornment from '@mui/material/InputAdornment';
+//import OutlinedInput from '@mui/material/OutlinedInput';
+import Autocomplete from '@mui/material/Autocomplete';
 
-
-interface RegistrarProductoProps {
-    agregarProducto: (producto: any) => void; // Define la función como prop
-
+interface Sucursal {
+    nombre: string;
 }
 
 const RegistrarProducto = () => {
@@ -17,7 +19,6 @@ const RegistrarProducto = () => {
     const [precio, setPrecio] = useState('');
     const [peso, setPeso] = useState('');
     const [categoria, setCategoria] = useState('');
-    const [sucursal, setSucursal] = useState('');
     const [marca, setMarca] = useState('');
     const [talle, setTalle] = useState('');
     const [color, setColor] = useState('');
@@ -27,6 +28,7 @@ const RegistrarProducto = () => {
     const [foto, setFoto] = useState<File | null>(null);  // Estado para almacenar la imagen
     const [preview, setPreview] = useState<string | null>(null);  // Estado para la previsualización 
     const [fileName, setFileName] = useState('');  // Para mostrar el nombre del archivo seleccionado
+    const [selectedSucursal, setSucursal] =  useState<Sucursal[]>([]);
     const [errores, setErrores] = useState({
         nombre: '',
         descripcion: '',
@@ -38,41 +40,31 @@ const RegistrarProducto = () => {
         categoria: '',
         foto: '',
     });
-
+    
     // Listas de opciones para las categorías, sucursales, marcas, talles y colores (simuladas)
     const categorias = ['Jean', 'Remera', 'Pollera', 'Musculosa'];
-    const sucursales = ['Sucursal 1', 'Sucursal 2', 'Sucursal 3'];
     const marcas = ['Marca A', 'Marca B', 'Marca C'];
     const talles = ['XS', 'S', 'M', 'L', 'XL'];
     const colores = ['Rojo', 'Azul', 'Verde', 'Negro'];
-    const [producto, setProducto] = useState<Producto>({
-        nombre: '',
-        descripcion: '',
-        precio: 1,
-        peso: 1,
-        categoria: '',
-        sucursal: '',
-        marca: '',
-        talle: '',
-        color: '',
-        stockActual: 0,
-        stockMedio:0,
-        stockMinimo:0,
-        foto: ''
-    });
+    const opcionesSucursal: Sucursal[] = [
+        { nombre: 'Sucursal 1'},
+        { nombre: 'Sucursal 2'},
+        { nombre: 'Sucursal 3'},
+        {nombre: 'Sucursal 4'},
+    ];
+
     // Función para el envío del formulario
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-
         // Validaciones
         const errores = {
             nombre: validarCampoRequerido(nombre) || validarAlfanumerico(nombre),
             descripcion: validarAlfanumerico(descripcion),
-            precio: validarCampoRequerido(precio) || validarDecimalPositivo(precio),
+            precio: validarCampoRequerido(precio) || validarDecimalPositivo(precio) || formatearNumero(precio),
             peso: validarCampoRequerido(peso) || validarDecimalPositivo(peso),
-            stockActual: validarEnteroPositivo(stockActual),
-            stockMedio: validarEnteroPositivo(stockMedio),
-            stockMinimo: validarEnteroPositivo(stockMinimo),
+            stockActual: validarEnteroPositivo(stockActual) || validarStock(stockActual),
+            stockMedio: validarEnteroPositivo(stockMedio) || validarStock(stockMedio),
+            stockMinimo: validarEnteroPositivo(stockMinimo) || validarStock(stockMinimo),
             categoria: validarCampoSeleccionado(categoria),
             foto: validarImagenProducto(foto), // Valida la imagen del producto
         };
@@ -82,30 +74,13 @@ const RegistrarProducto = () => {
         const sinErrores = Object.values(errores).every(error => error === '');
 
         if (sinErrores) {
-            const nuevoProducto = {
-                nombre,
-                descripcion,
-                precio,
-                peso,
-                categoria,
-                sucursal,
-                marca,
-                talle,
-                color,
-                stockActual,
-                stockMedio,
-                stockMinimo,
-                foto: URL.createObjectURL(foto!),  // Crear URL temporal de la foto
-            };
-            //agregarProducto(nuevoProducto); // Aquí se llama a la función agregarProducto
-
             // Limpiar los campos del formulario
             setNombre('');
             setDescripcion('');
             setPrecio('');
             setPeso('');
             setCategoria('');
-            setSucursal('');
+            setSucursal([]);
             setMarca('');
             setTalle('');
             setColor('');
@@ -118,9 +93,8 @@ const RegistrarProducto = () => {
         } else {
             console.log('Errores en el formulario');
         }
-
         // Lógica para enviar los datos al backend y si no hay errores sigue.
-        console.log({ nombre, descripcion, categoria, sucursal, marca, talle, color, stockActual, stockMedio, stockMinimo, foto });
+        console.log({ nombre, descripcion, categoria,selectedSucursal, marca, talle, color, stockActual, stockMedio, stockMinimo, foto });
     };
 
     // Función para manejar la carga de imagen y la previsualización
@@ -138,6 +112,11 @@ const RegistrarProducto = () => {
             reader.readAsDataURL(file);  // Lee el archivo como una URL de datos
         }
     };
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const valorFormateado = formatearNumero(event.target.value);
+        setPrecio(valorFormateado);
+    };
+
 
     return (
         <div className={style.container}>
@@ -165,15 +144,28 @@ const RegistrarProducto = () => {
                     helperText={errores.descripcion}
                     margin="normal"
                 />
-                <TextField
+
+                <TextField 
                     className={style.input}
                     label="Precio"
-                    value={precio}
-                    onChange={(e) => setPrecio(e.target.value)}
+                    value={precio} 
                     error={!!errores.precio}
                     helperText={errores.precio}
                     margin="normal"
+                    variant="standard"
+                    onChange={handleChange}
+                    slotProps={{
+                        input: {
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                $
+                            </InputAdornment> // Muestra el símbolo $
+                            )
+                        }
+                    }}
                 />
+                
+
                 <TextField
                     className={style.input}
                     label="Peso en gramos"
@@ -182,6 +174,7 @@ const RegistrarProducto = () => {
                     error={!!errores.peso}
                     helperText={errores.peso}
                     margin="normal"
+                
                 />
                 {/* Select para Categoría */}
                 <FormControl fullWidth margin="normal">
@@ -203,19 +196,19 @@ const RegistrarProducto = () => {
 
                 {/* Select para Sucursal */}
                 <FormControl fullWidth margin="normal">
-                    <InputLabel className={style.input} id="sucursal-label">Sucursal</InputLabel>
-                    <Select
-                        labelId="sucursal-label"
-                        value={sucursal}
-                        onChange={(e) => setSucursal(e.target.value)}
-                        label="Sucursal"
-                    >
-                        {sucursales.map((suc, index) => (
-                            <MenuItem key={index} value={suc}>
-                                {suc}
-                            </MenuItem>
-                        ))}
-                    </Select>
+                    <Autocomplete
+                        className={style.input}
+                        id="sucursal-label"
+                        multiple
+                        options={opcionesSucursal}
+                        getOptionLabel={(option) => option.nombre}
+                        value={selectedSucursal}
+                        onChange={(event, newValue: Sucursal[]) => setSucursal(newValue)} 
+                        defaultValue={[opcionesSucursal[2], opcionesSucursal[1]]} // Asegúrate de que el índice sea válido
+                        renderInput={(params) => (
+                            <TextField {...params} label="Sucursal"/>
+                        )}
+                    />
                 </FormControl>
 
                 {/* Select para Marca */}
@@ -277,6 +270,7 @@ const RegistrarProducto = () => {
                     error={!!errores.stockActual}
                     helperText={errores.stockActual}
                     margin="normal"
+                    
                 />
 
                 {/*campo para el stock medio*/}
@@ -285,6 +279,8 @@ const RegistrarProducto = () => {
                     label="Stock Medio"
                     value={stockMedio}
                     onChange={(e) => setStockMedio(e.target.value)}
+                    error={!!errores.stockMedio}
+                    helperText={errores.stockMedio}
                     margin="normal"
                 />
                 {/*campo para el stock mínimo*/}
@@ -293,6 +289,8 @@ const RegistrarProducto = () => {
                     label="Stock Mínimo"
                     value={stockMinimo}
                     onChange={(e) => setStockMinimo(e.target.value)}
+                    error={!!errores.stockMinimo}
+                    helperText={errores.stockMinimo}
                     margin="normal"
                 />
 
@@ -331,10 +329,8 @@ const RegistrarProducto = () => {
                 </div>
             )}
                 <Button 
-                type="submit" 
+                type="submit" //envia el formulario automaticamente, no hace falta el onClick.
                 variant="contained" 
-                onClick={()=> handleSubmit}
-                
                 sx={{
                     backgroundColor: '#c49dd7',  // Color lila de fondo
                     color: 'white',  // Color del texto
@@ -346,7 +342,6 @@ const RegistrarProducto = () => {
                       backgroundColor: '#b284c4',  // Lila más oscuro al hacer hover
                     }
                 }} 
-
                 >
                 Registrar Producto
                 </Button >

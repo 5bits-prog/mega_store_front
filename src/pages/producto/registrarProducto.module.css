@@ -21,13 +21,13 @@ h1 {
     flex-direction: column;
     width: 100%;
 }
-
+.error {
+    color: #d02525;
+    font-size: 13px;
+    font-weight: 300;
+}
 .input {
     margin-bottom: 20px;
-    border-radius: 50px;
-}
-.CargarImagen {
-    color: red;
 }
 
 img {

@@ -46,18 +46,6 @@ const Productos = [
     {'nombre':'producto 3', 
         'descripcion':'producto lindo'
     },
-    {'nombre':'producto 3', 
-        'descripcion':'producto lindo'
-    },
-    {'nombre':'producto 3', 
-        'descripcion':'producto lindo'
-    },
-    {'nombre':'producto 3', 
-        'descripcion':'producto lindo'
-    },
-    {'nombre':'producto 3', 
-        'descripcion':'producto lindo'
-    },
 ]
 const CatalogoProducto =()=> {
     return (
@@ -65,7 +53,7 @@ const CatalogoProducto =()=> {
             <h2>Catálogo de Productos</h2>
             <div className={styles.listado}>
                 {Productos.map((producto,idx)=>(
-                    <CardPrducto key={idx} nombre={producto.nombre} descripcion={producto.descripcion} ></CardPrducto>
+                    <CardPrducto key={idx} nombre={producto.nombre} descripcion={producto.descripcion}  ></CardPrducto>
                 ))}
             </div>
         </div>

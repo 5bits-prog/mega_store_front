@@ -60,7 +60,7 @@ const Menu = () => {
         {/* Dialog para el formulario de Registrar Producto */}
         <Dialog open={isDialogOpen} onClose={closeDialog} fullWidth maxWidth="sm">
                 <DialogContent className={styles.dialog}>
-                    <RegistrarProducto />{/* Es el formulario para registrar un producto que se renderiza dentro del Dialog */}
+                    <RegistrarProducto/>{/* Es el formulario para registrar un producto que se renderiza dentro del Dialog */}
                 </DialogContent>
                 <DialogActions className={styles.bottomborder}>
                 <Button onClick={closeDialog}>

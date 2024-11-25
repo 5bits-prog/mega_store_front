@@ -9,8 +9,8 @@ export interface Producto {
     marca: string;
     talle: string;
     color: string;
-    stockActual: number;
-    stockMedio: number;
-    stockMinimo: number;
+    stockActual: string | number;
+    stockMedio: string |  number;
+    stockMinimo:  string | number;
     foto: string; 
 }
