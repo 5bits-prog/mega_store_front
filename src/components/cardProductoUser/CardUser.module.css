@@ -12,7 +12,7 @@
 .contGeneral:hover{
     border: 1px solid black;
     transform:  scale(1.1);
-    box-shadow: -5px 5px 0px rgba(95, 95, 95, 0.249);
+    /* box-shadow: -5px 5px 0px rgba(95, 95, 95, 0.249); */
     cursor: pointer;
 }
 .imgProducto{

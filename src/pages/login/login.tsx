@@ -14,12 +14,14 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
+import { useAuth } from "../../contexts/LoginContext";
 
 
         
 const Login: React.FC = () => {
 
     //Funciones para visualización de contraseña
+    const { login, loading } = useAuth();
 
     const [showPassword, setShowPassword] = React.useState(false);
       
@@ -36,7 +38,7 @@ const Login: React.FC = () => {
 
     // Función para manejar el envío del formulario de inicio de sesión
     const onSubmitLogin = (data: any) => {
-        console.log(data); // Manejar datos del formulario de inicio de sesión
+        login(data)
     };
     
     return (
@@ -86,7 +88,7 @@ const Login: React.FC = () => {
                         {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                         </InputAdornment>}
-                        {...registerLogin('contrasena')} // Registrar el campo contraseña para las validaciones
+                        {...registerLogin('password')} // Registrar el campo contraseña para las validaciones
                     />
                         <Stack sx={{ width: '100%', height:'5%' }} spacing={3}>
                              {errorsLogin.contrasena && typeof errorsLogin.contrasena.message === 'string' && (
@@ -99,7 +101,10 @@ const Login: React.FC = () => {
             {/*Opciones para registro y recuperación de contraseña*/}
             <div className={Style.container3}>
                 <a className={Style.text}>¿Olvidaste tu contraseña?</a>
-                <button type="submit" className={Style.button}>Ingresar</button>
+
+                <button type="submit" className={Style.button}>
+                   {loading ? 'Cargando..': 'Ingresar'}
+                </button>
             </div>
         </form>            
     </div>

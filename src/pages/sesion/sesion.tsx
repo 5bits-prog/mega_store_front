@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Login from '../login/login'; 
 import Register from '../register/register'; 
 import Style from "./sesion.module.css";
@@ -17,6 +17,9 @@ const Sesion: React.FC = () => {
         const handleRegisterClick = () => {
           setFormType('register');
         };
+        useEffect(() => {
+          setFormType('login');
+        }, []); 
 
     return (
     <div className={Style.screen}>

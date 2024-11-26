@@ -8,7 +8,7 @@ const validationsLogin=z.object({
       .regex(/^(?!.*\s{2,}).*$/, { message: "Email no puede contener espacios consecutivos"})
       .email({message:'Formato inválido de email'})
       .refine((val) => !(val.length === 1 && val === ' '), { message: 'Email no puede estar vacío.' }),
-    contrasena:z
+      password:z
       .string()
       .min(1, { message: 'Contraseña no puede estar vacío.' })
       .max(100,{message: 'Contraseña no puede superar los 100 caracteres'})

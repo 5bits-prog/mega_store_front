@@ -22,8 +22,6 @@
     
 }
 
-
-
 .text {
     position: relative;   /* Necesario para el pseudo-elemento */
     color: #000;          /* Color del texto */

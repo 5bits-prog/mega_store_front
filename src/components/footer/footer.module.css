@@ -1,10 +1,11 @@
 .body{
-  position:relative;
-  /* padding-bottom:3em; */
+  /* position:relative; */
+  width: 100%;
   height: auto;
-  /* margin-top: 10px; */
-  margin: auto;
+  margin:auto ;
+  margin-bottom: 0px;
 }
+
 .footer{
   /* position: absolute; */
   background-color: #c99af3;

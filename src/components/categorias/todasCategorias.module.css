@@ -1,36 +1,47 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
  .list{  /*  CONTENEDOR GENERAL, define el tamanaño y color*/
-    width:100vh !important;
+    width:100% !important;
+
     height: auto;
     max-height: 50vh;
+
     background-color:white;
     overflow: hidden;
     overflow-y: auto;
-    scrollbar-color:black;
-    scroll-margin-left: 15px;
+
     padding:8px;
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.605);
-    border-radius: 10px !important;
+    border-radius: 0px !important;
     text-align:Center;
-    box-sizing: border-box; 
-    border:black;
+    background-color: #ca9af3;
+    scrollbar-width: none;
 
 }
 
 .item{ /*  CONTENEDOR DEl ITEM */
-    background-color: #e4e2e0;
-    width: 100%;
+    
+    background-color: transparent;
+    width: 50%;
     height: 5vh !important;
-    text-align: center;
-    color: black;
-    border-radius: 20px;
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid white;
+    color: #faf6fd;
+   
     text-align:center;
     padding:5px;
+    
+    transition: all 0.2s ease-in;
+    cursor: pointer;
   
 }
 .item:hover{
-    box-shadow: -5px 5px 10px rgba(255, 255, 255, 0.527);
-    background-color:black;
+    transform: scale(1.1);
+    box-shadow: -5px 5px 0px rgba(255, 255, 255, 0.527);
     color:white;
 }
 .contCategorias{

@@ -14,10 +14,12 @@ body {
     background-color: #c99af3;
     width: 100%;
     font-size:14px;
+    height: clamp(3.5rem,4vw,8rem);
     
 }
-.header img {
+.header img {       
     border: none;
+    margin-top: 0px;
 }
 
 .container1 {
@@ -29,13 +31,15 @@ body {
 
 .title {
     color: white;
+    height: 100%;
     width: 300px;
     font-size: 18px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all 0.3s ease-out;
     flex-basis: 100;
-    margin-right:auto;
-    margin-left:auto;
+    margin: 0px auto 0px auto;
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
     left: 38%;                   /* Colocar el contenedor en el 50% de la pantalla */
     font-family:lato, arial;
@@ -130,43 +134,20 @@ body {
     height: 100%;
     width:30%;
     font-family: lato, arial;
-    font-size: 16px;
+    font-size: clamp(0.6rem, 1vw,1.3rem);
     align-items: center;
-    text-align: center; 
+    justify-content: end;
 }
 
-.seleccion1{
-    display:flex;
-    height: 100%; /* Mantiene el padding */
-    cursor: pointer;
-    transition: background-color 0.3s;
-    box-sizing: border-box; /* Incluye padding y borde en el ancho total */
-    width: 50%; /* Asegúrate de que ocupe el ancho completo del contenedor */
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    padding-bottom:21px;
-    padding-top:21px;
-    padding-left:0px;
-    padding-right:0px;
-}
 .seleccion2{
     display:flex;
     height: 100%; /* Mantiene el padding */
     cursor: pointer;
     transition: background-color 0.3s;
     box-sizing: border-box; /* Incluye padding y borde en el ancho total */
-    width: 50%; /* Asegúrate de que ocupe el ancho completo del contenedor */
-    text-align: center;
+    width: 6vw; /* Asegúrate de que ocupe el ancho completo del contenedor */
     align-items: center;
     justify-content: center;
-    padding-bottom:25px;
-    padding-top:25px;
-    padding-left:0px;
-    padding-right:0px;
-}
-.seleccion1:hover{
-    background-color:#a27eea;
 }
 .seleccion2:hover{
     background-color:#a27eea;
