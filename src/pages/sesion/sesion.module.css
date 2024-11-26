@@ -3,26 +3,22 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    justify-content: center;
-    
+    justify-content: start;
+    padding-top: 30px;
     overflow-y: auto; /* Permite el scroll vertical */
+    min-height: 70vh;
 }
 .container{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
-    
-   
-   
+    align-items: center;  
     
 }
 .container2{
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-   
     
 }
 

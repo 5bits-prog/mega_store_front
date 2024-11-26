@@ -27,10 +27,8 @@ const Sesion: React.FC = () => {
     </div>
         {/* Renderizar el formulario correspondiente según el estado */}
         <div className={Style.container2}>
-        {formType === 'login' && <Login />}
-        {formType === 'register' && <Register />}
-
-        
+          {formType === 'login' && <Login />}
+          {formType === 'register' && <Register />}
         </div>
       </div>
     );

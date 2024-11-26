@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import RegistrarMarca from './pages/marca/registrarMarca'; 
 import Footer from './components/footer/footer'; 
 //import Menu from './components/menu/menu'; 
@@ -8,8 +8,9 @@ import RegistrarTalle from'./pages/talle/registrarTalle';
 import RegistrarColor from'./pages/color/registrarColor'; 
 import RegistrarCategoria from'./pages/categoria/registrarCategoria'; 
 import Login from'./pages/login/login'; 
-import Register from'./pages/register/register'; 
+import Home from './pages/home/Home';
 import Sesion from'./pages/sesion/sesion'; 
+import CatalogoProducto from './pages/producto/catalogoProductos';
 
 
 
@@ -24,8 +25,10 @@ export function App() {
         <Route path="/registrarColor" element={<RegistrarColor />} />
         <Route path="/registrarCategoria" element={<RegistrarCategoria />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
         <Route path="/sesion" element={<Sesion />} />
+        <Route path="/catalogoProductos" element={<CatalogoProducto />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Navigate to="/home" />} />
         
       </Routes>
       

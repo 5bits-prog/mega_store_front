@@ -8,13 +8,13 @@ body {
 .body{
     
     display: flex; /* Habilita Flexbox en el body */
-    justify-content: center; /* Centra horizontalmente */
+    justify-content: start; /* Centra horizontalmente */
     align-items: center; /* Centra verticalmente */    
     text-align:center;    
     flex-direction: column;
     gap: 30px;
     font-family: lato; /* Define la tipografía */
-    
+    min-height: 75vh;   
    
 }
 .form{

@@ -3,7 +3,6 @@
 
 body {
     font-family: 'Lato', sans-serif;
-    
 }
 
 .header {
@@ -30,6 +29,7 @@ body {
 
 .title {
     color: white;
+    width: 300px;
     font-size: 18px;
     text-align: center;
     transition: all 0.3s ease-out;
@@ -37,8 +37,9 @@ body {
     margin-right:auto;
     margin-left:auto;
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
-    left: 40%;                   /* Colocar el contenedor en el 50% de la pantalla */
+    left: 38%;                   /* Colocar el contenedor en el 50% de la pantalla */
     font-family:lato, arial;
+    cursor: pointer;
 }
 
 .title:hover{

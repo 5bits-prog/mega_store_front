@@ -1,7 +1,7 @@
 /*Pantalla completa*/
 .screen{
-    width:100%;
-    height:100%;
+    width:30vw;
+    height:25vw;
  }
 /*Formulario de login*/
 .loginForm{
@@ -9,8 +9,6 @@
     flex-direction:column;
     align-items:center;
     justify-content: center;
-    height:400px;
-    width:420px;
     /*border:solid 1px grey;*/
     box-sizing: border-box;
     border-radius: 20px;
