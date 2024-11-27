@@ -14,6 +14,10 @@ import CatalogoProducto from './pages/producto/catalogoProductos';
 import { AuthProvider } from './contexts/LoginContext';
 import { NotificationProvider } from './contexts/NotificacionContext';
 import { MarcaProvider } from './contexts/MarcaContext';
+import { SucursalProvider } from './contexts/SucursalContext';
+import { ColorProvider } from './contexts/ColorContext';
+import { TalleProvider } from './contexts/TalleContext';
+import { CategoriaProvider } from './contexts/CategoriaContext';
 import './App.css'
 
 
@@ -35,10 +39,34 @@ export function App() {
                    } 
                    />
 
-                  <Route path="/registrarSucursal" element={<RegistrarSucursal />} />
-                  <Route path="/registrarTalle" element={<RegistrarTalle />} />
-                  <Route path="/registrarColor" element={<RegistrarColor />} />
-                  <Route path="/registrarCategoria" element={<RegistrarCategoria />} />
+                  <Route path="/registrarSucursal" 
+                  element={
+                    <SucursalProvider>
+                      <RegistrarSucursal />
+                    </SucursalProvider>
+                  } />
+
+                  <Route path="/registrarTalle" 
+                  element={
+                    <TalleProvider>
+                      <RegistrarTalle />
+                    </TalleProvider>
+                  } />
+
+                  <Route path="/registrarColor" 
+                  element={
+                    <ColorProvider>
+                    <RegistrarColor />
+                    </ColorProvider>
+                  } />
+
+                  <Route path="/registrarCategoria" 
+                  element={
+                    <CategoriaProvider>
+                      <RegistrarCategoria />
+                    </CategoriaProvider>
+                  } />
+
                   <Route path="/login" element={<Login />} />
                   <Route path="/sesion" element={<Sesion />} />
                   <Route path="/catalogoProductos" element={<CatalogoProducto />} />

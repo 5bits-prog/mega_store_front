@@ -10,6 +10,7 @@ import {zodResolver} from '@hookform/resolvers/zod';
 import { validationsTalle } from './validationsTalle'
 //Componete Get talles
 import ListaTalles from "./getTalles"
+import { useTalle } from '../../contexts/TalleContext';
 
 //definimos los tipos que va a recibir el formulario
 type Inputs={
@@ -28,47 +29,13 @@ const RegistrarTalle: React.FC = () => {
         resolver: zodResolver(validationsTalle), // Usamos zodResolver para integrar validaciones definidas en el esquema validationsTalle
     });
 
-    const [refresh, setRefresh] = useState(false);
+    const {postTalle} = useTalle()
 
 
   // Función que maneja la consulta al back me
   const onSubmit = async (data: Inputs) => {
-    try {
-      // Enviamos la información al servidor mediante una llamada fetch
-      const response = await fetch('http://localhost:8080/products/talle', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data), //convertimos los datos recibidos en .json
-      });
-
-      if (!response.ok) { //si hay un error
-        const errorData = await response.json(); // Captura la respuesta del error
-        console.log(errorData);
-
-        if (errorData && errorData.errors) { //si existe un error desde el back
-            setError('nombre', { 
-            type: 'manual',
-            message: errorData.errors,   //recuperamos el atributo errors del json, que es el que contiene el mensaje de error desde el back
-          });
-          
-          alert(errorData.errors); // Muestra el mensaje de error en una alerta
-        } else {
-          alert('Error desconocido'); //si el error no coincide con ninguno del back, es error desconcido
-        }
-        return;
-      }
-      else{ //si no hay errores
-        reset() //limpiamos el input
-        alert("Talle registrado con éxito") //mensaje de éxito
-        setRefresh(!refresh); //cambia el estado refresh 
-      }
-    } catch (errors) {
-      const message = (errors as Error).message || 'Error desconocido';
-      console.error('Error desconocido:', errors);
-      alert('Ocurrió un error al registrar el talle: ' + message);
-    }
+    postTalle(data)
+    reset()
   };
     
     return (
@@ -83,7 +50,7 @@ const RegistrarTalle: React.FC = () => {
                 </div>
                 <button className={style.button} type="submit" >< ArrowForwardIcon />Registrar</button>       
             </form>
-            <ListaTalles refresh={refresh}></ListaTalles>
+            <ListaTalles ></ListaTalles>
         </div>
     );
 };

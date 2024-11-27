@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 //Importación del esquema de validaciones de categoría
 import { validationsCategoria } from './validationsCategoria';
 import ListaCategoria from '../../components/categorias/getCategoria'
+import { useCategoria } from '../../contexts/CategoriaContext';
 
 // Definición de los tipos que se esperan en el formulario
 type Inputs = {
@@ -27,48 +28,14 @@ const RegistrarCategoria: React.FC = () => {
     resolver: zodResolver(validationsCategoria), // Usamos zodResolver para integrar validaciones definidas en el esquema validationsCategoria
 });
 
-  const [refresh, setRefresh] = useState(false);
+  const {postCategoria} = useCategoria()
   
   
 
   // Función que maneja la consulta al back me
   const onSubmit = async (data: Inputs) => {
-    try {
-      // Enviamos la información al servidor mediante una llamada fetch
-      const response = await fetch('http://localhost:8080/products/categoria', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data), //convertimos los datos recibidos en .json
-      });
-
-      if (!response.ok) { //si hay un error
-        const errorData = await response.json(); // Captura la respuesta del error
-        console.log(errorData);
-
-        if (errorData && errorData.errors) { //si existe un error desde el back
-            setError('nombre', { 
-            type: 'manual',
-            message: errorData.errors,   //recuperamos el atributo errors del json, que es el que contiene el mensaje de error desde el back
-          });
-          
-          alert(errorData.errors); // Muestra el mensaje de error en una alerta
-        } else {
-          alert('Error desconocido'); //si el error no coincide con ninguno del back, es error desconcido
-        }
-        return;
-      }
-      else{ //si no hay errores
-        reset() //limpiamos el input
-        alert("Categoría registrada con éxito") //mensaje de éxito
-        setRefresh(!refresh); //cambia el estado refresh 
-      }
-    } catch (errors) {
-      const message = (errors as Error).message || 'Error desconocido';
-      console.error('Error desconocido:', errors);
-      alert('Ocurrió un error al registrar la categoría: ' + message);
-    }
+    postCategoria(data)
+    reset()
   };
 
 
@@ -92,7 +59,7 @@ const RegistrarCategoria: React.FC = () => {
           <ArrowForwardIcon />Registrar
         </button>
       </form>
-      <ListaCategoria refresh={refresh}></ListaCategoria>
+      <ListaCategoria ></ListaCategoria>
     </div>
   );
 };

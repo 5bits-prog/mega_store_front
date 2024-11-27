@@ -67,7 +67,7 @@ export default function CheckboxList() {
           </>
         );
       })}
-      <ModalPut open={open} onClose={handleModalClose} objeto={marcaSelect} onConfirm={handleConfirmarEdicion} onDelete={handleEliminarMarca}/>
+      <ModalPut open={open} onClose={handleModalClose} objeto={marcaSelect} onConfirm={handleConfirmarEdicion} onDelete={handleEliminarMarca}  titulo='MARCA'/>
     </List>
 
   );
