@@ -5,13 +5,14 @@ import Style from '../../components/categorias/todasCategorias.module.css';
 import { useEffect, useState} from 'react';
 import { useMarca } from '../../contexts/MarcaContext';
 import ModalPut from '../../components/modalPut/ModalPut';
-import { Objeto } from '../../components/modalPut/ModalPut';
+import { BaseObjeto } from '../../components/modalPut/ModalPut';
+import { Marca } from '../../contexts/MarcaContext';
     
 
 export default function CheckboxList() {
   const {marcas, fetchMarcas } = useMarca();
   const [open, setOpen] = useState(false)
-  const [marcaSelect, setMarcaSelect]= useState<Objeto | null>(null)
+  const [marcaSelect, setMarcaSelect]= useState<BaseObjeto | null>(null)
   
   useEffect(()=>{
     fetchMarcas()
@@ -25,12 +26,12 @@ export default function CheckboxList() {
   const handleModalClose = () => {
     setOpen(false); // Actualiza el estado en el padre
   };
-  const handleMarcaClick = (marca)=>{
+  const handleMarcaClick = (marca : Marca)=>{
+    
     setMarcaSelect({
       id: Number(marca.id), // Convierte a number
       nombre: marca.nombre,
-      descripcion: marca.descripcion || '', // Asegúrate de que exista una descripción
-      fechaEliminacion: marca.fechaEliminacion || '',
+      fechaEliminacion: marca.fechaDeEliminacion || '',
     });
     modalPut(true)
   };
