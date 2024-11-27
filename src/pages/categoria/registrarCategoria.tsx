@@ -21,7 +21,6 @@ const RegistrarCategoria: React.FC = () => {
   const { 
     register,
     reset,
-    setError, // Función para registrar los campos del formulario y sus validaciones
     handleSubmit, // Función que maneja el evento de envío del formulario
     formState: { errors } // Objeto que contiene el estado del formulario, incluyendo los errores de validación
 } = useForm<Inputs>({ // Inicializamos useForm con un tipo genérico 'Inputs' para tipar los datos del formulario
@@ -59,7 +58,7 @@ const RegistrarCategoria: React.FC = () => {
           <ArrowForwardIcon />Registrar
         </button>
       </form>
-      <ListaCategoria ></ListaCategoria>
+      <ListaCategoria></ListaCategoria>
     </div>
   );
 };
