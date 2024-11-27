@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 //Importación de estilos
 import style from "./registrarMarca.module.css";
 //Importación de iconos utilizados desde mui
@@ -43,10 +43,10 @@ const RegistrarMarca: React.FC = () => {
            <form className= {style.form} onSubmit={handleSubmit(onSubmit)}>
                 <h3 className={style.title}>Nueva Marca</h3> 
                 <div className={style.container}>
-                <input className={style.brand} type="text" placeholder="Marca" {...register('nombre')} />
-                {
-                errors.nombre?.message &&<p className={style.alerts}>{errors.nombre?.message}</p> /*// Verificamos si hay un mensaje de error asociado al campo 'marca', si lo hay mostramos el mensaje */
-                }
+                    <input className={style.brand} type="text" placeholder="Marca" {...register('nombre')} />
+                    {
+                    errors.nombre?.message &&<p className={style.alerts}>{errors.nombre?.message}</p> /*// Verificamos si hay un mensaje de error asociado al campo 'marca', si lo hay mostramos el mensaje */
+                    }
                 </div>
                 <button className={style.button} type="submit" >< ArrowForwardIcon />Registrar</button>       
             </form>

@@ -132,9 +132,9 @@ body {
     color:white;
     display:flex; /*el link abarcará todo el ancho de la pantalla*/
     height: 100%;
-    width:30%;
+    width:33%;
     font-family: lato, arial;
-    font-size: clamp(0.6rem, 1vw,1.3rem);
+    font-size: clamp(0.5rem, 1vw,1.3rem);
     align-items: center;
     justify-content: end;
 }
@@ -148,6 +148,7 @@ body {
     width: 6vw; /* Asegúrate de que ocupe el ancho completo del contenedor */
     align-items: center;
     justify-content: center;
+    
 }
 .seleccion2:hover{
     background-color:#a27eea;
