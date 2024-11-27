@@ -7,6 +7,8 @@ export const API_ROUTES = {
     //MARCAS
     GET_MARCAS:'/products/marcas',
     POST_MARCA:'/products/marca',
+    PUT_MARCA:'/products/marca',
+    DELETE_MARCA: (id: number) => `/products/marca/${id}`,
     //El resto de URLS...
 
   };

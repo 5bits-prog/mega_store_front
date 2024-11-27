@@ -41,7 +41,7 @@ body {
     flex-basis: 100;
     margin: 0px auto 0px auto;
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
-    left: 38%;                   /* Colocar el contenedor en el 50% de la pantalla */
+    left: 40%;                   /* Colocar el contenedor en el 50% de la pantalla */
     font-family:lato, arial;
     cursor: pointer;
 }

@@ -17,3 +17,13 @@ export async function newMarca(marca: Marca) {
     return respuesta;
     
 }
+
+export async function putMarca(marca: Marca) {
+    const {data : respuesta} = await api.put(API_ROUTES.POST_MARCA, marca); 
+    return respuesta;
+}
+
+export const deleteMarca = async (id: string) => {
+    const response = await api.delete(API_ROUTES.DELETE_MARCA(id)); 
+    return response.data;
+}

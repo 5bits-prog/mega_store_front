@@ -7,10 +7,11 @@ import { useMarca } from '../../contexts/MarcaContext';
 import ModalPut from '../../components/modalPut/ModalPut';
 import { BaseObjeto } from '../../components/modalPut/ModalPut';
 import { Marca } from '../../contexts/MarcaContext';
+
     
 
 export default function CheckboxList() {
-  const {marcas, fetchMarcas } = useMarca();
+  const {marcas, fetchMarcas, actualizarMarca, eliminarMarca} = useMarca();
   const [open, setOpen] = useState(false)
   const [marcaSelect, setMarcaSelect]= useState<BaseObjeto | null>(null)
   
@@ -18,16 +19,17 @@ export default function CheckboxList() {
     fetchMarcas()
   },[])
 
-  console.log(marcas)
+
 
   const modalPut= (abrir:boolean) =>{
     setOpen(abrir)
   }
+
   const handleModalClose = () => {
     setOpen(false); // Actualiza el estado en el padre
   };
+
   const handleMarcaClick = (marca : Marca)=>{
-    
     setMarcaSelect({
       id: Number(marca.id), // Convierte a number
       nombre: marca.nombre,
@@ -35,7 +37,14 @@ export default function CheckboxList() {
     });
     modalPut(true)
   };
+  
+  const handleConfirmarEdicion = (marcaEditada: Marca) => {
+    actualizarMarca(marcaEditada); // Llamamos a la función de actualización desde el modal
+  };
 
+  const handleEliminarMarca = (marcaEliminar:Marca) =>{
+      eliminarMarca(marcaEliminar)
+  }
   
   return (
     
@@ -58,7 +67,7 @@ export default function CheckboxList() {
           </>
         );
       })}
-      <ModalPut open={open} onClose={handleModalClose} objeto={marcaSelect}/>
+      <ModalPut open={open} onClose={handleModalClose} objeto={marcaSelect} onConfirm={handleConfirmarEdicion} onDelete={handleEliminarMarca}/>
     </List>
 
   );

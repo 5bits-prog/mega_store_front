@@ -1,9 +1,11 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { getMarcas, newMarca } from '../service/MarcaService'; // Importamos el servicio
+import { getMarcas, newMarca, putMarca, deleteMarca } from '../service/MarcaService'; // Importamos el servicio
 import { useNotification } from "./NotificacionContext";
+import { string } from 'zod';
+
 
 export interface Marca {
-  id?: string;
+  id?: number;
   nombre: string;
   fechaDeEliminacion?: string;       
 }
@@ -11,11 +13,18 @@ export interface Marca {
 interface MarcaContextType {
     fetchMarcas: () => void;
     postMarca: (marca:Marca) => void;
+    actualizarMarca: (marca: Marca) => Promise<void>;
+    eliminarMarca: (marca: Marca) => Promise<void>;
     marcas: Marca[];
     loading: boolean;
     error: string | null;
 }
 
+//Interface para el PUT
+export interface MarcaPayload {
+  id: number; // Lo que espera el endpoint
+  nombre: string;
+}
 const MarcaContext = createContext<MarcaContextType | undefined>(undefined);
 
 interface MarcaProviderProps {
@@ -67,8 +76,43 @@ export const MarcaProvider: React.FC<MarcaProviderProps> = ({ children }) => {
     }
   }
 
+  //PUT
+  const actualizarMarca = async (marca: Marca) => {
+    const payload: MarcaPayload = {
+      id: Number(marca.id), // Convertimos id a number si fuera string
+      nombre: marca.nombre,
+    };
+
+    try {
+      const response  = await putMarca(payload);
+      if (response?.data?.id) {
+        setMarcas((prev) =>
+          prev.map((m) => (m.id === response.data.id ? response.data : m))
+      )
+      console.log(`Marca ${response.data.nombre} actualizada`)
+
+    } else {
+      throw new Error('La respuesta del servidor no contiene los datos esperados');
+    }
+    }catch (error) {
+      console.error('Error al actualizar la marca:', error);
+    }
+  };
+
+  //DELETE
+  const eliminarMarca = async (marca: Marca) => {
+    try {
+      const id = String(marca.id)
+      const respuesta = await deleteMarca(id);
+      console.log(respuesta.data); 
+      fetchMarcas();
+    } catch (error) {
+      console.error('Error al eliminar la marca:', error);
+    }
+  };
+
   return (
-    <MarcaContext.Provider value={{ marcas, fetchMarcas, loading, error, postMarca }}>
+    <MarcaContext.Provider value={{ marcas, fetchMarcas, loading, error, postMarca, actualizarMarca, eliminarMarca }}>
       {children}
     </MarcaContext.Provider>
   );

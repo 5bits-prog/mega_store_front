@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 
 
 export interface BaseObjeto {
-  id: number | string; // Puede ser número o string según tus datos.
+  id: number; // Puede ser número o string según tus datos.
   nombre: string;
   fechaEliminacion?: string | null;
 }
@@ -21,27 +21,56 @@ export interface BaseObjeto {
     open: boolean;
     onClose: () => void;
     objeto: T | null; // Si no hay marca seleccionada, puede ser null
+    onConfirm: (objeto: T) => void; 
+    onDelete: (objeto: T) => void; 
   };
 
-const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto }: Props<T>) =>{
+const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto, onConfirm, onDelete }: Props<T>) =>{
 
     // Estado para controlar la visibilidad del modal de producto
     const [isDialogOpen, setDialogOpen] = useState(open || false);
     const [objectoSelect, setObjetoSelect] = useState(objeto || null);
-    const [confirmarPut, setConfirmarPut] = useState(false)
+    const [confirmar, setConfirmar] = useState(false)
+    const [confirmarD, setConfirmarD] = useState(false)
 
+  //Carga de las const al momento de abrir el modal 
     useEffect(() => {
         setDialogOpen(open);
         setObjetoSelect(objeto)
+        setConfirmar(false)
+        setConfirmarD(false)
     }, [open]);
-
+  
+    //funcion para cerrar el modal
     const handleClose = () => {
         setDialogOpen(false);
         onClose(); 
     };
 
-    const confirmar = (data: boolean) =>{
-        setConfirmarPut(data)
+    //funcion para pasar a confirmar (cambia el simbolo al tilde)
+    const aConfirmar =(data: boolean)=>{
+        setConfirmar(data)
+    }
+    //funcion para pasar a confirmar (cambia el simbolo al tilde) en el DELETE
+    const aConfirmarD =(data: boolean)=>{
+        setConfirmarD(data)
+    }
+
+    //funcion para confirmar el Put
+    const confirmarPut = () =>{
+        if (objectoSelect) {
+          onConfirm(objectoSelect); // Ejecutamos la función de confirmación pasando el objeto
+        }
+        setConfirmar(false)
+    }
+
+    //funcion para confirmar el delete
+    const confirmarDelete = () =>{
+        if (objectoSelect) {
+          onDelete(objectoSelect); // Ejecutamos la función de confirmación pasando el objeto
+        }
+        setConfirmar(false)
+        handleClose()
     }
     
   return (
@@ -57,10 +86,12 @@ const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto }: Props<T>) =>{
                 <input
                   type="text"
                   value={objectoSelect.nombre}
-                  readOnly={!confirmarPut}
-                  className={confirmarPut ? `${styles.linea}`: ''}
+                  readOnly={!confirmar}
+
+                  className={confirmar ? `${styles.linea}`: ''}
+
                   onChange={(e) => {
-                    if (confirmarPut) {
+                    if (confirmar) {
                       setObjetoSelect({
                         ...objectoSelect,
                         nombre: e.target.value,
@@ -80,16 +111,21 @@ const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto }: Props<T>) =>{
         </DialogContent>
 
           <DialogActions className={styles.contBotones}>
-
+          
+          {/* Boton eliminar */}
           <Button>
-              <DeleteIcon className={styles.botones} ></DeleteIcon>
+              {confirmarD ? 
+              (<CheckIcon className={styles.botones} onClick={()=> confirmarDelete()}></CheckIcon>)
+              :
+              (<DeleteIcon className={styles.botones} onClick={()=> aConfirmarD(true)}></DeleteIcon>)}
           </Button>
-
+          
+          {/* Boton editar */}
           <Button  >
-            {confirmarPut ? 
-            (<CheckIcon className={styles.botones} onClick={()=> confirmar(false)}></CheckIcon>)
+            {confirmar ? 
+            (<CheckIcon className={styles.botones} onClick={()=> confirmarPut()}></CheckIcon>)
             :
-            (<CreateIcon className={styles.botones} onClick={()=> confirmar(true)} ></CreateIcon>)}
+            (<CreateIcon className={styles.botones} onClick={()=> aConfirmar(true)} ></CreateIcon>)}
           </Button>
 
           <Button onClick={handleClose}>
