@@ -46,7 +46,7 @@ const Login: React.FC = () => {
             <div className={Style.container}>
                 {/* Formulario de inicio de sesión */}
                 <form className={Style.loginForm} onSubmit={handleSubmitLogin(onSubmitLogin)}>
-                    <div className={Style.imagen}> <h2>¡Bienvenido otra vez!</h2> </div>
+                    <div className={Style.imagen}> <h2>¡Bienvenido!</h2> </div>
                     <div>
                     {/* Campo de correo electrónico*/}
                     <FormControl sx={{ m: 1, width: '25ch' }} variant="standard">

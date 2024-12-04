@@ -72,6 +72,7 @@ export function App() {
                   <Route path="/catalogoProductos" element={<CatalogoProducto />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Navigate to="/home" />} />
+                  <Route path="/nosotros" element={<Nosotros />} />
                   
                 </Routes>
                 
