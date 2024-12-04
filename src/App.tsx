@@ -14,6 +14,7 @@ import CatalogoProducto from './pages/producto/catalogoProductos';
 import { AuthProvider } from './contexts/LoginContext';
 import { NotificationProvider } from './contexts/NotificacionContext';
 import { MarcaProvider } from './contexts/MarcaContext';
+import Nosotros from './pages/nosotros/nosotros';
 import './App.css'
 
 
@@ -44,6 +45,7 @@ export function App() {
                   <Route path="/catalogoProductos" element={<CatalogoProducto />} />
                   <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Navigate to="/home" />} />
+                  <Route path="/nosotros" element={<Nosotros />} />
                   
                 </Routes>
                 

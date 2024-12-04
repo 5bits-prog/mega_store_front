@@ -55,6 +55,9 @@ const Menu = () => {
      const handleHome=()=>{
         navigate('/home')
      }
+     const handleNosotros=()=>{
+        navigate('/nosotros')
+     }
      const modalProducto=()=>{
         setDialogOpen(!isDialogOpen)
      }
@@ -84,7 +87,7 @@ const Menu = () => {
             <h1 className={styles.title} onClick={()=>handleHome()}>{isHome ? 'MegaStore':'MegaStore - Panel de Administración'}</h1> 
 
             <div className={styles.components}>
-                <div className={styles.seleccion2}>Nosotros</div>
+                <div className={styles.seleccion2} onClick={handleNosotros}>Nosotros</div>
 
                 {rolG == '4'? 
                 <>
