@@ -18,7 +18,12 @@ import { SucursalProvider } from './contexts/SucursalContext';
 import { ColorProvider } from './contexts/ColorContext';
 import { TalleProvider } from './contexts/TalleContext';
 import { CategoriaProvider } from './contexts/CategoriaContext';
+import Nosotros from './pages/nosotros/nosotros';
 import './App.css'
+
+import AppsRami from './subApps/AppsRami'; //  apps rami
+import AppsRo from './subApps/AppsRo'; //apps ro
+import AppsAbril from './subApps/AppsAbril'; //apps abril
 
 
 
@@ -30,6 +35,10 @@ export function App() {
             <div className='contenedorDeTodo'>
               <MenuAdmin/> 
                 <Routes>
+                  
+                <Route path="/appsRami/*" element={<AppsRami />} />
+                <Route path="/appsRo/*" element={<AppsRo />} />
+                <Route path="/appsAbril/*" element={<AppsAbril />} />
 
                   <Route path="/registrarMarca"
                    element={
@@ -73,7 +82,8 @@ export function App() {
                   <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/nosotros" element={<Nosotros />} />
-                  
+
+                                  
                 </Routes>
                 
               <Footer/>

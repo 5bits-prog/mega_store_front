@@ -14,6 +14,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/LoginContext';
 
 
+
 const Menu = () => {
     const{rol, logout} = useAuth()
     const [rolG, setRol] = useState<string | null>(null);
@@ -69,7 +70,7 @@ const Menu = () => {
     <div className={styles.container1}>
         <div className={styles.header}>
             
-            <img src="logo.png" alt="Logo" width="100" height="60" /> {/* Ajusta el tamaño según sea necesario */}
+            <img src='/logo.png' alt="Logo" width="100" height="60" /> {/* Ajusta el tamaño según sea necesario */}
             <div className={styles.container2}>
                 {rolG=='4' ? 
                     <button className={styles.options} onMouseEnter={toggleMenu}><DensityMediumIcon/>{/* Agrega el ícono dentro del botón */}

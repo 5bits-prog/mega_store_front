@@ -63,17 +63,18 @@ const Productos = [
 
 const CatalogoProducto =()=> {
     const location = useLocation();
-    const isHome = location.pathname === '/home';
+    const isAdmin = location.pathname === '/catalogoProductos';
 
     return (
         <div className={styles.container}>
             <h2>Catálogo de Productos</h2>
             <div className={styles.listado}>
                 {Productos.map((producto, idx) => (
-                    isHome ? (
-                        <CardUser key={idx} nombre={producto.nombre} descripcion={producto.descripcion} precio={producto.precio} />
-                    ) : (
+
+                    isAdmin ? (
                         <CardPrducto key={idx} nombre={producto.nombre} descripcion={producto.descripcion} />
+                    ) : (
+                        <CardUser key={idx} nombre={producto.nombre} descripcion={producto.descripcion} precio={producto.precio} />
                     )
                     ))}
             </div>

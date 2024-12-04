@@ -1,9 +1,0 @@
-version = 1
-
-[[analyzers]]
-name = "typescript"
-enabled = true
-
-[analyzers.meta]
-# Opcional: Cambia a `true` si usas React en tu proyecto
-react = true

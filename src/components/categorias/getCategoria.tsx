@@ -49,9 +49,7 @@ export default function CheckboxList() {
     <List className={Style.list}>
 
       {(categorias ?? [1,2,3]).map ((categoria, idx) => {
-
         const labelId = `checkbox-list-label-${idx}`;
-
         return (
           <div className={Style.container}>
               <ListItem
