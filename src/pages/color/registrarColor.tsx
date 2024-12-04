@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 //Importación de estilos
 import style from "./registrarColor.module.css";
 //importación de iconos desde mui
@@ -16,6 +16,8 @@ import {validationsColor} from './validationsColor';
 //Componente del Get de colores
 import ListaColores from "./getColores"
 
+import { useColor } from '../../contexts/ColorContext';
+
 
 //Definición de los tipos de datos que recibirá el formulario
 type Inputs={  
@@ -27,52 +29,18 @@ const RegistrarColor: React.FC = () => {
         register,
         reset, // Función para registrar los campos del formulario y sus validaciones
         handleSubmit,
-        setError, // Función que maneja el evento de envío del formulario
         formState: { errors } // Objeto que contiene el estado del formulario, incluyendo los errores de validación
     } = useForm<Inputs>({ // Inicializamos useForm con un tipo genérico 'Inputs' para tipar los datos del formulario
         resolver: zodResolver(validationsColor), // Usamos zodResolver para integrar validaciones definidas en el esquema validationsColor
     });
-    const [refresh, setRefresh] = useState(false);
+    
+    const{postColor} = useColor()
 
 
     //POST
     const onSubmit = async (data: Inputs) => {
-        try {
-          // Enviamos la información al servidor mediante una llamada fetch
-          const response = await fetch('http://localhost:8080/products/color', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data), //convertimos los datos recibidos en .json
-          });
-    
-          if (!response.ok) { //si hay un error
-            const errorData = await response.json(); // Captura la respuesta del error
-            console.log(errorData);
-    
-            if (errorData && errorData.errors) { //si existe un error desde el back
-                setError('nombre', { 
-                type: 'manual',
-                message: errorData.errors,   //recuperamos el atributo errors del json, que es el que contiene el mensaje de error desde el back
-              });
-              
-              alert(errorData.errors); // Muestra el mensaje de error en una alerta
-            } else {
-              alert('Error desconocido'); //si el error no coincide con ninguno del back, es error desconcido
-            }
-            return;
-          }
-          else{ //si no hay errores
-            reset() //limpiamos el input
-            alert("Color registrado con éxito") //mensaje de éxito
-            setRefresh(!refresh); //cambia el estado refresh 
-          }
-        } catch (errors) {
-          const message = (errors as Error).message || 'Error desconocido';
-          console.error('Error desconocido:', errors);
-          alert('Ocurrió un error al registrar el color: ' + message);
-        }
+        postColor(data)
+        reset()
       };
     return (
         <div className={style.body}> 
@@ -86,10 +54,10 @@ const RegistrarColor: React.FC = () => {
                 </div>
                 <button className={style.button} type="submit" >< ArrowForwardIcon />Registrar</button>       
             </form>
-            <ListaColores refresh={refresh}></ListaColores>
+            <ListaColores ></ListaColores>
         </div>
     
-    );  
+    );   
 
 }
 export default RegistrarColor;

@@ -3,36 +3,51 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Style from '../../components/categorias/todasCategorias.module.css';
 import { useEffect, useState } from 'react';
+import { Sucursal, useSucursales } from '../../contexts/SucursalContext';
+import { BaseObjeto } from '../../components/modalPut/ModalPut';
+import ModalPut from '../../components/modalPut/ModalPut';
 
 
-interface Data {
-  id: number;
-  nombre: string;
-  fechaEliminacion:Date ;
-}
-export default function CheckboxList({ refresh }: { refresh: boolean }) {
-
-  const [data, setData] =useState<Data[]>([]);
+export default function CheckboxList() {
+  const {fetchSucursales, sucursales, actualizarSucursal, eliminarSucursal} = useSucursales();
+  const [open, setOpen] = useState(false)
+  const [sucursalSelect, setSucursalSelect]= useState<BaseObjeto | null>(null)
 
   //GET
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('http://localhost:8080/products/sucursales');
-      const jsonData = await response.json();
-      //console.log(jsonData);
-      setData(jsonData.data); 
-    };
+    fetchSucursales()
+  }, []);
+  
+  const modalPut= (abrir:boolean) =>{
+    setOpen(abrir)
+  }
 
-    fetchData();
-    
-  }, [refresh]);
+  const handleModalClose = () => {
+    setOpen(false); // Actualiza el estado en el padre
+  };
+  
+  const handleSucursalClick = (sucursal: Sucursal)=>{
+    setSucursalSelect({
+      id: Number(sucursal.id), // Convierte a number
+      nombre: sucursal.nombre,
+      fechaEliminacion: sucursal.fechaDeEliminacion || '',
+    });
+    modalPut(true)
+  };
+  
+  const handleConfirmarEdicion = (sucursalEditada: Sucursal) => {
+    actualizarSucursal(sucursalEditada); // Llamamos a la función de actualización desde el modal
+  };
 
+  const handleEliminar = (sucursalEliminar: Sucursal) =>{
+      eliminarSucursal(sucursalEliminar)
+  }
 
   return (
 
     <List className={Style.list}>
 
-      {(data ?? [1,2,3]).map ((sucursal, idx) => {
+      {(sucursales ?? []).map ((sucursal, idx) => {
 
         const labelId = `checkbox-list-label-${idx}`;
 
@@ -43,13 +58,14 @@ export default function CheckboxList({ refresh }: { refresh: boolean }) {
             disablePadding
             className={Style.contCategorias}
           > 
-              <ListItemText id={labelId} primary={`${sucursal.nombre}`} className={Style.item}/>
+              <ListItemText id={labelId} primary={`${sucursal.nombre}`} className={Style.item} onClick={()=>handleSucursalClick (sucursal)}/>
           </ListItem>
 
           </div>
           
         );
       })}
+      <ModalPut open={open} onClose={handleModalClose} objeto={sucursalSelect} onConfirm={handleConfirmarEdicion} onDelete={handleEliminar}  titulo='SUCURSAL'/>
     </List>
   );
 }

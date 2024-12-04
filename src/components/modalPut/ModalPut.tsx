@@ -23,9 +23,10 @@ export interface BaseObjeto {
     objeto: T | null; // Si no hay marca seleccionada, puede ser null
     onConfirm: (objeto: T) => void; 
     onDelete: (objeto: T) => void; 
+    titulo: string | ''
   };
 
-const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto, onConfirm, onDelete }: Props<T>) =>{
+const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto, onConfirm, onDelete, titulo }: Props<T>) =>{
 
     // Estado para controlar la visibilidad del modal de producto
     const [isDialogOpen, setDialogOpen] = useState(open || false);
@@ -82,7 +83,7 @@ const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto, onConfirm, onDe
               {objectoSelect ?  
               ( 
                 <>
-                <h2>MARCA</h2>
+                <h2>{titulo}</h2>
                 <input
                   type="text"
                   value={objectoSelect.nombre}
@@ -111,29 +112,27 @@ const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto, onConfirm, onDe
         </DialogContent>
 
           <DialogActions className={styles.contBotones}>
-          
-          {/* Boton eliminar */}
-          <Button>
-              {confirmarD ? 
-              (<CheckIcon className={styles.botones} onClick={()=> confirmarDelete()}></CheckIcon>)
+            {/* Boton eliminar */}
+            <Button>
+                {confirmarD ? 
+                (<CheckIcon className={styles.botones} onClick={()=> confirmarDelete()}></CheckIcon>)
+                :
+                (<DeleteIcon className={styles.botones} onClick={()=> aConfirmarD(true)}></DeleteIcon>)}
+            </Button>
+            
+            {/* Boton editar */}
+            <Button  >
+              {confirmar ? 
+              (<CheckIcon className={styles.botones} onClick={()=> confirmarPut()}></CheckIcon>)
               :
-              (<DeleteIcon className={styles.botones} onClick={()=> aConfirmarD(true)}></DeleteIcon>)}
-          </Button>
-          
-          {/* Boton editar */}
-          <Button  >
-            {confirmar ? 
-            (<CheckIcon className={styles.botones} onClick={()=> confirmarPut()}></CheckIcon>)
-            :
-            (<CreateIcon className={styles.botones} onClick={()=> aConfirmar(true)} ></CreateIcon>)}
-          </Button>
+              (<CreateIcon className={styles.botones} onClick={()=> aConfirmar(true)} ></CreateIcon>)}
+            </Button>
 
-          <Button onClick={handleClose}>
-              <ZoomBoton />
-          </Button>
-
+            <Button onClick={handleClose}>
+                <ZoomBoton />
+            </Button>
           
-        </DialogActions>
+          </DialogActions>
         </Dialog>
     </>
   );
