@@ -24,12 +24,14 @@ import './App.css'
 import AppsRami from './subApps/AppsRami'; //  apps rami
 import AppsRo from './subApps/AppsRo'; //apps ro
 import AppsAbril from './subApps/AppsAbril'; //apps abril
+import { CarritoProvider } from './contexts/CarritoContext';
 
 export function App() {
   return (
     <NotificationProvider>
       <Router>
           <AuthProvider>
+            <CarritoProvider>
             <div className='contenedorDeTodo'>
               <MenuAdmin/> 
                 <Routes>
@@ -81,18 +83,15 @@ export function App() {
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/nosotros" element={<Nosotros />} />
 
-                                  
                 </Routes>
-                
               <Footer/>
 
             </div>
+            </CarritoProvider>
             
           </AuthProvider>
         </Router>
       </NotificationProvider>
-      
-    
   );
 }
 
