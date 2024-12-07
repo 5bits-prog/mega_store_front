@@ -23,7 +23,7 @@ const Menu = () => {
     useEffect(() => {
         const rolGuardado = localStorage.getItem("rol");
         setRol(rolGuardado); // Guarda el rol en el estado local
-      }, [rol]);
+    }, [rol]);
 
     const cerrarSesion=()=>{
         setRol(null)
@@ -42,30 +42,30 @@ const Menu = () => {
     };
     const closeMenu = () => { //función para cerrar el desplegable
         setMenuOpen(false);  // Cerrar menú cuando el mouse salga del ícono o del menú
-        // setDialogOpen(!isDialogOpen)
     };
-     // Función para cerrar el menú
-     const navigate = useNavigate(); // Hook para navegar a otras rutas
-  
-     const handleNavigation = () => {
+
+    const navigate = useNavigate(); // Hook para navegar a otras rutas
+
+    const handleNavigation = () => {
        navigate('/sesion'); // Navegar a la ruta especificada
-     };
-     const handleCatalogo=()=>{
+    };
+    const handleCatalogo=()=>{
         navigate('/catalogoProductos')
-     }
-     const handleHome=()=>{
+    }
+    const handleHome=()=>{
         navigate('/home')
-     }
-     const handleNosotros=()=>{
+    }
+    const handleNosotros=()=>{
         navigate('/nosotros')
-     }
-     const modalProducto=()=>{
+    }
+
+    const modalProducto=()=>{
         setDialogOpen(!isDialogOpen)
-     }
-     const location = useLocation();
-     const isHome = location.pathname === '/home';
-     
-  
+    }
+    const location = useLocation();
+    const isHome = location.pathname === '/home';
+    
+
     return (
     <div className={styles.container1}>
         <div className={styles.header}>
