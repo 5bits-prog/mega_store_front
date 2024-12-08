@@ -4,17 +4,18 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useCarrito } from '../../contexts/CarritoContext.tsx';
 
 type Props={
+    id: number,
     nombre:string,
     descripcion:string,
     precio:number,
 }
 const CardUser: React.FC<Props> = (props) => {
         const { agregarAlCarrito } = useCarrito(); // Obtén la función para agregar al carrito
-    
+
         // Función para manejar el click en el carrito
         const handleAgregarAlCarrito = () => {
             agregarAlCarrito({
-                id: Math.random(), // Genera un ID único para el producto
+                id: props.id, // Genera un ID único para el producto
                 nombre: props.nombre,
                 precio: props.precio,
                 cantidad: 1,
@@ -28,8 +29,8 @@ const CardUser: React.FC<Props> = (props) => {
                 <p>${props.precio}</p>   
                 <span> {props.descripcion}</span>         
             </div>
-            <div className={style.contCarrito} onClick={handleAgregarAlCarrito}>
-            <ShoppingCartIcon className={style.carritoIcon} />
+            <div className={style.contCarrito}>
+            <ShoppingCartIcon className={style.carritoIcon} onClick={handleAgregarAlCarrito}/>
             </div>
         </div>
     )
