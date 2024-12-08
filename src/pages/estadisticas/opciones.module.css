@@ -1,0 +1,24 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    height: 100vh;            /* Hace que el div ocupe toda la altura de la pantalla */
+    width: 100%;  
+}
+
+.buttons{
+    width: 200px;         
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    padding:50px;
+    margin:10px;
+    border-radius: 15px;
+    border:solid 1px grey;
+
+    background-color: white;
+    outline: none;          /* Elimina el borde de enfoque (cuando se hace clic en el botón) */
+    box-shadow: none;
+}
