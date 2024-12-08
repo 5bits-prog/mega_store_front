@@ -1,19 +1,37 @@
 import style from './CardUser.module.css'
 import img1 from '../cardProductoAdmin/imagenes/remeraNegra.png'
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useCarrito } from '../../contexts/CarritoContext.tsx';
+
 type Props={
     nombre:string,
     descripcion:string,
     precio:number,
 }
-const CardUser =(props:Props)=>{
+const CardUser: React.FC<Props> = (props) => {
+        const { agregarAlCarrito } = useCarrito(); // Obtén la función para agregar al carrito
+    
+        // Función para manejar el click en el carrito
+        const handleAgregarAlCarrito = () => {
+            agregarAlCarrito({
+                id: Math.random(), // Genera un ID único para el producto
+                nombre: props.nombre,
+                precio: props.precio,
+                cantidad: 1,
+            });
+        };
     return(
         <div className={style.contGeneral}>
-            <img src={img1} alt="producto1" className={style.imgProducto} />
+            <img src={img1} alt="Remera Negra" className={style.imgProducto} />
             <div className={style.contTexto}>
-                <p>${props.precio}</p>
-                <h1>{props.nombre} <span>{props.descripcion}</span> </h1>                
+                <h1>{props.nombre}</h1>
+                <p>${props.precio}</p>   
+                <span> {props.descripcion}</span>         
+            </div>
+            <div className={style.contCarrito} onClick={handleAgregarAlCarrito}>
+            <ShoppingCartIcon className={style.carritoIcon} />
             </div>
         </div>
     )
-}
+};
 export default CardUser
