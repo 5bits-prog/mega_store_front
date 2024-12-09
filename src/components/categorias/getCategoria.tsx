@@ -30,7 +30,7 @@ export default function CheckboxList() {
     setObjectSelect({
       id: Number(data.id), // Convierte a number
       nombre: data.nombre,
-      fechaEliminacion: data.fechaDeEliminacion || '',
+      fechaEliminacion: data.fechaDeEliminacion ?? '',
     });
     modalPut(true)
   };
@@ -51,16 +51,15 @@ export default function CheckboxList() {
       {(categorias ?? [1,2,3]).map ((categoria, idx) => {
         const labelId = `checkbox-list-label-${idx}`;
         return (
-          <div className={Style.container}>
+          <div className={Style.container} key={categoria.id}>
               <ListItem
-            key={idx}
-            disablePadding
-            className={Style.contCategorias}
-          > 
+                disablePadding
+                className={Style.contCategorias}
+              > 
               <ListItemText id={labelId} primary={`${categoria.nombre}`} className={Style.item} onClick={()=>handleClick (categoria)}/>
+                
           </ListItem>
-          </div>
-          
+          </div> 
         );
       })}
       <ModalPut open={open} onClose={handleModalClose} objeto={objectSelect} onConfirm={handleConfirmarEdicion} onDelete={handleEliminar}  titulo='CATEGORIA'/>

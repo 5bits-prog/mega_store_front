@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 //Importación de los estilos
 import style from "./registrarSucursal.module.css";
 //Importación de los íconos utilizados desde mui
@@ -48,7 +48,7 @@ const RegistrarSucursal: React.FC = () => {
                 </div> 
                 <button className={style.button} type="submit" >< ArrowForwardIcon />Registrar</button>   
             </form>
-            <ListaSucursales></ListaSucursales>
+            <ListaSucursales/>
         </div>
     );
 };

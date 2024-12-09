@@ -29,8 +29,8 @@ export interface BaseObjeto {
 const ModalPut = <T extends BaseObjeto>({ open, onClose, objeto, onConfirm, onDelete, titulo }: Props<T>) =>{
 
     // Estado para controlar la visibilidad del modal de producto
-    const [isDialogOpen, setDialogOpen] = useState(open || false);
-    const [objectoSelect, setObjetoSelect] = useState(objeto || null);
+    const [isDialogOpen, setDialogOpen] = useState(open ?? false);
+    const [objectoSelect, setObjetoSelect] = useState(objeto ?? null);
     const [confirmar, setConfirmar] = useState(false)
     const [confirmarD, setConfirmarD] = useState(false)
 

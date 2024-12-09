@@ -5,18 +5,15 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
-type Props = {
-  modalRegistrarProducto: () => void; // La función no recibe argumentos y no retorna nada.
-};
-export default function AccordionUsage({ modalRegistrarProducto }: Props) {
+
+export default function AccordionUsage() {
   const entidades = [
-    {"nombre": "Marca", "ruta": "/registrarMarca"},
-    {"nombre": "Sucursal", "ruta": "/registrarSucursal"},
-    {"nombre": "Color", "ruta": "/registrarColor"},
-    {"nombre": "Talle", "ruta": "/registrarTalle"},
-    {"nombre": "Categoría", "ruta": "/registrarCategoria"},
-    {"nombre": "Producto", "ruta": "/registrarCategoria"},
-  ]
+    { id: 1, nombre: "Marca", ruta: "/registrarMarca" },
+    { id: 2, nombre: "Sucursal", ruta: "/registrarSucursal" },
+    { id: 3, nombre: "Color", ruta: "/registrarColor" },
+    { id: 4, nombre: "Talle", ruta: "/registrarTalle" },
+    { id: 5, nombre: "Categoría", ruta: "/registrarCategoria" },
+  ];
   const navigate = useNavigate(); // Hook para navegar a otras rutas
   
   const handleNavigation = (ruta: string) => {
@@ -40,29 +37,12 @@ export default function AccordionUsage({ modalRegistrarProducto }: Props) {
         >
           REGISTRAR
         </AccordionSummary>
-        {entidades.map((entidad,idx)=>(
+
+        {entidades.map((entidad)=>(
           
-           <AccordionDetails key={idx} sx={{ color:'white',backgroundColor: 'white', padding: '10px', textAlign:'center', '&:hover': {
+           <AccordionDetails key={entidad.id} sx={{ color:'white',backgroundColor: 'white', padding: '10px', textAlign:'center', '&:hover': {
                 backgroundColor: '#c99af3'} }}>
             
-            {entidad.nombre ==="Producto" ? (
-
-              <Button onClick={() => modalRegistrarProducto()}
-              sx={{
-                  color: 'BLACK',  // Color del texto del botón
-                  transition: 'background-color 0.3s',
-                  display: 'block',  // Hace que el botón ocupe toda la línea disponible
-                  width: '100%',
-                  '&:hover': {
-              // Color al pasar el ratón sobre el botón
-                    color: 'WHITE'  // Cambia el color del texto cuando el ratón está sobre el botón
-                  }
-                }}>
-              {entidad.nombre}
-          
-          </Button>
-
-            ):(
               <Button onClick={() => handleNavigation(entidad.ruta)}
                 sx={{
                     color: 'BLACK',  // Color del texto del botón
@@ -77,7 +57,7 @@ export default function AccordionUsage({ modalRegistrarProducto }: Props) {
                 {entidad.nombre}
             
             </Button>
-            )}
+            
           </AccordionDetails>
         ))}
         

@@ -1,5 +1,5 @@
 // NotificationContext.tsx
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useMemo } from "react";
 
 
 interface NotificationContextType {
@@ -17,11 +17,12 @@ interface NotificationProviderProps {
 
 export const NotificationProvider: React.FC<NotificationProviderProps> = ({children,}) => {
   const [mensaje, setMensaje] = useState<string>("");
-
+  
   const mostrarMensaje = (msg: string) => {
     setMensaje(msg);
     setTimeout(() => setMensaje(""), 1500); 
   };
+  const value = useMemo(() => ({ mensaje, mostrarMensaje }), [mensaje]);
   const divStyles: React.CSSProperties = {
     width:'25vw',
     height:'15vw',
@@ -42,7 +43,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({child
   };
 
   return (
-    <NotificationContext.Provider value={{ mensaje, mostrarMensaje }}>
+    <NotificationContext.Provider value={value}>
       {children}
       {mensaje && <div style={divStyles}>
         {mensaje}

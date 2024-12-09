@@ -52,9 +52,8 @@ export default function CheckboxList() {
         const labelId = `checkbox-list-label-${idx}`;
 
         return (
-          <div className={Style.container}>
+          <div className={Style.container} key={sucursal.id}>
             <ListItem
-            key={idx}
             disablePadding
             className={Style.contCategorias}
           > 

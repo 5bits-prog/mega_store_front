@@ -17,12 +17,20 @@ type Inputs={
     nombre:string;
     
 }
+/**
+ * Componente de React para registrar un nuevo talle.
+ * 
+ * Utiliza el hook `useForm` de React Hook Form para manejar la validación de formularios
+ * con un esquema de validación definido mediante Zod. Además, permite enviar los datos 
+ * al backend usando el custom hook `useTalle`.
+ *
+ * @component
+ */
 
 const RegistrarTalle: React.FC = () => {
     const { 
         register,
         reset,
-        setError, // Función para registrar los campos del formulario y sus validaciones
         handleSubmit, // Función que maneja el evento de envío del formulario
         formState: { errors } // Objeto que contiene el estado del formulario, incluyendo los errores de validación
     } = useForm<Inputs>({ // Inicializamos useForm con un tipo genérico 'Inputs' para tipar los datos del formulario
@@ -50,7 +58,7 @@ const RegistrarTalle: React.FC = () => {
                 </div>
                 <button className={style.button} type="submit" >< ArrowForwardIcon />Registrar</button>       
             </form>
-            <ListaTalles ></ListaTalles>
+            <ListaTalles />
         </div>
     );
 };

@@ -1,7 +1,9 @@
 .container{
+    position: relative;
     background-color: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
+    align-items: center;
     overflow: hidden;
     width: 100%;
     min-height: 100vh;
@@ -10,8 +12,10 @@
 }
 .container h2 {
     color: #c99af3;
+    width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 .listado{
@@ -23,4 +27,26 @@
     flex-wrap: wrap;
     width: 100%;
     height: auto;
+}
+.contBotonProductoNew{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 10px;
+    right: 50px;
+    border-radius: 15px;
+    background-color: white;
+    border: 2px solid #ca9af363;
+    width:clamp(3rem ,5.5vw,10rem) ;
+    height: 2.5vw;
+    overflow: hidden;
+    color: black;
+    box-shadow: -5px 5px 0 #ca9af363;
+    transition: all 0.5s ease-in-out;
+}
+.contBotonProductoNew:hover{
+    color: black;
+    box-shadow: inset 0 0 10px #c99af3,
+    -5px 5px 0 #3c076a63;
 }

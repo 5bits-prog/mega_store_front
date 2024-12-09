@@ -58,7 +58,7 @@ const RegistrarCategoria: React.FC = () => {
           <ArrowForwardIcon />Registrar
         </button>
       </form>
-      <ListaCategoria></ListaCategoria>
+      <ListaCategoria/>
     </div>
   );
 };

@@ -27,12 +27,13 @@ body {
     flex-wrap: wrap;
     flex-direction: column;  
     position: relative;
+    
 }
 
 .title {
     color: white;
     height: 100%;
-    width: 300px;
+    width: 350px;
     font-size: 18px;
     display: flex;
     align-items: center;
@@ -42,7 +43,7 @@ body {
     margin: 0px auto 0px auto;
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
     left: 40%;                   /* Colocar el contenedor en el 50% de la pantalla */
-    font-family:lato, arial;
+    font-family:Georgia, 'Times New Roman', Times, serif;
     cursor: pointer;
 }
 
@@ -148,6 +149,8 @@ body {
     width: 6vw; /* Asegúrate de que ocupe el ancho completo del contenedor */
     align-items: center;
     justify-content: center;
+    color: white;
+    text-decoration: none;
     
 }
 .seleccion2:hover{

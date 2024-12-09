@@ -7,7 +7,14 @@ import { useTalle, Talle } from '../../contexts/TalleContext';
 import { BaseObjeto } from '../../components/modalPut/ModalPut';
 import ModalPut from '../../components/modalPut/ModalPut';
 
-
+/**
+ * Componente `CheckboxList` para listar talles con opciones de edición y eliminación.
+ * 
+ * Utiliza un modal para editar o eliminar un talle seleccionado. Se conecta a través
+ * de `useTalle` para realizar las operaciones necesarias (fetch, update y delete).
+ * 
+ * @component
+ */
 export default function CheckboxList() {
   const {talles, fetchTalles,actualizarTalle,eliminarTalle} =useTalle()
   const [open, setOpen] = useState(false)
@@ -19,30 +26,53 @@ export default function CheckboxList() {
     fetchTalles()
   }, []);
 
-  const modalPut= (abrir:boolean) =>{
-    setOpen(abrir)
-  }
-
-  const handleModalClose = () => {
-    setOpen(false); // Actualiza el estado en el padre
-  };
+    /**
+   * Abre o cierra el modal de edición.
+   * 
+   * @param {boolean} abrir - Estado para abrir (`true`) o cerrar (`false`) el modal.
+   */
+    const modalPut = (abrir: boolean) => {
+      setOpen(abrir);
+    };
   
-  const handleClick = (data: Talle)=>{
-    setObjectSelect({
-      id: Number(data.id), // Convierte a number
-      nombre: data.nombre,
-      fechaEliminacion: data.fechaDeEliminacion || '',
-    });
-    modalPut(true)
-  };
+    /**
+     * Cierra el modal de edición.
+     */
+    const handleModalClose = () => {
+      setOpen(false); // Cierra el modal
+    };
   
-  const handleConfirmarEdicion = (objectEditadar: Talle) => {
-    actualizarTalle(objectEditadar); // Llamamos a la función de actualización desde el modal
-  };
-
-  const handleEliminar = (objectEliminar: Talle) =>{
-      eliminarTalle(objectEliminar)
-  }
+    /**
+     * Maneja la selección de un talle para editar.
+     * 
+     * @param {Talle} data - El talle seleccionado.
+     */
+    const handleClick = (data: Talle) => {
+      setObjectSelect({
+        id: Number(data.id), // Convierte el ID a número
+        nombre: data.nombre,
+        fechaEliminacion: data.fechaDeEliminacion || '', // Asegura un valor predeterminado
+      });
+      modalPut(true); // Abre el modal
+    };
+  
+    /**
+     * Confirma la edición del talle seleccionado.
+     * 
+     * @param {Talle} objectEditadar - El objeto editado que se va a actualizar.
+     */
+    const handleConfirmarEdicion = (objectEditadar: Talle) => {
+      actualizarTalle(objectEditadar); // Llama a la función de actualización
+    };
+  
+    /**
+     * Elimina el talle seleccionado.
+     * 
+     * @param {Talle} objectEliminar - El objeto que se va a eliminar.
+     */
+    const handleEliminar = (objectEliminar: Talle) => {
+      eliminarTalle(objectEliminar); // Llama a la función de eliminación
+    };
 
   return (
 
@@ -53,9 +83,8 @@ export default function CheckboxList() {
         const labelId = `checkbox-list-label-${idx}`;
 
         return (
-          <div className={Style.container}>
+          <div className={Style.container} key={talle.id}>
             <ListItem
-            key={idx}
             disablePadding
             className={Style.contCategorias}
           > 

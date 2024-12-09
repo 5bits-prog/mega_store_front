@@ -42,8 +42,8 @@ variants: [
 ],
 }));
 type Props={
-    nombre:string,
-    descripcion:string,
+    readonly nombre: string;
+    readonly descripcion: string;
 }
 export default function CardPrducto(props:Props) {
 const [expanded, setExpanded] = React.useState(false);

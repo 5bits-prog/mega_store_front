@@ -50,7 +50,7 @@ const RegistrarMarca: React.FC = () => {
                 </div>
                 <button className={style.button} type="submit" >< ArrowForwardIcon />Registrar</button>       
             </form>
-            <ListaMarcas  ></ListaMarcas>
+            <ListaMarcas  />
         </div>
     );
 };

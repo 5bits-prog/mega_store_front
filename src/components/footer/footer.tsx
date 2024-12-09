@@ -1,13 +1,12 @@
 import React from 'react';
-{/*Importación de estilos*/}
+// Importación de estilos
 import styles from './footer.module.css';
-{/*Importación de iconos desde mui */}
+//Importación de iconos desde mui
 import CallEndIcon from '@mui/icons-material/CallEnd';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import EmailIcon from '@mui/icons-material/Email';
 
-
-{/*Componente Footer*/}
+//Componente Footer
 const Footer: React.FC = () => {
   return (
   <body className={styles.body}>

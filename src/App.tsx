@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import RegistrarMarca from './pages/marca/registrarMarca'; 
 import Footer from './components/footer/footer'; 
-//import Menu from './components/menu/menu'; 
 import MenuAdmin from './components/menuAdmin/menuAdmin';  
 import RegistrarSucursal from'./pages/sucursal/registrarSucursal'; 
 import RegistrarTalle from'./pages/talle/registrarTalle'; 
@@ -82,7 +81,6 @@ export function App() {
                   <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/nosotros" element={<Nosotros />} />
-                  
 
                 </Routes>
               <Footer/>

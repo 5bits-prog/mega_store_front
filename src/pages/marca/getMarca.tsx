@@ -54,7 +54,7 @@ export default function CheckboxList() {
 
         const labelId = `checkbox-list-label-${idx}`;
         return (
-          <>
+          <div className={Style.container} key={marca.id}>
           <ListItem
             key={marca.id}
             disablePadding
@@ -64,7 +64,7 @@ export default function CheckboxList() {
               </ListItemText>
           </ListItem>
           
-          </>
+          </div>
         );
       })}
       <ModalPut open={open} onClose={handleModalClose} objeto={marcaSelect} onConfirm={handleConfirmarEdicion} onDelete={handleEliminarMarca}  titulo='MARCA'/>

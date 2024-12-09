@@ -54,7 +54,7 @@ const RegistrarColor: React.FC = () => {
                 </div>
                 <button className={style.button} type="submit" >< ArrowForwardIcon />Registrar</button>       
             </form>
-            <ListaColores ></ListaColores>
+            <ListaColores />
         </div>
     
     );   
