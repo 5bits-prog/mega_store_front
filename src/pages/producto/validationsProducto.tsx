@@ -94,51 +94,49 @@ export const validarImagenProducto = (archivo: File | null): string => {
     return ''; // Si no hay errores
 };
 
-// Función para validar que el precio sea un número positivo con 2 decimales como máximo
 export const validarPrecio = (valor: string): string => {
-    const regex = /^\d{1,3}(?:\.\d{3})*(?:,\d{2})?$/; // Acepta precios con formato con separadores de miles
-    return regex.test(valor) ? '' : 'Debe ser un precio válido';
+    // Primero eliminamos los puntos (separadores de miles) para verificar el número limpio
+    const valorSinPuntos = valor.replace(/\./g, '');
+
+    // Expresión regular para validar precios con dos decimales
+    const regex = /^\d+(?:,\d{1,2})?$/; // Acepta números enteros o con hasta dos decimales
+    
+    // Verificar que el precio es válido y que el valor es positivo
+    if (!regex.test(valorSinPuntos)) {
+        return 'Debe ser un precio válido';
+    }
+
+    // Convertir el valor en número (sin los separadores de miles) y verificar si es mayor que 0
+    const precio = parseFloat(valorSinPuntos.replace(',', '.'));
+    if (precio <= 0) {
+        return 'El precio debe ser mayor que cero';
+    }
+
+    return ''; // Si pasa la validación, no muestra error
 };
 
-// Función para dar formato visual al precio
-export const formatearNumero = (valor: string): string => {
-    // Eliminar cualquier carácter no numérico
-    const soloNumeros = valor.replace(/[^\d]/g, '');
-    if (!soloNumeros) return ''; // Si no hay número válido, devuelve vacío
-
-    // Convertir a número entero y dividirlo para calcular con decimales
-    const numero = parseInt(soloNumeros, 10);
-
-    // Convertir a cadena con formato correcto (dividir en dos decimales)
-    const decimalFormateado = (numero / 100).toFixed(2);
-
-    // Dividir la parte entera y la decimal
-    const [entero, decimal] = decimalFormateado.split('.');
-
-    // Agregar puntos para la parte entera en el formato de miles
-    const enteroConPuntos = entero.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+// Función para formatear el precio
+export const formatearPrecio = (valor: string): string => {
+    // Eliminar todo lo que no sean números o comas
+    const soloNumeros = valor.replace(/[^\d,]/g, '');
     
-    // Devolver la cadena completa con el formato adecuado
-    return `${enteroConPuntos},${decimal}`;
-};  
+    // Si no tiene coma, simplemente lo devolvemos tal cual
+    if (!soloNumeros.includes(',')) {
+        return soloNumeros.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Formato de miles
+    }
+    
+    // Si tiene coma, aseguramos el formato de los decimales
+    let [entero, decimal] = soloNumeros.split(',');
+    entero = entero.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Formato de miles
+    
+    // Limitar a 2 decimales
+    decimal = decimal.substring(0, 2);
+    
+    return `${entero},${decimal}`;
+};
 
 //ESPECIFICACIONES
 //(!!) convierte cualquier valor en un booleano, por eso !!errores.nombre devuleve un booleano
 //!!'' → false
 //!!'error' → true
 //FORMATEO DE PRECIO
-export const formatPrice = (price: string): string => {
-    // Intenta convertir el string a un número
-    const numericPrice = parseFloat(price.replace(',', '.')); // Reemplaza ',' con '.' si el input tiene coma como separador decimal
-  
-    // Valida si la conversión fue exitosa
-    if (isNaN(numericPrice)) {
-      return "Precio no válido"; // Mensaje de error si el string no es un número
-    }
-  
-    // Formatea el número
-    return new Intl.NumberFormat("es-AR", {
-      style: "currency",
-      currency: "ARS",
-    }).format(numericPrice);
-  };

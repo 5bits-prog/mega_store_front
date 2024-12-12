@@ -2,7 +2,7 @@ import style from './registrarProducto.module.css';
 import React, { useEffect, useState } from 'react';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, validarStockMedio, validarCampoRequerido, 
-    validarCampoSeleccionado, validarImagenProducto, formatearNumero, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
+    validarCampoSeleccionado, validarImagenProducto, formatearPrecio, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
 //import { Producto } from './interfazProducto';
 import InputAdornment from '@mui/material/InputAdornment';
 //import OutlinedInput from '@mui/material/OutlinedInput';
@@ -59,7 +59,7 @@ const RegistrarProducto = () => {
         categoria: '',
         foto: '',
     });
-    
+
 
     // Función para el envío del formulario
     const handleSubmit = (event: React.FormEvent) => {
@@ -68,7 +68,7 @@ const RegistrarProducto = () => {
         const errores = {
             nombre: validarCampoRequerido(nombre) || validarAlfanumerico(nombre) || validarLongitudCaracteres(nombre),
             descripcion: validarAlfanumerico(descripcion) || validarLongitudCaracteres(descripcion),
-            precio: validarCampoRequerido(precio) || validarDecimalPositivo(precio) || validarPrecio(precio) || formatearNumero(precio),
+            precio: validarCampoRequerido(precio) || validarDecimalPositivo(precio) || validarPrecio(precio),
             peso: validarCampoRequerido(peso) || validarDecimalPositivo(peso),
             stockActual: validarEnteroPositivo(stockActual),
             stockMedio: validarCampoRequerido(stockMedio) || validarEnteroPositivo(stockMedio) || validarStockMedio(stockMedio, stockMinimo),
@@ -77,7 +77,6 @@ const RegistrarProducto = () => {
             foto: validarImagenProducto(foto), // Valida la imagen del producto
         };
         setErrores(errores);
-
         // Chequear si hay errores
         const sinErrores = Object.values(errores).every(error => error === '');
 
@@ -121,10 +120,25 @@ const RegistrarProducto = () => {
         }
     };
 
-        const formatoPrecio = (precio : string) => {
-            const valorFormateado = formatearNumero(precio);
-            return valorFormateado
+    const handlePrecioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const valor = e.target.value;
+
+        // Eliminar cualquier cosa que no sea números o comas
+        const soloNumeros = valor.replace(/[^\d,]/g, '');
+
+        setPrecio(soloNumeros); // Actualizar el precio sin formato
+    };
+
+    const handleInputChange = (setState: React.Dispatch<React.SetStateAction<string>>) => {
+        return (e: React.ChangeEvent<HTMLInputElement>) => {
+            const valor = e.target.value;
+    
+            // Eliminar cualquier cosa que no sea números enteros
+            const soloEnteros = valor.replace(/\D/g, '');  // \D reemplaza todo lo que no sea un número
+    
+            setState(soloEnteros); // Actualizar el estado con el valor filtrado
         };
+    };
 
 
     return (
@@ -157,12 +171,12 @@ const RegistrarProducto = () => {
                 <TextField 
                     className={style.input}
                     label="Precio"
-                    value={precio} 
+                    value={formatearPrecio(precio)}
                     error={!!errores.precio}
                     helperText={errores.precio}
                     margin="normal"
                     variant="standard"
-                    onChange= {(e) => setPrecio(e.target.value)}
+                    onChange={handlePrecioChange}
                     slotProps={{
                         input: {
                             startAdornment: (
@@ -179,7 +193,7 @@ const RegistrarProducto = () => {
                     className={style.input}
                     label="Peso en gramos"
                     value={peso}
-                    onChange={(e) => setPeso(e.target.value)}
+                    onChange={handleInputChange(setPeso)}
                     error={!!errores.peso}
                     helperText={errores.peso}
                     margin="normal"
@@ -195,7 +209,7 @@ const RegistrarProducto = () => {
                         label="Categoría"
                     >
                         {categorias.map((cat, index) => (
-                            <MenuItem key={index} value={cat.nombre}>
+                            <MenuItem key={index} value={cat.id}>
                                 {cat.nombre}
                             </MenuItem>
                         ))}
@@ -230,7 +244,7 @@ const RegistrarProducto = () => {
                         label="Marca"
                     >
                         {marcas.map((m, index) => (
-                            <MenuItem key={index} value={m.nombre}>
+                            <MenuItem key={index} value={m.id}>
                                 {m.nombre}
                             </MenuItem>
                         ))}
@@ -247,7 +261,7 @@ const RegistrarProducto = () => {
                         label="Talle"
                     >
                         {talles.map((t, index) => (
-                            <MenuItem key={index} value={t.nombre}>
+                            <MenuItem key={index} value={t.id}>
                                 {t.nombre}
                             </MenuItem>
                         ))}
@@ -264,7 +278,7 @@ const RegistrarProducto = () => {
                         label="Color"
                     >
                         {colores.map((c, index) => (
-                            <MenuItem key={index} value={c.nombre}>
+                            <MenuItem key={index} value={c.id}>
                                 {c.nombre}
                             </MenuItem>
                         ))}
@@ -275,7 +289,7 @@ const RegistrarProducto = () => {
                     className={style.input}
                     label="Stock Actual"
                     value={stockActual}
-                    onChange={(e) => setStockActual(e.target.value)}
+                    onChange={handleInputChange(setStockActual)}
                     error={!!errores.stockActual}
                     helperText={errores.stockActual}
                     margin="normal"
@@ -286,7 +300,7 @@ const RegistrarProducto = () => {
                     className={style.input}
                     label="Stock Medio"
                     value={stockMedio}
-                    onChange={(e) => setStockMedio(e.target.value)}
+                    onChange={handleInputChange(setStockMedio)}
                     error={!!errores.stockMedio}
                     helperText={errores.stockMedio}
                     margin="normal"
@@ -296,7 +310,7 @@ const RegistrarProducto = () => {
                     className={style.input}
                     label="Stock Mínimo"
                     value={stockMinimo}
-                    onChange={(e) => setStockMinimo(e.target.value)}
+                    onChange={handleInputChange(setStockMinimo)}
                     error={!!errores.stockMinimo}
                     helperText={errores.stockMinimo}
                     margin="normal"
