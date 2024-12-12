@@ -4,10 +4,20 @@ export const validarCampoRequerido = (valor: string): string => {
 };
 
 export const validarAlfanumerico = (valor: string): string => {
-    if (valor === '') return ''; // Permite valores vacíos
+    if (valor.trim() === '') return ''; // Permite valores vacíos
     const regex = /^[a-zA-Z0-9\s]+$/;
-    return !regex.test(valor) ? 'Solo se permiten caracteres alfanuméricos' : '';
+    return !regex.test(valor) ? '': 'Solo se permiten letras y numeros';
 };
+
+export const validarLongitudCaracteres = (valor: string): string => {
+     // Si el campo está vacío, no mostrar ningún mensaje de error
+    if (valor.trim() === '') return '';
+
+    const regex = /^[A-Za-z0-9 ]{1,100}$/;
+    return regex.test(valor) ? '' : 'Debe tener entre 1 y 100 caracteres'; 
+};
+
+
 
 export const validarDecimalPositivo = (valor: string): string => {
     // Elimina los puntos (separadores de miles) si los hay
@@ -24,25 +34,35 @@ export const validarDecimalPositivo = (valor: string): string => {
 };
 
 
-
 export const validarEnteroPositivo = (valor: string): string => {
-    const regex = /^[0-9]+$/;
-    const numberValue = parseInt(valor, 10); // Asegura que conviertas a entero
-    return !regex.test(valor) || numberValue <= 0 
-        ? 'Debe ser un número entero positivo' 
-        : '';
-};
-
-export const validarStock = (valor: string): number => {
-    // Si el campo está vacío, devolver 0
-    if (valor.trim() === '') {
-        return 0;
+     // Si el campo está vacío, no mostrar ningún mensaje de error
+    if (valor.trim() === '') return '';
+    
+    const regex = /^[0-9]+$/; // Solo permite números enteros positivos o 0
+    if (!regex.test(valor)) {
+        return 'Debe ser un número positivo o cero';
     }
 
-    const stockNumerico = parseInt(valor, 10);
-    // Verificar si el valor es un número válido, de lo contrario, devolver 0
-    return isNaN(stockNumerico) ? 0 : stockNumerico;
+    return '';
 };
+
+export const validarStockMedio = (stockMedio: string, stockMinimo: string): string => {
+        const stockMedioNum = parseInt(stockMedio, 10);
+        const stockMinimoNum = parseInt(stockMinimo, 10);
+
+        console.log('Stock Medio:', stockMedioNum, 'Stock Mínimo:', stockMinimoNum);
+
+        if (isNaN(stockMedioNum) || isNaN(stockMinimoNum)) {
+            return 'Valores inválidos'; // Manejo de datos no numéricos
+        }
+    
+        if (stockMedioNum <= stockMinimoNum) {
+            console.log('Error porque el stock medio no es mayor que el mínimo');
+            return 'El stock medio debe ser mayor que el stock mínimo';
+        }
+    
+        return ''; // Sin errores
+    };
 
 //Validacion para las opciones a seleccionar (categoría)
 export const validarCampoSeleccionado = (valor: string): string => {
@@ -68,19 +88,33 @@ export const validarImagenProducto = (archivo: File | null): string => {
     return ''; // Si no hay errores
 };
 
-export const formatearNumero = (valor: string): string => {
-  // Eliminar caracteres no numéricos
-    const soloNumeros = valor.replace(/[^\d]/g, '');
-
-    //Convertir a número y luego a cadena formateada
-    const numeroFormateado = (parseInt(soloNumeros, 10) / 100)
-        .toFixed(2) // Fija dos decimales
-        .replace(/\B(?=(\d{3})+(?!\d))/g, '.') // Agrega puntos para miles
-        .replace(/(\d+)(,\d{2})$/, '$1,$2'); // Cambia el punto decimal a coma en la posición adecuada
-
-    return numeroFormateado;
+// Función para validar que el precio sea un número positivo con 2 decimales como máximo
+export const validarPrecio = (valor: string): string => {
+    const regex = /^\d{1,3}(?:\.\d{3})*(?:,\d{2})?$/; // Acepta precios con formato con separadores de miles
+    return regex.test(valor) ? '' : 'Debe ser un precio válido';
 };
 
+// Función para dar formato visual al precio
+export const formatearNumero = (valor: string): string => {
+    // Eliminar cualquier carácter no numérico
+    const soloNumeros = valor.replace(/[^\d]/g, '');
+    if (!soloNumeros) return ''; // Si no hay número válido, devuelve vacío
+
+    // Convertir a número entero y dividirlo para calcular con decimales
+    const numero = parseInt(soloNumeros, 10);
+
+    // Convertir a cadena con formato correcto (dividir en dos decimales)
+    const decimalFormateado = (numero / 100).toFixed(2);
+
+    // Dividir la parte entera y la decimal
+    const [entero, decimal] = decimalFormateado.split('.');
+
+    // Agregar puntos para la parte entera en el formato de miles
+    const enteroConPuntos = entero.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    
+    // Devolver la cadena completa con el formato adecuado
+    return `${enteroConPuntos},${decimal}`;
+};  
 
 //ESPECIFICACIONES
 //(!!) convierte cualquier valor en un booleano, por eso !!errores.nombre devuleve un booleano

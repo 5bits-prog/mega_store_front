@@ -1,8 +1,8 @@
 import style from './registrarProducto.module.css';
 import React, { useState } from 'react';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, validarStock, validarCampoRequerido, 
-    validarCampoSeleccionado, validarImagenProducto, formatearNumero } from './validationsProducto';
+import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, validarStockMedio, validarCampoRequerido, 
+    validarCampoSeleccionado, validarImagenProducto, formatearNumero, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
 //import { Producto } from './interfazProducto';
 import InputAdornment from '@mui/material/InputAdornment';
 //import OutlinedInput from '@mui/material/OutlinedInput';
@@ -50,7 +50,7 @@ const RegistrarProducto = () => {
         { nombre: 'Sucursal 1'},
         { nombre: 'Sucursal 2'},
         { nombre: 'Sucursal 3'},
-        {nombre: 'Sucursal 4'},
+        { nombre: 'Sucursal 4'},
     ];
 
     // Función para el envío del formulario
@@ -58,13 +58,13 @@ const RegistrarProducto = () => {
         event.preventDefault();
         // Validaciones
         const errores = {
-            nombre: validarCampoRequerido(nombre) || validarAlfanumerico(nombre),
-            descripcion: validarAlfanumerico(descripcion),
-            precio: validarCampoRequerido(precio) || validarDecimalPositivo(precio) || formatearNumero(precio),
+            nombre: validarCampoRequerido(nombre) || validarAlfanumerico(nombre) || validarLongitudCaracteres(nombre),
+            descripcion: validarAlfanumerico(descripcion) || validarLongitudCaracteres(descripcion),
+            precio: validarCampoRequerido(precio) || validarDecimalPositivo(precio) || validarPrecio(precio) || formatearNumero(precio),
             peso: validarCampoRequerido(peso) || validarDecimalPositivo(peso),
-            stockActual: validarEnteroPositivo(stockActual) || validarStock(stockActual),
-            stockMedio: validarEnteroPositivo(stockMedio) || validarStock(stockMedio),
-            stockMinimo: validarEnteroPositivo(stockMinimo) || validarStock(stockMinimo),
+            stockActual: validarEnteroPositivo(stockActual),
+            stockMedio: validarCampoRequerido(stockMedio) || validarEnteroPositivo(stockMedio) || validarStockMedio(stockMedio, stockMinimo),
+            stockMinimo: validarCampoRequerido(stockMinimo) || validarEnteroPositivo(stockMinimo) || validarStockMedio(stockMedio, stockMinimo),
             categoria: validarCampoSeleccionado(categoria),
             foto: validarImagenProducto(foto), // Valida la imagen del producto
         };
@@ -112,6 +112,7 @@ const RegistrarProducto = () => {
             reader.readAsDataURL(file);  // Lee el archivo como una URL de datos
         }
     };
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const valorFormateado = formatearNumero(event.target.value);
         setPrecio(valorFormateado);
@@ -153,7 +154,7 @@ const RegistrarProducto = () => {
                     helperText={errores.precio}
                     margin="normal"
                     variant="standard"
-                    onChange={handleChange}
+                    onChange= {handleChange}
                     slotProps={{
                         input: {
                             startAdornment: (
@@ -270,7 +271,6 @@ const RegistrarProducto = () => {
                     error={!!errores.stockActual}
                     helperText={errores.stockActual}
                     margin="normal"
-                    
                 />
 
                 {/*campo para el stock medio*/}
