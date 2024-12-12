@@ -6,7 +6,7 @@ export const validarCampoRequerido = (valor: string): string => {
 export const validarAlfanumerico = (valor: string): string => {
     if (valor.trim() === '') return ''; // Permite valores vacíos
     const regex = /^[a-zA-Z0-9\s]+$/;
-    return !regex.test(valor) ? '': 'Solo se permiten letras y numeros';
+    return regex.test(valor) ? '': 'Solo se permiten letras y numeros';
 };
 
 export const validarLongitudCaracteres = (valor: string): string => {
@@ -16,21 +16,27 @@ export const validarLongitudCaracteres = (valor: string): string => {
     const regex = /^[A-Za-z0-9 ]{1,100}$/;
     return regex.test(valor) ? '' : 'Debe tener entre 1 y 100 caracteres'; 
 };
+ 
 
 
+export const desformatearPrecio = (valor: string): string => {
+    // Elimina puntos (separadores de miles) y reemplaza comas decimales por puntos
+    return valor.replace(/\./g, '').replace(',', '.');
+};
 
+// Función para validar si un número es positivo y tiene hasta dos decimales
 export const validarDecimalPositivo = (valor: string): string => {
-    // Elimina los puntos (separadores de miles) si los hay
-    const valorSinPuntos = valor.replace(/\./g, '');
+    // Desformatea el valor ingresado
+    const valorSinFormato = desformatearPrecio(valor);
     const regex = /^[0-9]+(\.[0-9]{1,2})?$/; // Solo permite hasta dos decimales
 
-    // Convierte el valor sin puntos en un número
-    const numberValue = parseFloat(valorSinPuntos);
+    // Convierte el valor sin formato en un número
+    const numberValue = parseFloat(valorSinFormato);
 
     // Verifica si el valor es mayor que 0 y si sigue el formato correcto
-    return !regex.test(valorSinPuntos) || numberValue <= 0 
-        ? 'Debe ser un número positivo entero o hasta dos decimales' 
-        : '';  // Si pasa la validación, no muestra error
+    return !regex.test(valorSinFormato) || numberValue <= 0
+        ? 'Debe ser un número positivo entero o con hasta dos decimales'
+        : ''; // Si pasa la validación, no muestra error
 };
 
 
@@ -120,3 +126,19 @@ export const formatearNumero = (valor: string): string => {
 //(!!) convierte cualquier valor en un booleano, por eso !!errores.nombre devuleve un booleano
 //!!'' → false
 //!!'error' → true
+//FORMATEO DE PRECIO
+export const formatPrice = (price: string): string => {
+    // Intenta convertir el string a un número
+    const numericPrice = parseFloat(price.replace(',', '.')); // Reemplaza ',' con '.' si el input tiene coma como separador decimal
+  
+    // Valida si la conversión fue exitosa
+    if (isNaN(numericPrice)) {
+      return "Precio no válido"; // Mensaje de error si el string no es un número
+    }
+  
+    // Formatea el número
+    return new Intl.NumberFormat("es-AR", {
+      style: "currency",
+      currency: "ARS",
+    }).format(numericPrice);
+  };

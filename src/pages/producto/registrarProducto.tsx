@@ -1,5 +1,5 @@
 import style from './registrarProducto.module.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, validarStockMedio, validarCampoRequerido, 
     validarCampoSeleccionado, validarImagenProducto, formatearNumero, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
@@ -7,12 +7,31 @@ import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, val
 import InputAdornment from '@mui/material/InputAdornment';
 //import OutlinedInput from '@mui/material/OutlinedInput';
 import Autocomplete from '@mui/material/Autocomplete';
+import { useCategoria } from '../../contexts/CategoriaContext';
+import { useMarca } from '../../contexts/MarcaContext';
+import { useSucursales } from '../../contexts/SucursalContext';
+import { useTalle } from '../../contexts/TalleContext';
+import { useColor } from '../../contexts/ColorContext';
 
 interface Sucursal {
     nombre: string;
 }
 
 const RegistrarProducto = () => {
+    //CONJUNTO EXTRAIDOS DE LOS CONTEXT
+    const {categorias, fetchCategorias} = useCategoria()
+    const {sucursales, fetchSucursales} = useSucursales()
+    const {marcas, fetchMarcas}=useMarca()
+    const {talles, fetchTalles} = useTalle()
+    const {colores, fetchColores} = useColor()
+
+    useEffect(()=>{
+        fetchCategorias()
+        fetchSucursales()
+        fetchColores()
+        fetchMarcas()
+        fetchTalles()
+    },[])
     // Estados para almacenar las selecciones del formulario
     const [nombre, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
@@ -28,7 +47,7 @@ const RegistrarProducto = () => {
     const [foto, setFoto] = useState<File | null>(null);  // Estado para almacenar la imagen
     const [preview, setPreview] = useState<string | null>(null);  // Estado para la previsualización 
     const [fileName, setFileName] = useState('');  // Para mostrar el nombre del archivo seleccionado
-    const [selectedSucursal, setSucursal] =  useState<Sucursal[]>([]);
+    const [selectedSucursal, setSelectedSucursal] = useState<Sucursal[] | null>(null);
     const [errores, setErrores] = useState({
         nombre: '',
         descripcion: '',
@@ -41,17 +60,6 @@ const RegistrarProducto = () => {
         foto: '',
     });
     
-    // Listas de opciones para las categorías, sucursales, marcas, talles y colores (simuladas)
-    const categorias = ['Jean', 'Remera', 'Pollera', 'Musculosa'];
-    const marcas = ['Marca A', 'Marca B', 'Marca C'];
-    const talles = ['XS', 'S', 'M', 'L', 'XL'];
-    const colores = ['Rojo', 'Azul', 'Verde', 'Negro'];
-    const opcionesSucursal: Sucursal[] = [
-        { nombre: 'Sucursal 1'},
-        { nombre: 'Sucursal 2'},
-        { nombre: 'Sucursal 3'},
-        { nombre: 'Sucursal 4'},
-    ];
 
     // Función para el envío del formulario
     const handleSubmit = (event: React.FormEvent) => {
@@ -80,7 +88,7 @@ const RegistrarProducto = () => {
             setPrecio('');
             setPeso('');
             setCategoria('');
-            setSucursal([]);
+            setSelectedSucursal([]);
             setMarca('');
             setTalle('');
             setColor('');
@@ -94,7 +102,7 @@ const RegistrarProducto = () => {
             console.log('Errores en el formulario');
         }
         // Lógica para enviar los datos al backend y si no hay errores sigue.
-        console.log({ nombre, descripcion, categoria,selectedSucursal, marca, talle, color, stockActual, stockMedio, stockMinimo, foto });
+        console.log({ nombre, descripcion, categoria,precio,selectedSucursal, marca, talle, color, stockActual, stockMedio, stockMinimo, foto });
     };
 
     // Función para manejar la carga de imagen y la previsualización
@@ -113,10 +121,10 @@ const RegistrarProducto = () => {
         }
     };
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const valorFormateado = formatearNumero(event.target.value);
-        setPrecio(valorFormateado);
-    };
+        const formatoPrecio = (precio : string) => {
+            const valorFormateado = formatearNumero(precio);
+            return valorFormateado
+        };
 
 
     return (
@@ -154,7 +162,7 @@ const RegistrarProducto = () => {
                     helperText={errores.precio}
                     margin="normal"
                     variant="standard"
-                    onChange= {handleChange}
+                    onChange= {(e) => setPrecio(e.target.value)}
                     slotProps={{
                         input: {
                             startAdornment: (
@@ -187,8 +195,8 @@ const RegistrarProducto = () => {
                         label="Categoría"
                     >
                         {categorias.map((cat, index) => (
-                            <MenuItem key={index} value={cat}>
-                                {cat}
+                            <MenuItem key={index} value={cat.nombre}>
+                                {cat.nombre}
                             </MenuItem>
                         ))}
                     </Select>
@@ -201,11 +209,11 @@ const RegistrarProducto = () => {
                         className={style.input}
                         id="sucursal-label"
                         multiple
-                        options={opcionesSucursal}
+                        options={sucursales}
                         getOptionLabel={(option) => option.nombre}
-                        value={selectedSucursal}
-                        onChange={(event, newValue: Sucursal[]) => setSucursal(newValue)} 
-                        defaultValue={[opcionesSucursal[2], opcionesSucursal[1]]} // Asegúrate de que el índice sea válido
+                        value={selectedSucursal || []}
+                        onChange={(event, newValue) => setSelectedSucursal(newValue)} 
+                        // defaultValue={[opcionesSucursal[2], opcionesSucursal[1]]} // Asegúrate de que el índice sea válido
                         renderInput={(params) => (
                             <TextField {...params} label="Sucursal"/>
                         )}
@@ -222,8 +230,8 @@ const RegistrarProducto = () => {
                         label="Marca"
                     >
                         {marcas.map((m, index) => (
-                            <MenuItem key={index} value={m}>
-                                {m}
+                            <MenuItem key={index} value={m.nombre}>
+                                {m.nombre}
                             </MenuItem>
                         ))}
                     </Select>
@@ -239,8 +247,8 @@ const RegistrarProducto = () => {
                         label="Talle"
                     >
                         {talles.map((t, index) => (
-                            <MenuItem key={index} value={t}>
-                                {t}
+                            <MenuItem key={index} value={t.nombre}>
+                                {t.nombre}
                             </MenuItem>
                         ))}
                     </Select>
@@ -256,8 +264,8 @@ const RegistrarProducto = () => {
                         label="Color"
                     >
                         {colores.map((c, index) => (
-                            <MenuItem key={index} value={c}>
-                                {c}
+                            <MenuItem key={index} value={c.nombre}>
+                                {c.nombre}
                             </MenuItem>
                         ))}
                     </Select>
