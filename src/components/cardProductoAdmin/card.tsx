@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import style from './card.module.css'
-import remeraNegra from './imagenes/remeraNegra.png'
+
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -42,8 +42,11 @@ variants: [
 ],
 }));
 type Props={
-    readonly nombre: string;
-    readonly descripcion: string;
+    id: number,
+    nombre:string,
+    descripcion:string,
+    precio?:number,
+    foto: string,
 }
 export default function CardPrducto(props:Props) {
 const [expanded, setExpanded] = React.useState(false);
@@ -53,7 +56,7 @@ const handleExpandClick = () => {
 };
 
 return (
-    <Card sx={{ maxWidth: 345 }} className={style.card}>
+    <Card sx={{ maxWidth: 345 }} className={style.card} key={props.id}>
     <CardHeader
         avatar={
         <Avatar sx={{ bgcolor: "#a27eea" }} aria-label="recipe">
@@ -71,7 +74,7 @@ return (
     <CardMedia
         className={style.imagen}
         component="img"
-        image= {remeraNegra}
+        image= {props.foto}
         alt="Remera"
         color='red'
     />

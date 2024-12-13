@@ -12,13 +12,18 @@ import { useMarca } from '../../contexts/MarcaContext';
 import { useSucursales } from '../../contexts/SucursalContext';
 import { useTalle } from '../../contexts/TalleContext';
 import { useColor } from '../../contexts/ColorContext';
+import { useProductos } from '../../contexts/ProductoContext';
+
+
 
 interface Sucursal {
+    id?:number,
     nombre: string;
 }
 
 const RegistrarProducto = () => {
     //CONJUNTO EXTRAIDOS DE LOS CONTEXT
+    const{fetchProductos,postProducto}=useProductos()
     const {categorias, fetchCategorias} = useCategoria()
     const {sucursales, fetchSucursales} = useSucursales()
     const {marcas, fetchMarcas}=useMarca()
@@ -60,6 +65,7 @@ const RegistrarProducto = () => {
         foto: '',
     });
 
+    
 
     // Función para el envío del formulario
     const handleSubmit = (event: React.FormEvent) => {
@@ -81,6 +87,9 @@ const RegistrarProducto = () => {
         const sinErrores = Object.values(errores).every(error => error === '');
 
         if (sinErrores) {
+            //HACEMOS EL POST
+           
+            armarFormData();
             // Limpiar los campos del formulario
             setNombre('');
             setDescripcion('');
@@ -97,12 +106,45 @@ const RegistrarProducto = () => {
             setFoto(null);
             setPreview(null);
             setFileName('');
+            
+
         } else {
             console.log('Errores en el formulario');
         }
         // Lógica para enviar los datos al backend y si no hay errores sigue.
-        console.log({ nombre, descripcion, categoria,precio,selectedSucursal, marca, talle, color, stockActual, stockMedio, stockMinimo, foto });
     };
+
+    const armarFormData = ()=>{
+    const formData = new FormData();
+
+    // Agregar los valores de cada campo al FormData
+    formData.append("nombre", nombre);
+    formData.append("descripcion", descripcion);
+    formData.append("precio", precio);
+    formData.append("peso", peso);
+    formData.append("stockActual", stockActual);
+    formData.append("stockMedio", stockMedio);
+    formData.append("stockMinimo", stockMinimo);
+    formData.append("categoriaId", categoria);
+    formData.append("sucursalId", selectedSucursal?.map(s =>s.id).join(',') || ''); // Para múltiples sucursales
+    formData.append("marcaId", marca);
+    formData.append("talleId", talle);
+    formData.append("colorId", color);
+    
+    // Verificar si se seleccionó una imagen y agregarla
+    if (foto && foto instanceof File) {
+        formData.append('foto', foto);
+    }
+
+    // Llamar a la función postProducto con el formData
+    console.log('Contenido de FormData:');
+    for (const [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+        }
+    
+    postProducto(formData);
+    fetchProductos()
+    }
 
     // Función para manejar la carga de imagen y la previsualización
     const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {

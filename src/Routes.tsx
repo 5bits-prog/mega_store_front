@@ -34,6 +34,9 @@ export const API_ROUTES = {
      PUT_CATEGORIA:'/products/categoria',
      DELETE_CATEGORIA: (id: string) => `/products/categoria/${id}`,
 
+     //PRODUCTO
+     POST_PRODUCTO :'/products/producto',
+     GET_PRODUCTO:'/products/productos',
      //ESTADISTICAS
      
     //El resto de URLS...

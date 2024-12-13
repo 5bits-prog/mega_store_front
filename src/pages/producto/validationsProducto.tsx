@@ -56,8 +56,6 @@ export const validarStockMedio = (stockMedio: string, stockMinimo: string): stri
         const stockMedioNum = parseInt(stockMedio, 10);
         const stockMinimoNum = parseInt(stockMinimo, 10);
 
-        console.log('Stock Medio:', stockMedioNum, 'Stock Mínimo:', stockMinimoNum);
-
         if (isNaN(stockMedioNum) || isNaN(stockMinimoNum)) {
             return 'Valores inválidos'; // Manejo de datos no numéricos
         }

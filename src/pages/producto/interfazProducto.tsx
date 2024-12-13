@@ -1,16 +1,16 @@
 // Interfaz para producto, buena práctica
 export interface Producto {
+    id: number ,
+    foto: string ;
     nombre: string;
     descripcion: string;
     precio: number;
     peso: number;
-    categoria: string;
-    sucursal: string;
-    marca: string;
-    talle: string;
-    color: string;
-    stockActual: string | number;
-    stockMedio: string |  number;
-    stockMinimo:  string | number;
-    foto: string; 
+    stockMedio: number;
+    stockMinimo: number;
+    categoriaId: number;
+    sucursalId: number;
+    marcaId: number;
+    talleId: number;
+    colorId: number;
 }
