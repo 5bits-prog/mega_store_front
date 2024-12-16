@@ -71,7 +71,7 @@
     border: none;
     background-color: #ca9af3b4;
     color: white;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     border-radius: 10px;
     transition-duration: .2s;
@@ -113,10 +113,16 @@
 }
 
 .resendBtn {
-    background-color: transparent;
+    background-color: black;
     border: none;
-    color: #c99af3;
+    color: white;
     cursor: pointer;
-    font-size: 1.1em;
-    font-weight: 700;
+    font-size: 1.3em;
+    font-weight: 100;
+    height: 30px;
+    border-radius: 15px;
+}
+.resendBtn:hover{
+    background-color: #c99af3;
+    transition-duration: .2s;
 }

@@ -118,7 +118,7 @@ const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
             </div>
             <button className={style.verifyButton} type="submit">Verificar</button>
             <button className={style.exitBtn} onClick={onCerrar}>×</button>
-            <p className={style.resendNote}>¿No recibiste el código? <button className="resendBtn">Reenviar Código</button></p>
+            <p className={style.resendNote}>¿No recibiste el código? <button className={style.resendBtn}>Reenviar Código</button></p>
         </form>
         </StyledWrapper>
     );
