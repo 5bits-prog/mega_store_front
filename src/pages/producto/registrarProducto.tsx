@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, validarStockMedio, validarCampoRequerido, 
     validarCampoSeleccionado, validarImagenProducto, formatearNumero, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
-//import { Producto } from './interfazProducto';
 import InputAdornment from '@mui/material/InputAdornment';
-//import OutlinedInput from '@mui/material/OutlinedInput';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useCategoria } from '../../contexts/CategoriaContext';
 import { useMarca } from '../../contexts/MarcaContext';
