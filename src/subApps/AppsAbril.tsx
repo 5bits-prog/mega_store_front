@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/home/Home';
 import Estadisticas from '../pages/estadisticas/estadisticasVentasBarra';
 import OpcionesEstadisticas from '../pages/estadisticas/opciones';
+import Perfil from '../pages/perfil/perfil';
 
 
 
@@ -13,6 +14,7 @@ const AppsAbril = () => {
       <Route path="/homeabril" element={<Home />} />
       <Route path="/estadisticas" element={<Estadisticas />} />
       <Route path="/opcionesEstadisticas" element={<OpcionesEstadisticas />} />
+      <Route path="/perfil" element={<Perfil />} />
      
     </Routes>
   );

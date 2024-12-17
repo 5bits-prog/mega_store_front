@@ -16,6 +16,7 @@ const validationsRegister=z.object({
     contrasena:z
       .string()
       .min(1, { message: 'Contraseña no puede estar vacío.' })
+      .min(8, { message: 'Contraseña debe tener al menos 8 caracteres.' })
       .max(100,{message: 'Contraseña no puede superar los 100 caracteres'})
       .regex(/^[A-Za-z0-9áéíóúÁÉÍÓÚ\s]+$/,{ message: 'Contraseña contiene caracteres no permitidos.' })
       .regex(/^(?!.*\s{2,}).*$/, { message: "Contraseña no puede contener espacios consecutivos"})
