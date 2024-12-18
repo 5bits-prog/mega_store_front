@@ -20,7 +20,10 @@ const validationsRegister=z.object({
       .max(100,{message: 'Contraseña no puede superar los 100 caracteres'})
       .regex(/^[A-Za-z0-9áéíóúÁÉÍÓÚ\s]+$/,{ message: 'Contraseña contiene caracteres no permitidos.' })
       .regex(/^(?!.*\s{2,}).*$/, { message: "Contraseña no puede contener espacios consecutivos"})
-      .refine((val) => !(val.length === 1 && val === ' '), { message: 'Contraseña no puede estar vacío.' }) ,
+      .refine((val) => !(val.length === 1 && val === ' '), { message: 'Contraseña no puede estar vacío.' })
+      .refine((value) => /[A-Z]/.test(value), { message: "La contraseña debe contener al menos una letra mayúscula." }) 
+      .refine((value) => /[a-z]/.test(value), { message: "La contraseña debe contener al menos una letra minúscula." }) 
+      .refine((value) => /\d/.test(value), { message: "La contraseña debe contener al menos un número." }), 
     envio:z
       .string()
       .max(100, { message: 'No debe superar los 100 caracteres.' }),

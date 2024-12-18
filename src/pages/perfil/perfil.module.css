@@ -1,21 +1,16 @@
 .screen{
     width:100%;
-    min-height:55vw;
+    min-height:60vw;
     display: flex;
-    align-content: center;
     align-items: center;
-    text-align: center;
     justify-content: center;
-    
-    
 }
+
 .container{
     display: flex;
-   flex-direction: column;
+    flex-direction: column;
     align-items: center;
     text-align: center;
-    align-content: center;
-    
 }
 
 .input{
@@ -24,10 +19,10 @@
     text-align: center;
     justify-content: center;
     padding:15px;
+    flex-direction: column;
 }
 
 .button{ 
-    
     background-color:black;
     color: #ffffff;
     padding-right:12px;
@@ -36,9 +31,7 @@
     padding-bottom:10px;
     border: none;
     border-radius: 11px;
-    
     transition: all 0.6s ease;
-
     margin-top:15px;
     width:150px;
 }
@@ -54,12 +47,12 @@
     cursor: pointer;
 }
 
-.mostrar{
+.show {
     display:block;
     align-items: center;
 }
 
-.ocultar{
+.hide{
     display:none;
     align-items: center;
 }
@@ -70,25 +63,9 @@
    display: none;
    
 }
-
-.buttonFile{
-    background-color:black;
-    color: #ffffff;
-    padding-right:12px;
-    padding-left:12px;
-    padding-top:10px;
-    padding-bottom:10px;
-    border: none;
-    border-radius: 11px;
-    
-    transition: all 0.6s ease;
-
-    margin-top:15px;
-    width:150px;
-   
-    
-}
-.buttonFile:hover{ 
-    background-color: #b598ed;
-    cursor: pointer;  
+.alerts {
+    font-size: 9px;
+    color: red;
+    margin-top:0px;
+    margin-bottom:0px;  
 }

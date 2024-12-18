@@ -11,8 +11,12 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 const Register: React.FC = () => {
     
     const [showPassword, setShowPassword] = React.useState(false);
+    
+    const [showConfirmation, setShowConfirmation] = React.useState(false);
       
     const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+    const handleClickShowConfirmation = () => setShowConfirmation((show) => !show);
       
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {event.preventDefault();};
     
@@ -95,17 +99,17 @@ const Register: React.FC = () => {
     <InputLabel htmlFor="standard-adornment-confirmacion">Confirmar contraseña</InputLabel>
     <Input
         id="standard-adornment-confirmacion"
-        type={showPassword ? 'text' : 'password'}
+        type={showConfirmation ? 'text' : 'password'}
         color="secondary"
         endAdornment={
             <InputAdornment position="end">
                 <IconButton
-                    aria-label={showPassword ? 'hide the password' : 'display the password'}
-                    onClick={handleClickShowPassword}
+                    aria-label={showConfirmation ? 'hide the password' : 'display the password'}
+                    onClick={handleClickShowConfirmation}
                     onMouseDown={handleMouseDownPassword}
                     onMouseUp={handleMouseUpPassword}
                 >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showConfirmation ? <VisibilityOff /> : <Visibility />}
                 </IconButton>
             </InputAdornment>
         }
