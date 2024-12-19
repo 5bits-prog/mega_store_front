@@ -25,7 +25,7 @@ const Sesion: React.FC = () => {
     <div className={Style.screen}>
     <div className={Style.container}>
         {/* Botones para cambiar el formulario */}
-        <button onClick={handleLoginClick} className={Style.text }>Loguearse</button>
+        <button onClick={handleLoginClick} className={Style.text }>Iniciar sesión</button>
         <button onClick={handleRegisterClick} className={Style.text}>Registrarse</button>
     </div>
         {/* Renderizar el formulario correspondiente según el estado */}
