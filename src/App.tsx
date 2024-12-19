@@ -75,7 +75,23 @@ export function App() {
                   } />
                   <Route path="/login" element={<Login />} />
                   <Route path="/sesion" element={<Sesion />} />
-                  <Route path="/catalogoProductos" element={<CatalogoProducto />} />
+
+                  <Route
+                    path="/catalogoProductos"
+                    element={
+                      <MarcaProvider>
+                        <SucursalProvider>
+                          <ColorProvider>
+                            <TalleProvider>
+                              <CategoriaProvider>
+                                <CatalogoProducto />
+                              </CategoriaProvider>
+                            </TalleProvider>
+                          </ColorProvider>
+                        </SucursalProvider>
+                      </MarcaProvider>
+                    }
+                  />
                   <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/nosotros" element={<Nosotros />} />
