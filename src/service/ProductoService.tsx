@@ -21,12 +21,11 @@ export async function newProducto(producto : FormData) {
     if (!token) {
         throw new Error('Token no disponible. El usuario no está autenticado.');
     }
-
-    console.log('llegue',token)
+    console.log('tokenn',token)
     const { data: respuesta } = await api.post(API_ROUTES.POST_PRODUCTO, producto, {
         headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Token ${token}`,
         },
     });
     return respuesta;

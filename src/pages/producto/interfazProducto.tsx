@@ -9,7 +9,7 @@ export interface Producto {
     stockMedio: number;
     stockMinimo: number;
     categoriaId: number;
-    sucursalId: number;
+    sucursales: number[];
     marcaId: number;
     talleId: number;
     colorId: number;

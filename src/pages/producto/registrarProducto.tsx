@@ -126,14 +126,14 @@ const RegistrarProducto = () => {
     formData.append("stockMedio", stockMedio);
     formData.append("stockMinimo", stockMinimo);
     formData.append("categoriaId", categoria);
-    formData.append("sucursalId", selectedSucursal?.map(s =>s.id).join(',') || ''); // Para múltiples sucursales
+    formData.append("sucursales", selectedSucursal?.map(s =>s.id).join(',') || ''); // Para múltiples sucursales
     formData.append("marcaId", marca);
     formData.append("talleId", talle);
     formData.append("colorId", color);
     
     // Verificar si se seleccionó una imagen y agregarla
     if (foto && foto instanceof File) {
-        formData.append('foto', foto);
+        formData.append('imagen', foto);
     }
 
     // Llamar a la función postProducto con el formData

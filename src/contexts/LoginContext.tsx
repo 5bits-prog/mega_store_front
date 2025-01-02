@@ -38,7 +38,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setLoading(true)
         const response = await LogionService(username) //le paso los datos del usuario al service
         console.log(response)
-        console.log(response.data.token)
+        console.log('tokenn se inicio S',response.data.token)
         setUser(response)
         setRol(response.data.rol_id)
         setNombre(response.data.usuario_nombre)
