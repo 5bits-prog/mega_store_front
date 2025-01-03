@@ -85,6 +85,6 @@ input {/* Espaciado inferior si el input está seguido por otro elemento */
     padding: 0px;
     text-align: center; /* Alinea el texto de la alerta al centro */
     position:absolute;
-    top:165px;
+    top:160px;
 }
 

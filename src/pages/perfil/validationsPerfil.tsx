@@ -4,23 +4,23 @@ export const validationsPerfil=z.object({
     nombre:z
         .string()
         .min(1, { message: 'Nombre no puede estar vacío.' })
-        .max(100,{message: 'Nombre no puede superar los 100 caracteres'})
-        .regex(/^[A-Za-z0-9áéíóúÁÉÍÓÚ\s]+$/,{ message: 'Nombre contiene caracteres no permitidos.' })
+        .max(100,{message: 'Nombre no puede superar los 100 caracteres.'})
+        .regex(/^[A-Za-záéíóúÁÉÍÓÚ\s]+$/,{ message: 'Nombre debe ser una cadena de letras.' })
         .regex(/^(?!.*\s{2,}).*$/, { message: "Nombre no puede contener espacios consecutivos"})
         .refine((val) => !(val.length === 1 && val === ' '), { message: 'Nombre no puede estar vacío.' }) ,
     email:z
         .string()
         .email({message:"Formato inválido de email"})
-        .regex(/^(?!.*\s{2,}).*$/, { message: "Email no puede contener espacios consecutivos"})
+        .regex(/^(?!.*\s{2,}).*$/, { message: "Email no puede contener espacios consecutivos."})
         .refine((val) => !(val.length === 1 && val === ' '), { message: 'Email no puede estar vacío.' }) ,
     envio:z
         .string()
         .max(100, { message: 'No debe superar los 100 caracteres.' }),
     numeroTelefono:z
        .string()
-       .regex(/^\+?[0-9]+$/, { message: 'Teléfono debe ser un número' })
+       .regex(/^\+?[0-9]+$/, { message: 'Teléfono debe ser un número.' })
        .min(8, { message: 'Debe tener al menos 8 dígitos.' })
-       .max(15,{message: 'No debe superar los 15 dígitos'}),
+       .max(15,{message: 'No debe superar los 15 dígitos.'}),
        
 
 });

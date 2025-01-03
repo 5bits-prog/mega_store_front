@@ -3,6 +3,7 @@ import { LoginData, LogionService } from "../service/LoginService";
 import { useNotification } from "./NotificacionContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from 'axios';
+import Swal from "sweetalert2";
 
 // Define el tipo para el contexto
 interface AuthContextType {
@@ -40,8 +41,18 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         setNombre(response.data.usuario_nombre)
         localStorage.setItem('rol', response.data.rol_id);
         localStorage.setItem('nombre', response.data.usuario_nombre);
-        // mostrarMensaje('Sesion iniciada ')
         navigate("/home");
+        Swal.fire({
+          title: `¡Bienvenido, ${response.data.usuario_nombre}!`,
+          text: "Has iniciado sesión correctamente.",
+          icon: 'success',
+          confirmButtonText: 'Continuar',
+          confirmButtonColor: '#a27eea', 
+          timer: 3000, // Se cierra automáticamente después de 3 segundos
+          timerProgressBar: true
+        });
+       
+        
     }catch(error: unknown){
         if (error instanceof AxiosError) {
             mostrarMensaje(error.response?.data.errors)
@@ -52,6 +63,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }finally{
         setLoading(false)
     }
+    
   };
 
   const logout = () => {

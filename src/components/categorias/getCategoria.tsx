@@ -5,6 +5,8 @@ import Style from "./todasCategorias.module.css"
 import { useEffect, useState } from 'react';
 import { Categoria, useCategoria } from '../../contexts/CategoriaContext';
 import ModalPut, {BaseObjeto} from '../modalPut/ModalPut';
+import { ListItemIcon } from '@mui/material';
+
 
 
 export default function CheckboxList() {
@@ -52,13 +54,26 @@ export default function CheckboxList() {
         const labelId = `checkbox-list-label-${idx}`;
         return (
           <div className={Style.container} key={categoria.id}>
-              <ListItem
+              <ListItem 
                 disablePadding
                 className={Style.contCategorias}
               > 
-              <ListItemText id={labelId} primary={`${categoria.nombre}`} className={Style.item} onClick={()=>handleClick (categoria)}/>
-                
-          </ListItem>
+              <ListItemText 
+                id={labelId} 
+                primary={`${categoria.nombre}`} 
+                className={Style.item} 
+                onClick={()=>handleClick (categoria)}/>
+           <ListItemIcon 
+        className={Style.icon}
+        
+          
+      >
+        
+       
+      </ListItemIcon>
+    </ListItem>
+              
+          
           </div> 
         );
       })}

@@ -11,7 +11,7 @@ import Home from './pages/home/Home';
 import Sesion from'./pages/sesion/sesion'; 
 import CatalogoProducto from './pages/producto/catalogoProductos';
 import { AuthProvider } from './contexts/LoginContext';
-import { NotificationProvider } from './contexts/NotificacionContext';
+import { NotificationProvider} from './contexts/NotificacionContext';
 import { MarcaProvider } from './contexts/MarcaContext';
 import { SucursalProvider } from './contexts/SucursalContext';
 import { ColorProvider } from './contexts/ColorContext';
@@ -24,9 +24,11 @@ import AppsRo from './subApps/AppsRo'; //apps ro
 import AppsAbril from './subApps/AppsAbril'; //apps abril
 import { CarritoProvider } from './contexts/CarritoContext';
 
+
 export function App() {
   return (
     <NotificationProvider>
+      
       <Router>
           <AuthProvider>
             <CarritoProvider>

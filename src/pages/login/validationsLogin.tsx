@@ -12,7 +12,6 @@ const validationsLogin=z.object({
       .string()
       .min(1, { message: 'Contraseña no puede estar vacío.' })
       .max(100,{message: 'Contraseña no puede superar los 100 caracteres'})
-      .regex(/^[A-Za-z0-9áéíóúÁÉÍÓÚ\s]+$/,{ message: 'Contraseña contiene caracteres no permitidos.' })
       .regex(/^(?!.*\s{2,}).*$/, { message: "Contraseña no puede contener espacios consecutivos"})
       .refine((val) => !(val.length === 1 && val === ' '), { message: 'Contraseña no puede estar vacío.' }) ,
 
