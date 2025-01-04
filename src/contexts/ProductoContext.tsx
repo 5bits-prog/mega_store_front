@@ -1,12 +1,14 @@
 // Contexto para gestionar productos
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { getProductos, newProducto } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
+import { getProductos, newProducto, putProducto, deleteProducto } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
 import { useNotification } from "./NotificacionContext";
 import { Producto } from "../pages/producto/interfazProducto";
 
 interface ProductoContextType {
     fetchProductos: () => void;
     postProducto: (producto: FormData) => void;
+    modificarProducto:(producto:Producto)=>void;
+    eliminarProducto:(producto:Producto)=>void;
     productos: Producto[];
     loading: boolean;
     error: string | null;
@@ -60,7 +62,37 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
             }finally{
                 setLoading(false)
             }
-          }
+      }
+  //PUT
+  const modificarProducto = async (producto: Producto) => {
+    try{
+        setLoading(true)
+        const response = await putProducto(producto) //post
+        mostrarMensaje(`Prodcuto ${response.data.nombre} modificado`) //mensaje
+        await fetchProductos(); //Recargamos las sucursales
+        }catch(error:any){
+            if (error) {
+                mostrarMensaje(error.response?.data.errors)
+                console.log(error.response?.data.errors);  // Accediendo a 'errors'
+              } else {
+                console.error("Error desconocido", error);
+              }
+        }finally{
+            setLoading(false)
+        }
+    }
+  //DELETE
+  const eliminarProducto = async (objeto: Producto) => {
+    try {
+          const id = String(objeto.id)
+          const respuesta = await deleteProducto(id);
+          console.log(respuesta.data); 
+          fetchProductos();
+          mostrarMensaje('Producto eliminado con exito')
+        } catch (error) {
+          console.error('Error al eliminar la Sucursal:', error);
+        }
+    } 
 
     return (
     <ProductosContext.Provider
@@ -70,6 +102,8 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         error,
         fetchProductos,
         postProducto,
+        modificarProducto,
+        eliminarProducto,
       }}
     >
       {children}

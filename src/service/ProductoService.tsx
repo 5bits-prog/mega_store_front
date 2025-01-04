@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_ROUTES } from "../Routes";
 
-
+import { Producto } from "../pages/producto/interfazProducto";
 
 
 const api = axios.create({
@@ -32,12 +32,22 @@ export async function newProducto(producto : FormData) {
     
 }
 
-// export async function putMarca() {
-//     const {data : respuesta} = await api.put(API_ROUTES.POST_MARCA, marca); 
-//     return respuesta;
-// }
+export async function putProducto(producto: Producto) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('Token no disponible. El usuario no está autenticado.');
+    }
+    
+    const {data : respuesta} = await api.put(API_ROUTES.PUT_PRODUCTO, producto,{
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+        },  
+    }); 
+    return respuesta;
+}
 
-// export const deleteMarca = async (id: string) => {
-//     const response = await api.delete(API_ROUTES.DELETE_MARCA(id)); 
-//     return response.data;
-// }
+export const deleteProducto = async (id: string) => {
+    const response = await api.delete(API_ROUTES.DELETE_PRODUCTO(id)); 
+    return response.data;
+}

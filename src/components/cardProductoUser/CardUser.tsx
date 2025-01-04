@@ -7,7 +7,7 @@ type Props={
     nombre:string,
     descripcion:string,
     precio:number,
-    foto: string,
+    foto: string | undefined,
 }
 const CardUser: React.FC<Props> = (props) => {
         const { agregarAlCarrito } = useCarrito(); // Obtén la función para agregar al carrito

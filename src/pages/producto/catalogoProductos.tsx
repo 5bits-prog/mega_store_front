@@ -17,16 +17,6 @@ interface CatalogoProductoProps {
     productos: Producto[]; // Usar la interfaz
 }
 
-const Productos = [
-    {
-        id: 1,
-        nombre: 'Cargando',
-        descripcion: '',
-        precio: 0,
-    },
-   
-   
-]
 
 
 const CatalogoProducto =()=> {
@@ -75,7 +65,7 @@ const CatalogoProducto =()=> {
                 {(productos || []).map((producto) => (
 
                     isAdmin ? (
-                        <CardPrducto key={producto.id} nombre={producto.nombre} descripcion={producto.descripcion} foto={producto.foto} id={producto.id} />
+                        <CardPrducto key={producto.id}  {...producto} />
                     ) : (
                         <CardUser key={producto.id}  nombre={producto.nombre} descripcion={producto.descripcion} precio={producto.precio} id={producto.id} foto={producto.foto}/>
                     )

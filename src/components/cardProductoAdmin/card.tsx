@@ -10,9 +10,18 @@ import Avatar from '@mui/material/Avatar';
 import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import style from './card.module.css'
-
+import style from './card.module.css';
+import EditIcon from '@mui/icons-material/Edit';
+import Dialog from '@mui/material/Dialog'; // Dialog (se usa como un modal)
+import DialogContent from '@mui/material/DialogContent'; // Contenido del modal de Material UI
+import DialogActions from '@mui/material/DialogActions'; // Acciones como botones en el modal de Material UI
+import Button from '@mui/material/Button'; // Botón de Material UI
+import { useState } from 'react';
+import ZoomBoton from '../../components/transitions/buttomzoom';  
+import ModificarProducto from '../../pages/producto/modificarProducto';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Producto } from '../../pages/producto/interfazProducto';
+import { useProductos } from '../../contexts/ProductoContext';
 
 interface ExpandMoreProps extends IconButtonProps {
     expand: boolean;
@@ -41,21 +50,30 @@ variants: [
     },
 ],
 }));
-type Props={
-    id: number,
-    nombre:string,
-    descripcion:string,
-    precio?:number,
-    foto: string,
-}
-export default function CardPrducto(props:Props) {
+
+export default function CardPrducto(props:Producto) {
 const [expanded, setExpanded] = React.useState(false);
+const {eliminarProducto}= useProductos()
 
 const handleExpandClick = () => {
     setExpanded(!expanded);
 };
 
+const [isDialogOpen, setDialogOpen] = useState(false);
+const [isMenuOpen, setMenuOpen] = useState(false);
+
+const modalProducto=()=>{
+        setDialogOpen(!isDialogOpen)
+}
+    // Función para ir cambiando el estado del menú
+const toggleMenu = () => { //Función para abrir el desplegable
+        setMenuOpen(!isMenuOpen);
+};
+const eliminar = (producto: Producto) =>{
+    eliminarProducto(producto)
+}
 return (
+    <>
     <Card sx={{ maxWidth: 345 }} className={style.card} key={props.id}>
     <CardHeader
         avatar={
@@ -64,9 +82,15 @@ return (
         </Avatar>
         }
         action={
-        <IconButton aria-label="settings">
-            <MoreVertIcon />
-        </IconButton>
+            <>
+            <IconButton color="primary" onClick={() => modalProducto()}>
+                <EditIcon />
+            </IconButton>
+
+            <IconButton color="primary" onClick={() =>eliminar(props) }>
+                <DeleteIcon />
+            </IconButton>
+            </>
         }
         title={props.nombre}
         subheader="September 14, 2016"
@@ -83,6 +107,7 @@ return (
             {props.descripcion}
         </Typography>
     </CardContent>
+
     <CardActions disableSpacing>
         <ExpandMore
         expand={expanded}
@@ -93,23 +118,26 @@ return (
         <ExpandMoreIcon />
         </ExpandMore>
     </CardActions>
+
     <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
         <Typography sx={{ marginBottom: 2 }}>Detalle:</Typography>
-        <Typography sx={{ marginBottom: 2 }}>
-        
-        </Typography>
-        <Typography sx={{ marginBottom: 2 }}>
-        
-        </Typography>
-        <Typography sx={{ marginBottom: 2 }}>
-            
-        </Typography>
-        <Typography>
-            
-        </Typography>
+        <Typography sx={{ marginBottom: 2 }}> </Typography>
+    
         </CardContent>
     </Collapse>
     </Card>
+
+    <Dialog open={isDialogOpen} onClose={toggleMenu} fullWidth maxWidth="sm">
+    <DialogContent >
+        <ModificarProducto producto={props} />{/* Es el formulario para registrar un producto que se renderiza dentro del Dialog */}
+    </DialogContent>
+    <DialogActions >
+    <Button onClick={modalProducto}>
+        <ZoomBoton />
+    </Button>
+    </DialogActions>
+    </Dialog>
+    </>
 );
 }
