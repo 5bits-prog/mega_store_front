@@ -1,14 +1,15 @@
 // Contexto para gestionar productos
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { getProductos, newProducto, putProducto, deleteProducto } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
+import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
 import { useNotification } from "./NotificacionContext";
-import { Producto } from "../pages/producto/interfazProducto";
+import { Producto, ProductoGet } from "../pages/producto/interfazProducto";
 
 interface ProductoContextType {
     fetchProductos: () => void;
     postProducto: (producto: FormData) => void;
     modificarProducto:(producto:Producto)=>void;
-    eliminarProducto:(producto:Producto)=>void;
+    eliminarProducto:(producto:ProductoGet)=>void;
+    fetchProductoEspe:(producto:ProductoGet)=>void;
     productos: Producto[];
     loading: boolean;
     error: string | null;
@@ -26,10 +27,11 @@ interface ProductoProviderProps {
 
 export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) => {
     const [productos, setProductos] = useState<Producto[]>([]);
+    const [producto, setProducto] = useState<Producto>();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState(null);
     const {mostrarMensaje} = useNotification()
-
+//GET
     const fetchProductos = async () => {
         setLoading(true);
         setError(null); // Limpiamos el error antes de la llamada
@@ -42,6 +44,24 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         } finally {
              setLoading(false);
         }
+    };
+
+//GET ESPECIFICO
+    const fetchProductoEspe = async (objeto: ProductoGet) => {
+
+      setLoading(true);
+      setError(null); // Limpiamos el error antes de la llamada
+      try {
+          const id = String(objeto.id)
+          const response = await getProductoEspecifico(id);
+          setProducto(response.data); 
+          console.log(producto)
+
+      } catch (err: any) {
+          console.error(err);
+      } finally {
+          setLoading(false);
+      }
     };
 
 //POST
@@ -81,8 +101,9 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
             setLoading(false)
         }
     }
+
   //DELETE
-  const eliminarProducto = async (objeto: Producto) => {
+  const eliminarProducto = async (objeto: ProductoGet) => {
     try {
           const id = String(objeto.id)
           const respuesta = await deleteProducto(id);
@@ -104,6 +125,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         postProducto,
         modificarProducto,
         eliminarProducto,
+        fetchProductoEspe,
       }}
     >
       {children}

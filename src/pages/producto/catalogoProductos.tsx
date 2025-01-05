@@ -67,7 +67,7 @@ const CatalogoProducto =()=> {
                     isAdmin ? (
                         <CardPrducto key={producto.id}  {...producto} />
                     ) : (
-                        <CardUser key={producto.id}  nombre={producto.nombre} descripcion={producto.descripcion} precio={producto.precio} id={producto.id} foto={producto.foto}/>
+                        <CardUser key={producto.id}  {...producto}/>
                     )
                     ))}
             </div>

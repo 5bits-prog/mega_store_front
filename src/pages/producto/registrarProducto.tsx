@@ -122,7 +122,6 @@ const RegistrarProducto = () => {
     formData.append("descripcion", descripcion);
     formData.append("precio", precio);
     formData.append("peso", peso);
-    formData.append("stockActual", stockActual);
     formData.append("stockMedio", stockMedio);
     formData.append("stockMinimo", stockMinimo);
     formData.append("categoriaId", categoria);
@@ -327,15 +326,7 @@ const RegistrarProducto = () => {
                     </Select>
                 </FormControl>
                 {/*campo para el stock actual*/}
-                <TextField
-                    className={style.input}
-                    label="Stock Actual"
-                    value={stockActual}
-                    onChange={handleInputChange(setStockActual)}
-                    error={!!errores.stockActual}
-                    helperText={errores.stockActual}
-                    margin="normal"
-                />
+                
 
                 {/*campo para el stock medio*/}
                 <TextField

@@ -1,15 +1,7 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import IconButton from '@mui/material/IconButton';
 import style from './card.module.css';
 import EditIcon from '@mui/icons-material/Edit';
 import Dialog from '@mui/material/Dialog'; // Dialog (se usa como un modal)
@@ -20,45 +12,12 @@ import { useState } from 'react';
 import ZoomBoton from '../../components/transitions/buttomzoom';  
 import ModificarProducto from '../../pages/producto/modificarProducto';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Producto } from '../../pages/producto/interfazProducto';
+import { ProductoGet } from '../../pages/producto/interfazProducto';
 import { useProductos } from '../../contexts/ProductoContext';
 
-interface ExpandMoreProps extends IconButtonProps {
-    expand: boolean;
-}
 
-const ExpandMore = styled((props: ExpandMoreProps) => {
-const { expand, ...other } = props;
-return <IconButton {...other} />;
-})(({ theme }) => ({
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-}),
-variants: [
-    {
-    props: ({ expand }) => !expand,
-    style: {
-        transform: 'rotate(0deg)',
-    },
-    },
-    {
-    props: ({ expand }) => !!expand,
-    style: {
-        transform: 'rotate(180deg)',
-    },
-    },
-],
-}));
-
-export default function CardPrducto(props:Producto) {
-const [expanded, setExpanded] = React.useState(false);
+export default function CardPrducto(props:ProductoGet) {
 const {eliminarProducto}= useProductos()
-
-const handleExpandClick = () => {
-    setExpanded(!expanded);
-};
-
 const [isDialogOpen, setDialogOpen] = useState(false);
 const [isMenuOpen, setMenuOpen] = useState(false);
 
@@ -69,63 +28,151 @@ const modalProducto=()=>{
 const toggleMenu = () => { //Función para abrir el desplegable
         setMenuOpen(!isMenuOpen);
 };
-const eliminar = (producto: Producto) =>{
+
+const eliminar = (producto:ProductoGet) =>{
     eliminarProducto(producto)
 }
+
+const formatearPrecio = (precio: number): string => {
+    return precio.toLocaleString('es-ES');
+};
+
+function formatearFecha(fechaISO : any) {
+    // Convertir la fecha ISO a un objeto Date
+    const fecha = new Date(fechaISO);
+
+    // Extraer los valores de día, mes y año
+    const dia = String(fecha.getDate()).padStart(2, '0');
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses son 0-indexados
+    const anio = fecha.getFullYear();
+
+    // Devolver la fecha en formato dd/mm/yyyy
+    return `${dia}/${mes}/${anio}`;
+}
+
+const fecha = formatearFecha(props.fechaCreacion);
+
 return (
     <>
-    <Card sx={{ maxWidth: 345 }} className={style.card} key={props.id}>
-    <CardHeader
-        avatar={
-        <Avatar sx={{ bgcolor: "#a27eea" }} aria-label="recipe">
-            Ro
-        </Avatar>
-        }
-        action={
-            <>
-            <IconButton color="primary" onClick={() => modalProducto()}>
-                <EditIcon />
-            </IconButton>
+    <Card sx={{ maxWidth: 345 }} className={style.card} key={props.id} >
+        <CardHeader
+            className={style.header}
+            avatar={
+                    <Avatar sx={{ bgcolor: "#a27eea" }} aria-label="recipe">
+                        Ro
+                    </Avatar>
+                    }
+            action={
+                <>
+                   <IconButton color="primary" onClick={() => modalProducto()}>
+                        <EditIcon />
+                    </IconButton>
 
-            <IconButton color="primary" onClick={() =>eliminar(props) }>
-                <DeleteIcon />
-            </IconButton>
-            </>
-        }
-        title={props.nombre}
-        subheader="September 14, 2016"
-    />
-    <CardMedia
-        className={style.imagen}
-        component="img"
-        image= {props.foto}
-        alt="Remera"
-        color='red'
-    />
-    <CardContent>
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            {props.descripcion}
-        </Typography>
-    </CardContent>
+                    <IconButton color="primary" onClick={() =>eliminar(props) }>
+                       <DeleteIcon />
+                    </IconButton>
+                </>
+                }
+            title={props.nombre} 
+            subheader={
+                <>
+                {fecha}<br />
+                  ${formatearPrecio(props.precio ?? 0)} 
+                </>
+              }
+                         
+        />
 
-    <CardActions disableSpacing>
-        <ExpandMore
-        expand={expanded}
-        onClick={handleExpandClick}
-        aria-expanded={expanded}
-        aria-label="show more"
-        >
-        <ExpandMoreIcon />
-        </ExpandMore>
-    </CardActions>
+        <div className={style.content} tabIndex={0}>
 
-    <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-        <Typography sx={{ marginBottom: 2 }}>Detalle:</Typography>
-        <Typography sx={{ marginBottom: 2 }}> </Typography>
-    
-        </CardContent>
-    </Collapse>
+            <div className={style.front}>
+                
+                    <div className={style.imagen} >
+                        <img src={props.foto} alt="" />
+                    </div>
+
+            </div>
+
+            <div className={style.back}>
+                <div className={style.backContent} >
+                    
+                    <div className={style.contDescripGeneral}>
+                        Descripcion <br /> {props.descripcion}
+                    </div>
+
+                    <div className={style.contStockGeneral}> 
+                        STOCK
+                        <div className={style.contStock}>
+                            <table className={style.tabla}>
+                                <thead>
+                                    <tr>
+                                    <th>Actual Total </th>
+                                    <th>Medio</th>
+                                    <th>Minimo</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td>{props.stockActual}</td>
+                                    <td>{props.stockMedio}</td>
+                                    <td>{props.stockMinimo}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+
+                    
+
+                    <div className={style.contInfoGeneral}>
+                        INFORMACIÓN
+                        <table className={style.tabla}>
+                                <thead>
+                                    <tr>
+                                    <th>Categoria</th>
+                                    <th>Marca</th>
+                                    <th>Color</th>
+                                    <th>Talle</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td>{props.categoriaId}</td>
+                                    <td>{props.marcaId}</td>
+                                    <td>{props.colorId}</td>
+                                    <td>{props.talleId} </td>
+                                    </tr>
+                                </tbody>
+                        </table>
+                    </div>
+
+                    <div className={style.contSucurlGeneral}>
+                        Sucursales
+                        <div className={style.contSucurl}>
+                            <table className={style.tablaSucursal}>
+
+                                <thead>
+                                    <tr>
+                                    {(props.sucursales || []).map((sucursal, index) => (
+                                        <th key={index}>{sucursal.nombreSucursal}</th>
+                                    ))}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    {(props.sucursales || []).map((sucursal, index) => (
+                                        <td key={index}>{sucursal.cantidad}</td>
+                                    ))}
+                                    </tr>
+                                </tbody>
+                            </table>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </Card>
 
     <Dialog open={isDialogOpen} onClose={toggleMenu} fullWidth maxWidth="sm">

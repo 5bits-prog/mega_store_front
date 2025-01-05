@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_ROUTES } from "../Routes";
 
-import { Producto } from "../pages/producto/interfazProducto";
+import { Producto,ProductoGet } from "../pages/producto/interfazProducto";
 
 
 const api = axios.create({
@@ -13,6 +13,11 @@ const api = axios.create({
 export async function getProductos() {
         const {data : respuesta} = await api.get(API_ROUTES.GET_PRODUCTO); 
         return respuesta;
+}
+
+export async function getProductoEspecifico(id: string) {
+    const {data : respuesta} = await api.get(API_ROUTES.GET_PRODUCTO_ESPECIFICO(id)); 
+    return respuesta;
 }
 
 export async function newProducto(producto : FormData) {

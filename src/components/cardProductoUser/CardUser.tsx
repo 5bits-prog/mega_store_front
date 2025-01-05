@@ -1,28 +1,32 @@
 import style from './CardUser.module.css'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useCarrito } from '../../contexts/CarritoContext.tsx';
+import { useProductos } from '../../contexts/ProductoContext.tsx';
+import { ProductoGet } from '../../pages/producto/interfazProducto.tsx';
 
-type Props={
-    id: number,
-    nombre:string,
-    descripcion:string,
-    precio:number,
-    foto: string | undefined,
-}
-const CardUser: React.FC<Props> = (props) => {
+
+const CardUser: React.FC<ProductoGet> = (props) => {
         const { agregarAlCarrito } = useCarrito(); // Obtén la función para agregar al carrito
-
+        const {fetchProductoEspe}= useProductos()
+        
         // Función para manejar el click en el carrito
         const handleAgregarAlCarrito = () => {
             agregarAlCarrito({
                 id: props.id, // Genera un ID único para el producto
                 nombre: props.nombre,
-                precio: props.precio,
+                precio: props.precio || 0,
                 cantidad: 1,
             });
         };
+
+    const openProducto = (producto: ProductoGet) =>{
+        fetchProductoEspe(producto)
+        
+    }
+
     return(
-        <div className={style.contGeneral}>
+        <div className={style.contGeneral} onDoubleClick={() => openProducto(props)}>
+
             <img src={props.foto} alt="Remera Negra" className={style.imgProducto} />
             <div className={style.contTexto}>
                 <h1>{props.nombre}</h1>

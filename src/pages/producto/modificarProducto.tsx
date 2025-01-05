@@ -13,21 +13,19 @@ import { useSucursales } from '../../contexts/SucursalContext';
 import { useTalle } from '../../contexts/TalleContext';
 import { useColor } from '../../contexts/ColorContext';
 import { useProductos } from '../../contexts/ProductoContext';
-import { Producto } from './interfazProducto';
+import { ProductoGet , Producto} from './interfazProducto';
+import { Sucursal } from '../../contexts/SucursalContext';
 
 
 
-interface Sucursal {
-    id?:number,
-    nombre: string;
-}
+
+
 
 interface ModificarProductoProps {
-    producto: Producto;
+    producto: ProductoGet;
 }
 
 const ModificarProducto = ({ producto }: ModificarProductoProps) => {
-
     //CONJUNTO EXTRAIDOS DE LOS CONTEXT
     const{fetchProductos,modificarProducto}=useProductos()
     const {categorias, fetchCategorias} = useCategoria()
@@ -60,6 +58,7 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
     const [preview, setPreview] = useState<string | null>(null);  // Estado para la previsualización 
     const [fileName, setFileName] = useState('');  // Para mostrar el nombre del archivo seleccionado
     const [selectedSucursal, setSelectedSucursal] = useState<Sucursal[] | null>(null);
+
     const [errores, setErrores] = useState({
         nombre: '',
         descripcion: '',
@@ -88,15 +87,18 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
         setStockMinimo(producto.stockMinimo.toString()); // Convertir a string si es necesario
         setFoto(null); // Iniciar con null para nueva carga de imagen
         setPreview(producto.foto || null); // Usar la URL de la foto si está disponible
-        // setSelectedSucursal(
-        //     producto.sucursales.map(sucursal => ({
-        //       id: sucursal.id, 
-        //       nombre: sucursal.nombre
-        //     })) || null
-        //   );
+
+        setSelectedSucursal(
+            (producto.sucursales || []).map((sucursal) => ({
+              idSucursal: sucursal.idSucursal, // Usa idSucursal como id
+              nombre: sucursal.nombreSucursal, // Usa nombreSucursal como nombre
+              idProducto: sucursal.idProducto,
+              cantidad: sucursal.cantidad,
+            })) || null
+          );
 
     }, [producto]);
-   
+    
     // Función para el envío del formulario
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -127,11 +129,17 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
     };
 
     
+    // const armarSucursales = (sucursales :any)=>{
+    //     const sucursalIds = sucursales.map( sucursal => sucursal.idSucursal);
+    //     return sucursalIds
+    // }
     const armarJson = ()=>{
         if (id === undefined) {
             console.error("El ID del producto no puede ser undefined.");
             return; // Salir de la función si no hay un ID válido
         }
+        
+    // const sucursalesIDs = armarSucursales(selectedSucursal)
 
     const jsonData: Producto = {
             id, // Asegúrate de que `id` siempre esté presente (debe ser de tipo `number`)
@@ -145,6 +153,7 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
             marcaId: parseInt(marca, 10),
             talleId: parseInt(talle, 10),
             colorId: parseInt(color, 10),
+            // sucursales: sucursalesIDs,
            
         };
         
@@ -154,6 +163,7 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
         }
     
     modificarProducto(jsonData);
+    console.log(jsonData)
     fetchProductos()
     }
 
@@ -257,11 +267,14 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
                 {/* Select para Sucursal */}
                 <FormControl fullWidth margin="normal">
                     <Autocomplete
+                        disabled 
                         className={style.input}
                         id="sucursal-label"
                         multiple
                         options={sucursales}
+                        
                         getOptionLabel={(option) => option.nombre}
+
                         value={selectedSucursal || []}
                         onChange={(event, newValue) => setSelectedSucursal(newValue)} 
                         renderInput={(params) => (
@@ -329,6 +342,7 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
                     error={!!errores.stockActual}
                     helperText={errores.stockActual}
                     margin="normal"
+                    disabled 
                 />
 
                 {/*campo para el stock medio*/}
@@ -362,20 +376,7 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
                 
             />
             <label htmlFor="file-upload">
-            <Button 
-            sx={{
-            alignItems:'center',
-            backgroundColor: '#c49dd7', // Color lila
-            color: 'white',
-            '&:hover': {
-            backgroundColor: '#b284c4', // Color lila más oscuro al pasar el mouse
-            },
-            }}
-            variant="contained"
-            component="span"  // Actúa como disparador del input
-            >
-            {fileName || 'Cargar imagen'}
-                    </Button>
+            
             </label>
                     
             </FormControl>
