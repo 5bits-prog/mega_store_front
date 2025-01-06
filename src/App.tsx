@@ -20,7 +20,6 @@ import { CategoriaProvider } from './contexts/CategoriaContext';
 import { ProductoProvider } from './contexts/ProductoContext';
 import Nosotros from './pages/nosotros/nosotros';
 import './App.css'
-
 import AppsRami from './subApps/AppsRami'; //  apps rami
 import AppsRo from './subApps/AppsRo'; //apps ro
 import AppsAbril from './subApps/AppsAbril'; //apps abril
@@ -75,7 +74,6 @@ export function App() {
                       <RegistrarCategoria />
                     </CategoriaProvider>
                   } />
-                  
                   <Route path="/login" element={<Login />} />
                   <Route path="/sesion" element={<Sesion />} />
 

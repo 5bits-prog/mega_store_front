@@ -9,7 +9,6 @@ import Dialog from '@mui/material/Dialog'; // Dialog (se usa como un modal)
 import DialogContent from '@mui/material/DialogContent'; // Contenido del modal de Material UI
 import DialogActions from '@mui/material/DialogActions'; // Acciones como botones en el modal de Material UI
 import Button from '@mui/material/Button'; // Botón de Material UI
-
 import ZoomBoton from '../../components/transitions/buttomzoom';  
 import { useProductos } from '../../contexts/ProductoContext';
 

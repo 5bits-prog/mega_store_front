@@ -91,9 +91,9 @@ const Login: React.FC = () => {
                         {...registerLogin('password')} // Registrar el campo contraseña para las validaciones
                     />
                         <Stack sx={{ width: '100%', height:'5%' }} spacing={3}>
-                             {errorsLogin.contrasena && typeof errorsLogin.contrasena.message === 'string' && (
+                             {errorsLogin.password && typeof errorsLogin.password.message === 'string' && (
                             <Alert severity="error"  sx={{'.MuiAlert-icon': { fontSize: '20px' },'.MuiAlert-message': { fontSize: '10px' }}}
-                            >{errorsLogin.contrasena.message} </Alert>)}
+                            >{errorsLogin.password.message} </Alert>)}
                         </Stack>
                 </FormControl>
                 </div>

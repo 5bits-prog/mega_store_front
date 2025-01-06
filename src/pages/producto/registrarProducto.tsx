@@ -5,7 +5,6 @@ import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, val
     validarCampoSeleccionado, validarImagenProducto, formatearPrecio, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
 //import { Producto } from './interfazProducto';
 import InputAdornment from '@mui/material/InputAdornment';
-//import OutlinedInput from '@mui/material/OutlinedInput';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useCategoria } from '../../contexts/CategoriaContext';
 import { useMarca } from '../../contexts/MarcaContext';
