@@ -14,12 +14,17 @@ import ModificarProducto from '../../pages/producto/modificarProducto';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { ProductoGet } from '../../pages/producto/interfazProducto';
 import { useProductos } from '../../contexts/ProductoContext';
+import HistoryIcon from '@mui/icons-material/History';
+import Stack from '@mui/material/Stack';
+import CircularProgress from '@mui/material/CircularProgress';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 export default function CardPrducto(props:ProductoGet) {
-const {eliminarProducto}= useProductos()
+const {eliminarProducto, obtenerHistorial, loading, historial }= useProductos()
 const [isDialogOpen, setDialogOpen] = useState(false);
 const [isMenuOpen, setMenuOpen] = useState(false);
+const [openHistorial, setOpenHistorial] = useState(false)
 
 const modalProducto=()=>{
         setDialogOpen(!isDialogOpen)
@@ -49,8 +54,16 @@ function formatearFecha(fechaISO : any) {
     // Devolver la fecha en formato dd/mm/yyyy
     return `${dia}/${mes}/${anio}`;
 }
-
 const fecha = formatearFecha(props.fechaCreacion);
+
+const handleHistorial =(id:any)=>{
+    id= String(id)
+    obtenerHistorial(id)
+    setOpenHistorial(true)
+}
+const closeHistorial=()=>{
+    setOpenHistorial(false)
+}
 
 return (
     <>
@@ -71,6 +84,18 @@ return (
                     <IconButton color="primary" onClick={() =>eliminar(props) }>
                        <DeleteIcon />
                     </IconButton>
+
+                    <IconButton color="primary" onClick={() =>handleHistorial(props.id) }>
+                        
+                        {!loading ? <HistoryIcon /> 
+                            : 
+                            <Stack spacing={2} direction="row" alignItems="center">
+                                <CircularProgress size="20px" />
+                            </Stack>
+                        }   
+                        
+                    </IconButton>
+
                 </>
                 }
             title={props.nombre} 
@@ -94,7 +119,7 @@ return (
             </div>
 
             <div className={style.back}>
-                <div className={style.backContent} >
+                <div className={style.backContent}>
                     
                     <div className={style.contDescripGeneral}>
                         Descripcion <br /> {props.descripcion}
@@ -185,6 +210,37 @@ return (
     </Button>
     </DialogActions>
     </Dialog>
+
+    {/*MODAL HISTORIAL */}
+
+    {openHistorial && !loading ? 
+
+        <div className={style.historial}>
+                {/* Encabezado con el botón */}
+                <div className={style.historialHeader}>
+
+                    <h1>Historial de {props.nombre}</h1>
+
+                    <IconButton color="primary" className={style.botonClose} onClick={() => closeHistorial()}>
+                        <CloseIcon />
+                    </IconButton>
+                </div>
+
+                {/* Contenido desplazable */}
+                <div className={style.historialContent}>
+                    {(historial || []).map((item) => (
+                        <p key={item.id}>
+                            {formatearFecha(item.fecha)} - ${formatearPrecio(item.precio)}
+                        </p>
+                    ))}
+                </div>
+        </div>
+        :
+        ''
+    }
+  
     </>
+
+   
 );
 }

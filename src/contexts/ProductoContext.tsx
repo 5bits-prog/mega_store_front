@@ -1,6 +1,6 @@
 // Contexto para gestionar productos
 import React, { createContext, ReactNode, useContext, useState } from "react";
-import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
+import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico, getHitorial } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
 import { useNotification } from "./NotificacionContext";
 import { Producto, ProductoGet } from "../pages/producto/interfazProducto";
 
@@ -10,10 +10,12 @@ interface ProductoContextType {
     modificarProducto:(producto:Producto)=>void;
     eliminarProducto:(producto:ProductoGet)=>void;
     fetchProductoEspe:(id: string)=>void;
+    obtenerHistorial:(id: string)=>void;
     productos: Producto[];
     loading: boolean;
     error: string | null;
     producto?: ProductoGet;
+    historial:any[];
 }
 
 
@@ -30,6 +32,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     const [productos, setProductos] = useState<Producto[]>([]);
     const [producto, setProducto] = useState<ProductoGet>();
     const [loading, setLoading] = useState<boolean>(false);
+    const [historial, setHistorial] = useState([])
     const [error, setError] = useState(null);
     const {mostrarMensaje} = useNotification()
 //GET
@@ -114,6 +117,21 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
           console.error('Error al eliminar la Sucursal:', error);
         }
     } 
+    //GET HISTORIAL
+    const obtenerHistorial = async (id: string) => {
+
+      setLoading(true);
+      setError(null); // Limpiamos el error antes de la llamada
+      try {
+          const response = await getHitorial(id);
+          setHistorial(response.data); 
+
+      } catch (err: any) {
+          console.error(err);
+      } finally {
+          setLoading(false);
+      }
+    };
 
     return (
     <ProductosContext.Provider
@@ -122,11 +140,13 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         loading,
         error,
         producto,
+        historial,
         fetchProductos,
         postProducto,
         modificarProducto,
         eliminarProducto,
         fetchProductoEspe,
+        obtenerHistorial,
       }}
     >
       {children}
