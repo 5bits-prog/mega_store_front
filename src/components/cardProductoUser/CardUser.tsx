@@ -1,13 +1,12 @@
 import style from './CardUser.module.css'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useCarrito } from '../../contexts/CarritoContext.tsx';
-import { useProductos } from '../../contexts/ProductoContext.tsx';
 import { ProductoGet } from '../../pages/producto/interfazProducto.tsx';
-
+import { useNavigate } from "react-router-dom";
 
 const CardUser: React.FC<ProductoGet> = (props) => {
         const { agregarAlCarrito } = useCarrito(); // Obtén la función para agregar al carrito
-        const {fetchProductoEspe}= useProductos()
+        const navigate = useNavigate()
         
         // Función para manejar el click en el carrito
         const handleAgregarAlCarrito = () => {
@@ -19,10 +18,9 @@ const CardUser: React.FC<ProductoGet> = (props) => {
             });
         };
 
-    const openProducto = (producto: ProductoGet) =>{
-        fetchProductoEspe(producto)
-        
-    }
+        const openProducto = (producto: ProductoGet) => {
+            navigate(`/appsRami/productoEspecifico/${producto.id}`);
+        };
 
     return(
         <div className={style.contGeneral} onDoubleClick={() => openProducto(props)}>

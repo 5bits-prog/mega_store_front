@@ -9,10 +9,11 @@ interface ProductoContextType {
     postProducto: (producto: FormData) => void;
     modificarProducto:(producto:Producto)=>void;
     eliminarProducto:(producto:ProductoGet)=>void;
-    fetchProductoEspe:(producto:ProductoGet)=>void;
+    fetchProductoEspe:(id: string)=>void;
     productos: Producto[];
     loading: boolean;
     error: string | null;
+    producto?: ProductoGet;
 }
 
 
@@ -27,7 +28,7 @@ interface ProductoProviderProps {
 
 export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) => {
     const [productos, setProductos] = useState<Producto[]>([]);
-    const [producto, setProducto] = useState<Producto>();
+    const [producto, setProducto] = useState<ProductoGet>();
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState(null);
     const {mostrarMensaje} = useNotification()
@@ -47,12 +48,11 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     };
 
 //GET ESPECIFICO
-    const fetchProductoEspe = async (objeto: ProductoGet) => {
+    const fetchProductoEspe = async (id: string) => {
 
       setLoading(true);
       setError(null); // Limpiamos el error antes de la llamada
       try {
-          const id = String(objeto.id)
           const response = await getProductoEspecifico(id);
           setProducto(response.data); 
           console.log(producto)
@@ -121,6 +121,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         productos,
         loading,
         error,
+        producto,
         fetchProductos,
         postProducto,
         modificarProducto,
