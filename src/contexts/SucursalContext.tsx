@@ -6,7 +6,9 @@ import { useNotification } from "./NotificacionContext";
 export interface Sucursal {
     id?: number;
     nombre: string;
-    fechaDeEliminacion?: string;       
+    fechaDeEliminacion?: string;   
+    idProducto?: number;
+    cantidad?: number;    
   }
 
 interface SucursalContextType {

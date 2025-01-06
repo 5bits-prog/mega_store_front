@@ -3,83 +3,23 @@ import CardPrducto from '../../components/cardProductoAdmin/card';
 import CardUser from '../../components/cardProductoUser/CardUser';
 import styles from './catalogoProductos.module.css'
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import RegistrarProducto from '../../pages/producto/registrarProducto'; 
 import Dialog from '@mui/material/Dialog'; // Dialog (se usa como un modal)
 import DialogContent from '@mui/material/DialogContent'; // Contenido del modal de Material UI
 import DialogActions from '@mui/material/DialogActions'; // Acciones como botones en el modal de Material UI
 import Button from '@mui/material/Button'; // Botón de Material UI
 import ZoomBoton from '../../components/transitions/buttomzoom';  
+import { useProductos } from '../../contexts/ProductoContext';
 
 interface CatalogoProductoProps {
     productos: Producto[]; // Usar la interfaz
 }
 
-const Productos = [
-    {
-        id: 1,
-        nombre: 'Remera Negra 1',
-        descripcion: 'Tela liviana',
-        precio: 12000,
-    },
-    {
-        id: 2,
-        nombre: 'Remera Negra 2',
-        descripcion: 'Tela liviana',
-        precio: 12000,
-    },
-    {
-        id: 3,
-        nombre: 'Remera Negra 3',
-        descripcion: 'Tela liviana',
-        precio: 12000,
-    },
-    {
-        id: 4,
-        nombre: 'producto 3',
-        descripcion: 'producto lindo',
-        precio: 12000,
-    },
-    {
-        id: 5,
-        nombre: 'producto 3',
-        descripcion: 'producto lindo',
-        precio: 12000,
-    },
-    {
-        id: 6,
-        nombre: 'producto 3',
-        descripcion: 'producto lindo',
-        precio: 12000,
-    },
-    {
-        id: 7,
-        nombre: 'producto 3',
-        descripcion: 'producto lindo',
-        precio: 1200,
-    },
-    {
-        id: 8,
-        nombre: 'producto 3',
-        descripcion: 'producto lindo',
-        precio: 1200,
-    },
-    {
-        id: 9,
-        nombre: 'producto 3',
-        descripcion: 'producto lindo',
-        precio: 1200,
-    },
-    {
-        id: 10,
-        nombre: 'producto 3',
-        descripcion: 'producto lindo',
-        precio: 1200,
-    },
-]
 
 
 const CatalogoProducto =()=> {
+    const {productos,fetchProductos} = useProductos()
     const location = useLocation();
     const isAdmin = location.pathname === '/catalogoProductos';
     const isProducto = location.pathname === '/catalogoProductos';
@@ -94,6 +34,9 @@ const CatalogoProducto =()=> {
     const toggleMenu = () => { //Función para abrir el desplegable
         setMenuOpen(!isMenuOpen);
     };
+    useEffect (()=>{
+        fetchProductos()
+    },[])
 
     return (
         <div className={styles.container}>
@@ -118,12 +61,12 @@ const CatalogoProducto =()=> {
             
 
             <div className={styles.listado}>
-                {Productos.map((producto) => (
+                {(productos || []).map((producto) => (
 
                     isAdmin ? (
-                        <CardPrducto key={producto.id} nombre={producto.nombre} descripcion={producto.descripcion} />
+                        <CardPrducto key={producto.id}  {...producto} />
                     ) : (
-                        <CardUser key={producto.id} nombre={producto.nombre} descripcion={producto.descripcion} precio={producto.precio} id={producto.id} />
+                        <CardUser key={producto.id}  {...producto}/>
                     )
                     ))}
             </div>

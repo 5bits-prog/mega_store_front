@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import React, { createContext, useContext, useState, ReactNode } from "react";
 import { LoginData, LogionService } from "../service/LoginService";
 import { useNotification } from "./NotificacionContext";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ interface AuthContextType {
   rol:string | null;
   nombre:string | null;
   loading:boolean;
+  token:string;
 }
 
 // Crea el contexto con un valor inicial vacío
@@ -26,6 +27,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<string | null>(null);
   const [rol, setRol] = useState('')
+  const [token, setToken] = useState('')
   const [nombre, setNombre]= useState('')
   const navigate = useNavigate();
   const {mostrarMensaje } = useNotification();
@@ -35,11 +37,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     try{
         setLoading(true)
         const response = await LogionService(username) //le paso los datos del usuario al service
+        console.log(response)
+        console.log('tokenn se inicio S',response.data.token)
         setUser(response)
         setRol(response.data.rol_id)
         setNombre(response.data.usuario_nombre)
+        setToken(response.data.token)
         localStorage.setItem('rol', response.data.rol_id);
         localStorage.setItem('nombre', response.data.usuario_nombre);
+        localStorage.setItem('token', response.data.token);
         // mostrarMensaje('Sesion iniciada ')
         navigate("/home");
     }catch(error: unknown){
@@ -57,14 +63,16 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     setUser(null);
     setRol('')
+    setToken('')
     localStorage.setItem('rol', 'null');
     localStorage.removeItem('rol');  // Elimina el valor de 'rol' de localStorage
     localStorage.removeItem('nombre');
+    localStorage.removeItem('token');
     navigate("/home");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, rol, nombre, loading }}>
+    <AuthContext.Provider value={{ user, login, logout, rol, nombre, loading, token }}>
       {children}
     </AuthContext.Provider>
   );

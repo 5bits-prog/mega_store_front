@@ -5,6 +5,7 @@ import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, val
     validarCampoSeleccionado, validarImagenProducto, formatearPrecio, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
 //import { Producto } from './interfazProducto';
 import InputAdornment from '@mui/material/InputAdornment';
+//import OutlinedInput from '@mui/material/OutlinedInput';
 import Autocomplete from '@mui/material/Autocomplete';
 import { useCategoria } from '../../contexts/CategoriaContext';
 import { useMarca } from '../../contexts/MarcaContext';
@@ -12,17 +13,21 @@ import { useSucursales } from '../../contexts/SucursalContext';
 import { useTalle } from '../../contexts/TalleContext';
 import { useColor } from '../../contexts/ColorContext';
 import { useProductos } from '../../contexts/ProductoContext';
+import { ProductoGet , Producto} from './interfazProducto';
+import { Sucursal } from '../../contexts/SucursalContext';
 
 
 
-interface Sucursal {
-    id?:number,
-    nombre: string;
+
+
+
+interface ModificarProductoProps {
+    producto: ProductoGet;
 }
 
-const RegistrarProducto = () => {
+const ModificarProducto = ({ producto }: ModificarProductoProps) => {
     //CONJUNTO EXTRAIDOS DE LOS CONTEXT
-    const{fetchProductos,postProducto}=useProductos()
+    const{fetchProductos,modificarProducto}=useProductos()
     const {categorias, fetchCategorias} = useCategoria()
     const {sucursales, fetchSucursales} = useSucursales()
     const {marcas, fetchMarcas}=useMarca()
@@ -37,6 +42,7 @@ const RegistrarProducto = () => {
         fetchTalles()
     },[])
     // Estados para almacenar las selecciones del formulario
+    const [id, setId] = useState<number>(0);;
     const [nombre, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [precio, setPrecio] = useState('');
@@ -48,10 +54,11 @@ const RegistrarProducto = () => {
     const [stockActual, setStockActual] = useState('');
     const [stockMedio, setStockMedio] = useState('');
     const [stockMinimo, setStockMinimo] = useState('');
-    const [foto, setFoto] = useState<File | null>(null);  // Estado para almacenar la imagen
+    const [foto, setFoto] = useState(null);  // Estado para almacenar la imagen
     const [preview, setPreview] = useState<string | null>(null);  // Estado para la previsualización 
     const [fileName, setFileName] = useState('');  // Para mostrar el nombre del archivo seleccionado
     const [selectedSucursal, setSelectedSucursal] = useState<Sucursal[] | null>(null);
+
     const [errores, setErrores] = useState({
         nombre: '',
         descripcion: '',
@@ -61,11 +68,37 @@ const RegistrarProducto = () => {
         stockMedio: '',
         stockMinimo: '',
         categoria: '',
-        foto: '',
+        // foto: '',
     });
 
-    
+    //cargamos los datos del producto
+    useEffect(() => {
+        setId(producto.id);
+        setNombre(producto.nombre);
+        setDescripcion(producto.descripcion);
+        setPrecio(producto.precio?.toString() || "0"); // Convertir a string si precio es numérico
+        setPeso(producto.peso.toString()); // Convertir a string si peso es numérico
+        setCategoria(producto.categoriaId.toString()); // Convertir a string si es necesario
+        setMarca(producto.marcaId.toString()); // Convertir a string si es necesario
+        setTalle(producto.talleId.toString()); // Convertir a string si es necesario
+        setColor(producto.colorId.toString()); // Convertir a string si es necesario
+        setStockActual(producto.stockActual.toString()); // Convertir a string si es necesario
+        setStockMedio(producto.stockMedio.toString()); // Convertir a string si es necesario
+        setStockMinimo(producto.stockMinimo.toString()); // Convertir a string si es necesario
+        setFoto(null); // Iniciar con null para nueva carga de imagen
+        setPreview(producto.foto || null); // Usar la URL de la foto si está disponible
 
+        setSelectedSucursal(
+            (producto.sucursales || []).map((sucursal) => ({
+              idSucursal: sucursal.idSucursal, // Usa idSucursal como id
+              nombre: sucursal.nombreSucursal, // Usa nombreSucursal como nombre
+              idProducto: sucursal.idProducto,
+              cantidad: sucursal.cantidad,
+            })) || null
+          );
+
+    }, [producto]);
+    
     // Función para el envío del formulario
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -79,7 +112,6 @@ const RegistrarProducto = () => {
             stockMedio: validarCampoRequerido(stockMedio) || validarEnteroPositivo(stockMedio) || validarStockMedio(stockMedio, stockMinimo),
             stockMinimo: validarCampoRequerido(stockMinimo) || validarEnteroPositivo(stockMinimo) || validarStockMedio(stockMedio, stockMinimo),
             categoria: validarCampoSeleccionado(categoria),
-            foto: validarImagenProducto(foto), // Valida la imagen del producto
         };
         setErrores(errores);
         // Chequear si hay errores
@@ -88,24 +120,7 @@ const RegistrarProducto = () => {
         if (sinErrores) {
             //HACEMOS EL POST
            
-            armarFormData();
-            // Limpiar los campos del formulario
-            setNombre('');
-            setDescripcion('');
-            setPrecio('');
-            setPeso('');
-            setCategoria('');
-            setSelectedSucursal([]);
-            setMarca('');
-            setTalle('');
-            setColor('');
-            setStockActual('');
-            setStockMedio('');
-            setStockMinimo('');
-            setFoto(null);
-            setPreview(null);
-            setFileName('');
-            
+            armarJson();
 
         } else {
             console.log('Errores en el formulario');
@@ -113,52 +128,44 @@ const RegistrarProducto = () => {
         // Lógica para enviar los datos al backend y si no hay errores sigue.
     };
 
-    const armarFormData = ()=>{
-    const formData = new FormData();
-
-    // Agregar los valores de cada campo al FormData
-    formData.append("nombre", nombre);
-    formData.append("descripcion", descripcion);
-    formData.append("precio", precio);
-    formData.append("peso", peso);
-    formData.append("stockMedio", stockMedio);
-    formData.append("stockMinimo", stockMinimo);
-    formData.append("categoriaId", categoria);
-    formData.append("sucursales", selectedSucursal?.map(s =>s.id).join(',') || ''); // Para múltiples sucursales
-    formData.append("marcaId", marca);
-    formData.append("talleId", talle);
-    formData.append("colorId", color);
     
-    // Verificar si se seleccionó una imagen y agregarla
-    if (foto && foto instanceof File) {
-        formData.append('imagen', foto);
-    }
+    // const armarSucursales = (sucursales :any)=>{
+    //     const sucursalIds = sucursales.map( sucursal => sucursal.idSucursal);
+    //     return sucursalIds
+    // }
+    const armarJson = ()=>{
+        if (id === undefined) {
+            console.error("El ID del producto no puede ser undefined.");
+            return; // Salir de la función si no hay un ID válido
+        }
+        
+    // const sucursalesIDs = armarSucursales(selectedSucursal)
 
-    // Llamar a la función postProducto con el formData
-    console.log('Contenido de FormData:');
-    for (const [key, value] of formData.entries()) {
-    console.log(`${key}:`, value);
+    const jsonData: Producto = {
+            id, // Asegúrate de que `id` siempre esté presente (debe ser de tipo `number`)
+            nombre: nombre,
+            descripcion: descripcion,
+            peso: parseFloat(peso),
+            stockActual: parseInt(stockActual, 10),
+            stockMedio: parseInt(stockMedio, 10),
+            stockMinimo: parseInt(stockMinimo, 10),
+            categoriaId: parseInt(categoria, 10),
+            marcaId: parseInt(marca, 10),
+            talleId: parseInt(talle, 10),
+            colorId: parseInt(color, 10),
+            // sucursales: sucursalesIDs,
+           
+        };
+        
+        // Verificar si el precio ha cambiado
+        if (precio !== producto.precio?.toString() || precio === "0") {
+            jsonData.precio = parseFloat(precio);
         }
     
-    postProducto(formData);
+    modificarProducto(jsonData);
+    console.log(jsonData)
     fetchProductos()
     }
-
-    // Función para manejar la carga de imagen y la previsualización
-    const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];  // Obtenemos el primer archivo seleccionado
-        if (file) {
-            setFoto(file);  //Se guarda el archivo en el estado
-            setFileName(file.name); //Se guarda el nombre del archivo
-
-            // FileReader: para mostrar la previsualización de la imagen
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(reader.result as string);  //Se guarda el resultado de la lectura como previsualización
-            };
-            reader.readAsDataURL(file);  // Lee el archivo como una URL de datos
-        }
-    };
 
     const handlePrecioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const valor = e.target.value;
@@ -183,7 +190,7 @@ const RegistrarProducto = () => {
 
     return (
         <div className={style.container}>
-            <h1>Registrar Producto</h1>
+            <h1>Editar Producto</h1>
             <form className={style.form} onSubmit={handleSubmit}>
                 {/* Campo para ingresar el nombre del producto */}
                 <TextField
@@ -260,14 +267,16 @@ const RegistrarProducto = () => {
                 {/* Select para Sucursal */}
                 <FormControl fullWidth margin="normal">
                     <Autocomplete
+                        disabled 
                         className={style.input}
                         id="sucursal-label"
                         multiple
                         options={sucursales}
+                        
                         getOptionLabel={(option) => option.nombre}
+
                         value={selectedSucursal || []}
                         onChange={(event, newValue) => setSelectedSucursal(newValue)} 
-                        // defaultValue={[opcionesSucursal[2], opcionesSucursal[1]]} // Asegúrate de que el índice sea válido
                         renderInput={(params) => (
                             <TextField {...params} label="Sucursal"/>
                         )}
@@ -325,7 +334,16 @@ const RegistrarProducto = () => {
                     </Select>
                 </FormControl>
                 {/*campo para el stock actual*/}
-                
+                <TextField
+                    className={style.input}
+                    label="Stock Actual"
+                    value={stockActual}
+                    onChange={handleInputChange(setStockActual)}
+                    error={!!errores.stockActual}
+                    helperText={errores.stockActual}
+                    margin="normal"
+                    disabled 
+                />
 
                 {/*campo para el stock medio*/}
                 <TextField
@@ -349,31 +367,18 @@ const RegistrarProducto = () => {
                 />
 
                  {/* Campo personalizado para subir archivo */}
-        <FormControl fullWidth error={!!errores.foto} margin="normal">
+        <FormControl fullWidth  margin="normal">
             <input
                 type="file"
                 accept="image/jpeg, image/png" // Solo .jpg o .jpeg y .png
                 id="file-upload"
                 style={{ display: 'none' }}  // Ocultamos el input original
-                onChange={handleImageChange}
+                
             />
             <label htmlFor="file-upload">
-            <Button 
-            sx={{
-            alignItems:'center',
-            backgroundColor: '#c49dd7', // Color lila
-            color: 'white',
-            '&:hover': {
-            backgroundColor: '#b284c4', // Color lila más oscuro al pasar el mouse
-            },
-            }}
-            variant="contained"
-            component="span"  // Actúa como disparador del input
-            >
-            {fileName || 'Cargar imagen'}
-                    </Button>
-                    </label>
-                    {errores.foto && <p className={style.error}>{errores.foto}</p>}
+            
+            </label>
+                    
             </FormControl>
 
             {/* Previsualización de la imagen seleccionada */}
@@ -397,11 +402,11 @@ const RegistrarProducto = () => {
                     }
                 }} 
                 >
-                Registrar Producto
+                Editar Producto
                 </Button >
             </form>
         </div>
     );
 };
 
-export default RegistrarProducto
+export default ModificarProducto
