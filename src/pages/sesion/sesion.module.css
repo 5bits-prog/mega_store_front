@@ -7,6 +7,7 @@
     padding-top: 30px;
     overflow-y: auto; /* Permite el scroll vertical */
     min-height: 70vh;
+    margin-top: 75px;
 }
 .container{
     display: flex;

@@ -5,15 +5,35 @@ import { useParams } from "react-router-dom";
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './ProductoEspecifico.module.css'
+import { useCarrito } from "../../contexts/CarritoContext";
 
 
 const ProductoEspecifico = () => {
     const { id } = useParams();
+    const { agregarAlCarrito } = useCarrito();
     const {fetchProductoEspe, producto, loading}= useProductos()
     console.log(producto)
     useEffect(()=>{
         fetchProductoEspe(String(id))
     },[])
+
+    const formatearPrecio = (precio: number): string => {
+      return precio.toLocaleString('es-ES');
+  };
+  console.log(producto)
+  // Función para manejar el click en el carrito
+  const handleAgregarAlCarrito = () => {
+    if (producto) {
+      agregarAlCarrito({
+          id: producto.id, 
+          nombre: producto.nombre,
+          precio: producto.precio || 0,
+          cantidad: 1,
+          imagen: producto.foto || '',
+          stockActual: producto.stockActual,
+      });
+  }
+};
 
   return (
     <div className={style.contGeneral}>
@@ -40,7 +60,7 @@ const ProductoEspecifico = () => {
                   </h2> 
 
                 <h1>{producto?.nombre}</h1> 
-                <h3> ${producto?.precio}</h3>
+                <h3> ${formatearPrecio(producto?.precio || 0)}</h3>
             </div>
             <hr />
             <div className={style.contInfo}>
@@ -57,6 +77,8 @@ const ProductoEspecifico = () => {
               <h3>{producto?.descripcion}</h3> 
 
             </div>
+
+            <button className={style.botonCarrito} onClick={handleAgregarAlCarrito} >AGREGAR A CARRITO</button>
 
         </div>
     </div>

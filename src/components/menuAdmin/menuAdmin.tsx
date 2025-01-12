@@ -5,7 +5,7 @@ import DensityMediumIcon from '@mui/icons-material/DensityMedium';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/LoginContext';
-
+import CarritoMenuAdmin from '../carritoBarraMenu/CarritoBarraMenu';
 
 
 const Menu = () => {
@@ -39,6 +39,9 @@ const Menu = () => {
 
     const handleNavigation = () => {
        navigate('/sesion'); // Navegar a la ruta especificada
+    };
+    const handleNavigationCarrito = () => {
+       navigate('/appsRami/carrito'); // Navegar a la ruta especificada
     };
     const handleCatalogo=()=>{
         navigate('/catalogoProductos')
@@ -87,6 +90,7 @@ const Menu = () => {
                 </>
                 :''}
                 <a className={styles.seleccion2} onClick={handleNavigation}> < PersonIcon /></a>
+                <a className={styles.seleccion2} onClick={handleNavigationCarrito}> < CarritoMenuAdmin /></a>
             </div>
 
         </div>

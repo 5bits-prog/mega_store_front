@@ -30,7 +30,7 @@ export const NotificationProvider: React.FC<NotificationProviderProps> = ({child
     border:'solid 2px white',
     borderRadius: '10px',
     color: 'white',
-    position:'absolute',
+    position:'fixed',
     top:'50%',
     left:'50%',
     transform: 'translate(-50%, -90%)', 

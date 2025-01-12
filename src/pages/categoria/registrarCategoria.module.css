@@ -16,6 +16,7 @@ body {
     font-family: lato; /* Define la tipografía */
     min-height: 75vh;   
     padding-top: 30px;
+    margin-top: 75px;
 }
 .form{
     display:flex; /*para que el contenido se ajuste de forma horizontal*/
