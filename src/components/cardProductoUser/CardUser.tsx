@@ -48,4 +48,4 @@ const CardUser: React.FC<ProductoGet> = (props) => {
         </div>
     )
 };
-export default CardUser
+export default CardUser 
