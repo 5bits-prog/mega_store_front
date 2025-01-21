@@ -6,6 +6,7 @@ import RegistrarSucursal from'./pages/sucursal/registrarSucursal';
 import RegistrarTalle from'./pages/talle/registrarTalle'; 
 import RegistrarColor from'./pages/color/registrarColor'; 
 import RegistrarCategoria from'./pages/categoria/registrarCategoria'; 
+import Perfil from'./pages/perfil/perfil'; 
 import Login from'./pages/login/login'; 
 import Home from './pages/home/Home';
 import Sesion from'./pages/sesion/sesion'; 
@@ -23,63 +24,62 @@ import AppsRami from './subApps/AppsRami'; //  apps rami
 import AppsRo from './subApps/AppsRo'; //apps ro
 import AppsAbril from './subApps/AppsAbril'; //apps abril
 import { CarritoProvider } from './contexts/CarritoContext';
-
+import { PerfilProvider } from './contexts/PerfilContext';
+import { ToastContainer } from 'react-toastify';  // Importa el ToastContainer
+import 'react-toastify/dist/ReactToastify.css';  // Importa los estilos de react-toastify
 
 export function App() {
   return (
     <NotificationProvider>
-      
       <Router>
-          <AuthProvider>
-            <CarritoProvider>
-            <div className='contenedorDeTodo'>
-              <MenuAdmin/> 
+        <AuthProvider>
+          <CarritoProvider>
+            <PerfilProvider>
+              <div className='contenedorDeTodo'>
+                <MenuAdmin /> 
                 <Routes>
-                  
-                <Route path="/appsRami/*" element={<AppsRami />} />
-                <Route path="/appsRo/*" element={<AppsRo />} />
-                <Route path="/appsAbril/*" element={<AppsAbril />} />
+                  <Route path="/appsRami/*" element={<AppsRami />} />
+                  <Route path="/appsRo/*" element={<AppsRo />} />
+                  <Route path="/appsAbril/*" element={<AppsAbril />} />
 
-                  <Route path="/registrarMarca"
-                  element={
-                    <MarcaProvider>
-                      <RegistrarMarca />
-                    </MarcaProvider>
-                  } 
+                  <Route path="/registrarMarca" 
+                    element={
+                      <MarcaProvider>
+                        <RegistrarMarca />
+                      </MarcaProvider>
+                    } 
                   />
-
                   <Route path="/registrarSucursal" 
-                  element={
-                    <SucursalProvider>
-                      <RegistrarSucursal />
-                    </SucursalProvider>
-                  } />
-
+                    element={
+                      <SucursalProvider>
+                        <RegistrarSucursal />
+                      </SucursalProvider>
+                    } 
+                  />
                   <Route path="/registrarTalle" 
-                  element={
-                    <TalleProvider>
-                      <RegistrarTalle />
-                    </TalleProvider>
-                  } />
-
+                    element={
+                      <TalleProvider>
+                        <RegistrarTalle />
+                      </TalleProvider>
+                    } 
+                  />
                   <Route path="/registrarColor" 
-                  element={
-                    <ColorProvider>
-                    <RegistrarColor />
-                    </ColorProvider>
-                  } />
-
+                    element={
+                      <ColorProvider>
+                        <RegistrarColor />
+                      </ColorProvider>
+                    } 
+                  />
                   <Route path="/registrarCategoria" 
-                  element={
-                    <CategoriaProvider>
-                      <RegistrarCategoria />
-                    </CategoriaProvider>
-                  } />
+                    element={
+                      <CategoriaProvider>
+                        <RegistrarCategoria />
+                      </CategoriaProvider>
+                    } 
+                  />
                   <Route path="/login" element={<Login />} />
                   <Route path="/sesion" element={<Sesion />} />
-
-                  <Route
-                    path="/catalogoProductos"
+                  <Route path="/catalogoProductos" 
                     element={
                       <MarcaProvider>
                         <SucursalProvider>
@@ -92,25 +92,25 @@ export function App() {
                           </ColorProvider>
                         </SucursalProvider>
                       </MarcaProvider>
-                    }
+                    } 
                   />
                   <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/nosotros" element={<Nosotros />} />
-
                 </Routes>
-              <Footer/>
-
-            </div>
-            </CarritoProvider>
-            
-          </AuthProvider>
-        </Router>
-      </NotificationProvider>
+                <Footer />
+              </div>
+            </PerfilProvider>
+          </CarritoProvider>
+        </AuthProvider>
+      </Router>
+      <ToastContainer />
+    </NotificationProvider>
   );
 }
 
 export default App;
+
 
 
 

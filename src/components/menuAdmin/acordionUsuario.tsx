@@ -6,6 +6,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/LoginContext';
 import Swal from 'sweetalert2';
+import Notificaciones from '../notificaciones';
 
 
 export default function Accordion2Usage() {
@@ -23,27 +24,35 @@ export default function Accordion2Usage() {
   //Función para cerrar sesión
   const cerrarSesion=()=>{
     Swal.fire({
-      title: '¿Estás seguro?',
-      text: "Se cerrará tu sesión actual.",
+      title: 'Cerrar Sesión',
+      text: '¿Estás seguro de que deseas cerrar tu sesión?',
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#a27eea',
-      cancelButtonColor: '#d33',
+      showCloseButton: true, // Habilitamos la cruz para cerrar
+      closeButtonHtml: '&times;', // Personalizamos la cruz
+      confirmButtonColor: '#a27eea', // Color lila para el botón de confirmar
+      cancelButtonColor: '#ff6b6b', // Color rojo para el botón de cancelar
       confirmButtonText: 'Sí, cerrar sesión',
-      cancelButtonText: 'Cancelar'
-    }).then((result) => {
-      if (result.isConfirmed) {
+      cancelButtonText: 'Cancelar',
+      width: '360px', // Cuadro aún más pequeño
+      padding: '16px', // Menor espaciado interno
+      customClass: {
+        popup: 'modern-swal',
+        title: 'modern-swal-title',
+        htmlContainer: 'modern-swal-text',
+        confirmButton: 'modern-swal-confirm',
+        cancelButton: 'modern-swal-cancel',
+        closeButton: 'modern-swal-close',
+      },
+    }).then(({ isConfirmed }) => {
+      if (isConfirmed) {
+        // Acciones al confirmar
         setRol(null);
         logout();
-        Swal.fire({
-          text: "Se ha cerrado la sesión",
-          confirmButtonText: 'ok', // Texto del botón de confirmación
-          confirmButtonColor: '#a27eea', 
-          timer: 3000, // Tiempo para que se cierre automáticamente (en milisegundos)
-          timerProgressBar: true, // Muestra una barra de progreso
-        }
+        Notificaciones.exito(`Has cerrado sesión exitosamente.`);
+        
           
-        );
+        
       }
     });
   };

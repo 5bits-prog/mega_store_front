@@ -21,7 +21,7 @@
 .item{ /*  CONTENEDOR DEl ITEM */
     
     background-color: transparent;
-    width: 50%;
+    width: 80%;
     height: 5vh !important;
     display: flex !important;
     flex-direction: row;

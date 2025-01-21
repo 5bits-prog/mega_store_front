@@ -35,6 +35,10 @@ export const API_ROUTES = {
      DELETE_CATEGORIA: (id: string) => `/products/categoria/${id}`,
 
      //ESTADISTICAS
+
+     //PERFIL
+     GET_DATOS_PERFIL: '/auth/usuario/id/24',
+     PUT_DATOS_PERFIL: '/auth/usuario',
      
     //El resto de URLS...
 

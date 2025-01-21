@@ -13,7 +13,7 @@ export const validationsPerfil=z.object({
         .email({message:"Formato inválido de email"})
         .regex(/^(?!.*\s{2,}).*$/, { message: "Email no puede contener espacios consecutivos."})
         .refine((val) => !(val.length === 1 && val === ' '), { message: 'Email no puede estar vacío.' }) ,
-    envio:z
+    direccionEnvio:z
         .string()
         .max(100, { message: 'No debe superar los 100 caracteres.' }),
     numeroTelefono:z

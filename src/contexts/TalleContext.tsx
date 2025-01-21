@@ -1,6 +1,7 @@
 import { useNotification } from "./NotificacionContext";
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { newTalle, deleteTalle,getTalles,putTalle } from "../service/TalleService";
+import Notificaciones from "../components/notificaciones";
 
 
 export interface Talle {
@@ -59,12 +60,12 @@ export const TalleProvider: React.FC<TalleProviderProps> = ({ children }) => {
     try{
         setLoading(true)
         const response = await newTalle(dato) //post
-        mostrarMensaje(`Talle ${response.data.nombre} registrada`) //mensaje
+        Notificaciones.exito(`Talle ${response.data.nombre} registrada`) //mensaje
         await fetchTalles(); //Recargamos 
 
     }catch(error:any){
         if (error) {
-            mostrarMensaje(error.response?.data.errors)
+           Notificaciones.error(error.response?.data.errors)
             console.log(error.response?.data.errors);  // Accediendo a 'errors'
           } else {
             console.error("Error desconocido", error);

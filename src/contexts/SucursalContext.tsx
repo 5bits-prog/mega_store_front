@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, useContext, ReactNode } from
 import { deleteSucursal, getSucursales, newSucursal, putSucursal } from '../service/SucursalesService';
 
 import { useNotification } from "./NotificacionContext";
+import Notificaciones from '../components/notificaciones';
 
 export interface Sucursal {
     id?: number;
@@ -58,12 +59,12 @@ export const SucursalProvider: React.FC<SucursalProviderProps> = ({ children }) 
     try{
         setLoading(true)
         const response = await newSucursal(sucursal) //post
-        mostrarMensaje(`Sucursal ${response.data.nombre} registrada`) //mensaje
+        Notificaciones.exito(`Sucursal ${response.data.nombre} registrada`) //mensaje
         await fetchSucursales(); //Recargamos las sucursales
 
     }catch(error:any){
         if (error) {
-            mostrarMensaje(error.response?.data.errors)
+            Notificaciones.error(error.response?.data.errors)
             console.log(error.response?.data.errors);  // Accediendo a 'errors'
           } else {
             console.error("Error desconocido", error);

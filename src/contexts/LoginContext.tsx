@@ -4,6 +4,7 @@ import { useNotification } from "./NotificacionContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from 'axios';
 import Swal from "sweetalert2";
+import Notificaciones from "../components/notificaciones";
 
 // Define el tipo para el contexto
 interface AuthContextType {
@@ -42,15 +43,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         localStorage.setItem('rol', response.data.rol_id);
         localStorage.setItem('nombre', response.data.usuario_nombre);
         navigate("/home");
-        Swal.fire({
-          title: `¡Bienvenido, ${response.data.usuario_nombre}!`,
-          text: "Has iniciado sesión correctamente.",
-          icon: 'success',
-          confirmButtonText: 'Continuar',
-          confirmButtonColor: '#a27eea', 
-          timer: 3000, // Se cierra automáticamente después de 3 segundos
-          timerProgressBar: true
-        });
+        Notificaciones.exito(`Bienvenido ${response.data.usuario_nombre}, has iniciado sesión exitosamente.`);
+
        
         
     }catch(error: unknown){
