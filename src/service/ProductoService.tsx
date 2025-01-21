@@ -59,6 +59,7 @@ export const deleteProducto = async (id: string) => {
 
 export async function getHitorial(id: string) {
     const token = localStorage.getItem('token');
+    console.log(token)
     if (!token) {
         throw new Error('Token no disponible. El usuario no está autenticado.');
     }

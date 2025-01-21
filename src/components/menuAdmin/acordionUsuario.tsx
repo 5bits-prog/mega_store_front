@@ -71,8 +71,8 @@ export default function Accordion2Usage() {
   ];
   
   return (
-    <div>
-      <Accordion expanded>
+    <div >
+      <Accordion expanded sx={{backgroundColor:'red'}}>
         {entidades.map((entidad)=>(
         <AccordionDetails key={entidad.id} sx={{ color:'white',backgroundColor: 'white', padding: '15px', textAlign:'center', '&:hover': {backgroundColor: '#c99af3'} }}>
         <Button 

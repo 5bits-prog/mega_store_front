@@ -6,6 +6,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/LoginContext';
 import CarritoMenuAdmin from '../carritoBarraMenu/CarritoBarraMenu';
+import Accordion2Usage from './acordionUsuario';
 
 
 
@@ -99,6 +100,7 @@ const Menu = () => {
                 <a className={styles.seleccion2} onClick={handleEstadisticas}>Estadísticas</a>
                 {/*<a className={styles.seleccion2} onClick={ ()=> cerrarSesion()}>Cerrar Sesion</a>*/}
                 <a className={styles.seleccion2} onMouseEnter={toggleMenu2}> < PersonIcon /></a>
+                <a className={styles.seleccion2} onClick={handleNavigationCarrito}> < CarritoMenuAdmin /></a>
                 {/* Contenido del menú que se muestra/oculta según el estado */}
                 {isMenu2Open && (
                     <a className={styles.dropdownContent2} onMouseLeave={closeMenu2}>
@@ -109,10 +111,11 @@ const Menu = () => {
                 :''}
                 {/**Si no está logueado, no se muestran las opciones de perfil */}
                 {rolG != '4'?
-                <a className={styles.seleccion2} onClick={handleNavigation}> < PersonIcon /></a>
+                <>
+                    <a className={styles.seleccion2} onClick={handleNavigation}> < PersonIcon /></a>
 
-                <a className={styles.seleccion2} onClick={handleNavigationCarrito}> < CarritoMenuAdmin /></a>
-
+                    <a className={styles.seleccion2} onClick={handleNavigationCarrito}> < CarritoMenuAdmin /></a>
+                    </>
                 :''}
 
             </div>

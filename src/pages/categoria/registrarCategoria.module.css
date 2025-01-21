@@ -24,6 +24,7 @@ body {
     align-items: center;
     flex-direction: row; /* Alinea los elementos en fila */
     gap:20px;
+}
 
   .title{ /*Titulo pantalla administración*/
       color:black;
