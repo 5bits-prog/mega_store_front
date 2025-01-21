@@ -6,6 +6,7 @@ import Perfil from '../pages/perfil/perfil';
 
 
 
+
 const AppsAbril = () => {
   return (
     <Routes>
@@ -15,6 +16,7 @@ const AppsAbril = () => {
       <Route path="/estadisticas" element={<Estadisticas />} />
       <Route path="/opcionesEstadisticas" element={<OpcionesEstadisticas />} />
       <Route path="/perfil" element={<Perfil />} />
+    
      
     </Routes>
   );

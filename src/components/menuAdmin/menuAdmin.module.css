@@ -146,7 +146,7 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
     box-sizing: border-box; /* Incluye padding y borde en el ancho total */
-    width: 6vw; /* Asegúrate de que ocupe el ancho completo del contenedor */
+    width: 9vw; /* Asegúrate de que ocupe el ancho completo del contenedor */
     align-items: center;
     justify-content: center;
     color: white;
@@ -157,3 +157,28 @@ body {
     background-color:#a27eea;
 }
 
+.dropdownContent2 {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50px; 
+    left: 91.5%; 
+    transform: translateX(-50%); 
+    width: 140px;
+    border: none;
+    background-color: white;
+    z-index: 10;
+    font-family: arial;
+}
+.dropdownContent2::before { /*es la flecha que se ve sobre el boton de registrar*/
+    content: '';
+    position: absolute;
+    top: -10px; /* Posiciona la flecha justo encima del menú */
+    left: 92%; /* Coloca la flecha en el centro del menú */
+    transform: translateX(-50%); /* Ajusta para que la flecha esté alineada al centro */
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white; /* Color de la flecha */
+    width: 0;
+    height: 0;
+}

@@ -42,6 +42,10 @@ export const API_ROUTES = {
      GET_PRODUCTO_ESPECIFICO: (id: string) => `/products/producto/${id}`,
      HISTORIAL:(id: string) => `/products/historiales-precio/producto/${id}`,
      //ESTADISTICAS
+
+     //PERFIL
+     GET_DATOS_PERFIL: '/auth/usuario/id/24',
+     PUT_DATOS_PERFIL: '/auth/usuario',
      
     //El resto de URLS...
 

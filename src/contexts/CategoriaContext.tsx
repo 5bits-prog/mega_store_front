@@ -1,6 +1,7 @@
 import { useNotification } from "./NotificacionContext";
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { newCategoria, getCategorias, deleteCategoria, putCategoria } from "../service/CategoriaService";
+import Notificaciones from "../components/notificaciones";
 
 
 export interface Categoria {
@@ -35,7 +36,7 @@ export const CategoriaProvider: React.FC<CategoriaProviderProps> = ({ children }
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [loading, setLoading] = useState<boolean>(false); // Estado de carga
   const [error, setError] = useState<string | null>(null); // Estado de error
-  const {mostrarMensaje}= useNotification()
+
 
  //GET
   const fetchCategorias= async () => {
@@ -59,12 +60,12 @@ export const CategoriaProvider: React.FC<CategoriaProviderProps> = ({ children }
     try{
         setLoading(true)
         const response = await newCategoria(dato) //post
-        mostrarMensaje(`Categoria ${response.data.nombre} registrada`) //mensaje
+        Notificaciones.exito(`Categoria ${response.data.nombre} registrada`) //mensaje
         await fetchCategorias(); //Recargamos 
 
     }catch(error:any){
         if (error) {
-            mostrarMensaje(error.response?.data.errors)
+            Notificaciones.error(error.response?.data.errors)
             console.log(error.response?.data.errors);  // Accediendo a 'errors'
           } else {
             console.error("Error desconocido", error);
