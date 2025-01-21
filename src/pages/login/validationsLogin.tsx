@@ -8,12 +8,14 @@ const validationsLogin=z.object({
       .regex(/^(?!.*\s{2,}).*$/, { message: "Email no puede contener espacios consecutivos"})
       .email({message:'Formato inválido de email'})
       .refine((val) => !(val.length === 1 && val === ' '), { message: 'Email no puede estar vacío.' }),
-    password:z
+      password: z
       .string()
-      .min(1, { message: 'Contraseña no puede estar vacío.' })
-      .max(100,{message: 'Contraseña no puede superar los 100 caracteres'})
-      .regex(/^(?!.*\s{2,}).*$/, { message: "Contraseña no puede contener espacios consecutivos"})
-      .refine((val) => !(val.length === 1 && val === ' '), { message: 'Contraseña no puede estar vacío.' }) ,
 
-    }); 
+      .min(1, { message: 'Contraseña no puede estar vacía.' })
+      .max(100, { message: 'Contraseña no puede superar los 100 caracteres' })
+      .regex(/^[A-Za-z0-9áéíóúÁÉÍÓÚ\s@$!%*?&#]+$/, { message: 'Contraseña contiene caracteres no permitidos.' })
+      .regex(/^(?!.*\s{2,}).*$/, { message: 'Contraseña no puede contener espacios consecutivos' })
+      .refine((val) => !(val.length === 1 && val === ' '), { message: 'Contraseña no puede estar vacía.' }),
+}); 
+
 export default validationsLogin

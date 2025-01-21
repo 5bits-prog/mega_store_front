@@ -18,6 +18,7 @@ import { SucursalProvider } from './contexts/SucursalContext';
 import { ColorProvider } from './contexts/ColorContext';
 import { TalleProvider } from './contexts/TalleContext';
 import { CategoriaProvider } from './contexts/CategoriaContext';
+import { ProductoProvider } from './contexts/ProductoContext';
 import Nosotros from './pages/nosotros/nosotros';
 import './App.css'
 import AppsRami from './subApps/AppsRami'; //  apps rami
@@ -81,20 +82,32 @@ export function App() {
                   <Route path="/sesion" element={<Sesion />} />
                   <Route path="/catalogoProductos" 
                     element={
+                      
                       <MarcaProvider>
-                        <SucursalProvider>
-                          <ColorProvider>
-                            <TalleProvider>
-                              <CategoriaProvider>
-                                <CatalogoProducto />
-                              </CategoriaProvider>
-                            </TalleProvider>
-                          </ColorProvider>
-                        </SucursalProvider>
+                          <SucursalProvider>
+                            <ColorProvider>
+                              <TalleProvider>
+                                <CategoriaProvider>
+                                  <ProductoProvider>
+                                    <CatalogoProducto />
+                                  </ProductoProvider> 
+                                </CategoriaProvider>
+                              </TalleProvider>
+                            </ColorProvider>
+                          </SucursalProvider>
                       </MarcaProvider>
                     } 
                   />
-                  <Route path="/home" element={<Home />} />
+
+                  <Route
+                    path="/home"
+                    element={
+                      <ProductoProvider>
+                        <Home />
+                      </ProductoProvider>
+                    }
+                  />
+
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/nosotros" element={<Nosotros />} />
                 </Routes>
