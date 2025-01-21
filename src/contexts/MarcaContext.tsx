@@ -2,6 +2,7 @@ import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { getMarcas, newMarca, putMarca, deleteMarca } from '../service/MarcaService'; // Importamos el servicio
 import { useNotification } from "./NotificacionContext";
 import { string } from 'zod';
+import Notificaciones from '../components/notificaciones';
 
 
 export interface Marca {
@@ -35,7 +36,7 @@ export const MarcaProvider: React.FC<MarcaProviderProps> = ({ children }) => {
   const [marcas, setMarcas] = useState<Marca[]>([]); // Estado para almacenar las marcas
   const [loading, setLoading] = useState<boolean>(false); // Estado de carga
   const [error, setError] = useState<string | null>(null); // Estado de error
-  const {mostrarMensaje}= useNotification()
+ 
 
   //GET
   const fetchMarcas = async () => {
@@ -62,11 +63,12 @@ export const MarcaProvider: React.FC<MarcaProviderProps> = ({ children }) => {
     try{
         setLoading(true)
         const response = await newMarca(marca) //post
-        mostrarMensaje(`Marca ${response.data.nombre} registrada`) //mensaje
+        Notificaciones.exito(`Marca ${response.data.nombre} registrada con éxito`); //mensaje
         await fetchMarcas(); //Recargamos las marcas
     }catch(error:any){
         if (error) {
-            mostrarMensaje(error.response?.data.errors)
+          Notificaciones.error(error.response?.data.errors);
+         
             console.log(error.response?.data.errors);  // Accediendo a 'errors'
           } else {
             console.error("Error desconocido", error);

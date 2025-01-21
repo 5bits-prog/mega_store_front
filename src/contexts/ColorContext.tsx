@@ -1,6 +1,7 @@
 import { useNotification } from "./NotificacionContext";
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { getColores, newColor, putColor, deleteColor } from "../service/ColorService";
+import Notificaciones from "../components/notificaciones";
 
 export interface Color {
     id?: number;
@@ -34,7 +35,7 @@ export const ColorProvider: React.FC<ColorProviderProps> = ({ children }) => {
   const [colores, setColores] = useState<Color[]>([]);
   const [loading, setLoading] = useState<boolean>(false); // Estado de carga
   const [error, setError] = useState<string | null>(null); // Estado de error
-  const {mostrarMensaje}= useNotification()
+  
 
  //GET
   const fetchColores= async () => {
@@ -58,12 +59,12 @@ export const ColorProvider: React.FC<ColorProviderProps> = ({ children }) => {
     try{
         setLoading(true)
         const response = await newColor(dato) //post
-        mostrarMensaje(`Color ${response.data.nombre} registrada`) //mensaje
+        Notificaciones.exito(`Color ${response.data.nombre} registrada`) //mensaje
         await fetchColores(); //Recargamos las sucursales
 
     }catch(error:any){
         if (error) {
-            mostrarMensaje(error.response?.data.errors)
+            Notificaciones.error(error.response?.data.errors)
             console.log(error.response?.data.errors);  // Accediendo a 'errors'
           } else {
             console.error("Error desconocido", error);

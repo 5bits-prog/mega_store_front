@@ -1,11 +1,13 @@
 .contInfo{
     width: 100%;
     height: 15vw;
-    /* background-color: red; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
+    
+    
+    
 }
 .contInfo h2{
     font-family: 'Times New Roman', Times, serif;
@@ -14,10 +16,11 @@
     width: 100%;
     border: none;
     text-align: center;
-    font-size: 3rem;
+    font-size: 2rem;
     color: rgb(58, 58, 58);
     font-family: 'Times New Roman', Times, serif;
     cursor: auto;
+    
 }
 .contInfo input:focus {
     outline: none;  
