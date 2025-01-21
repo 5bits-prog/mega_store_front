@@ -15,6 +15,8 @@ const CardUser: React.FC<ProductoGet> = (props) => {
                 nombre: props.nombre,
                 precio: props.precio || 0,
                 cantidad: 1,
+                imagen: props.foto ||'',
+                stockActual:props.stockActual,
             });
         };
 
@@ -22,19 +24,28 @@ const CardUser: React.FC<ProductoGet> = (props) => {
             navigate(`/appsRami/productoEspecifico/${producto.id}`);
         };
 
+        const formatearPrecio = (precio: number): string => {
+            return precio.toLocaleString('es-ES');
+        };
+
     return(
         <div className={style.contGeneral} onDoubleClick={() => openProducto(props)}>
 
-            <img src={props.foto} alt="Remera Negra" className={style.imgProducto} />
+            <div className={style.contImg}>
+                <img src={props.foto} alt="Remera Negra" className={style.imgProducto} />
+            </div>
+            
+
             <div className={style.contTexto}>
                 <h1>{props.nombre}</h1>
-                <p>${props.precio}</p>   
                 <span> {props.descripcion}</span>         
+                <p>${formatearPrecio(props.precio || 0)}</p>   
             </div>
-            <div className={style.contCarrito}>
-            <ShoppingCartIcon className={style.carritoIcon} onClick={handleAgregarAlCarrito}/>
+            
+            <div className={style.contCarrito} onClick={handleAgregarAlCarrito}>
+                <ShoppingCartIcon className={style.carritoIcon} />
             </div>
         </div>
     )
 };
-export default CardUser
+export default CardUser 

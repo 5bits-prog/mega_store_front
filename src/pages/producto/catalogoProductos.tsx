@@ -39,7 +39,7 @@ const CatalogoProducto =()=> {
     },[])
 
     return (
-        <div className={styles.container}>
+        <div className={styles.container} style={{marginTop: isAdmin ? '75px' : '0'}}>
             <h2>| Catálogo de Productos |</h2>
 
             {isProducto && 

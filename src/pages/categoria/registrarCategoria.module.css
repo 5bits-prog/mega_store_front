@@ -4,27 +4,27 @@ body {
     font-family: 'Lato', sans-serif;
   }
   
-  .body{
-      
-      display: flex; /* Habilita Flexbox en el body */
-      justify-content: start; /* Centra horizontalmente */
-      align-items: center; /* Centra verticalmente */    
-      text-align:center;    
-      flex-direction: column;
-      gap: 30px;
-      font-family: lato; /* Define la tipografía */
-      min-height: 75vh;
-      padding-top: 30px;
-  }
-  .form{
-      display:flex; /*para que el contenido se ajuste de forma horizontal*/
-      background-color:white;
-      font-size:15px;
-      align-items: center;
-      flex-direction: row; /* Alinea los elementos en fila */
-      gap:20px;
-      
-  }
+.body{
+    
+    display: flex; /* Habilita Flexbox en el body */
+    justify-content: start; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */    
+    text-align:center;    
+    flex-direction: column;
+    gap: 30px;
+    font-family: lato; /* Define la tipografía */
+    min-height: 75vh;   
+    padding-top: 30px;
+    margin-top: 75px;
+}
+.form{
+    display:flex; /*para que el contenido se ajuste de forma horizontal*/
+    background-color:white;
+    font-size:15px;
+    align-items: center;
+    flex-direction: row; /* Alinea los elementos en fila */
+    gap:20px;
+
   .title{ /*Titulo pantalla administración*/
       color:black;
   }

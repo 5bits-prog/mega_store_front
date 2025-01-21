@@ -4,6 +4,7 @@
     height: 30vw;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     overflow: hidden;
     border: 1px solid transparent;
@@ -16,9 +17,18 @@
    
     cursor: pointer;
 }
-.imgProducto{
+.contImg{
     width: 100%;
-    height:50vh;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.imgProducto{
+    min-width: 80%;
+    width: auto;
+    height:auto;
+    max-height: 45vh;
     border: none;
     margin-top: 0px;
     object-fit: cover;
@@ -27,39 +37,49 @@
 
 .contTexto{
     width: 100%;
-    height: 100%;
+    height: 5vw;
+    min-height: 3vw;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     align-items: center; /* Centra horizontalmente */
     justify-content: center; /* Centra verticalmente */
-    text-align: center; /* Asegura que el texto esté centrado */
+    margin: auto;
 }
 .contTexto p{
-    margin: 0;
+    text-align: center;
+    width: 5vw;
+    border: 1px solid #8668c1;
+    box-shadow: -3px 3px 0 #a27eea83;
 }
 .contTexto h1 {
     width: 100%;
     max-height: 10vh;
-    padding: 0px 10px 0px 10px;
+    padding: 0px 10px 0px 30px;
     font-size: 1rem;
     margin: 0;
 }
 .contTexto span {
     font-size: 0.8rem;
-    margin: 0;
+    /* margin: 0; */
 }
 .contCarrito{
-    position: absolute;  /*Para colocar el ícono sobre la tarjeta */
-    top: 10px; /* Ajusta la distancia desde arriba */
-    right: 10px; /* Ajusta la distancia desde la derecha */
+    width: 100%;
+    height: 2vw;
+    background-color: #a27eea;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: auto;
 }
+
 .carritoIcon {
     color: #333; /* Cambia el color del ícono */
     font-size: 24px; /* Tamaño del ícono */
     cursor: pointer; /* Cambia el cursor al pasar por encima */
     transition: transform 0.2s; /* Animación opcional */
 }
-.carritoIcon:hover {
+.contCarrito:hover .carritoIcon {
     transform: scale(1.2); /* Efecto al pasar el mouse */
 }

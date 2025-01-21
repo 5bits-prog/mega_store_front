@@ -1,0 +1,149 @@
+.contGeneral{
+    width: 100%;
+    min-height: 83vh;
+    overflow: hidden;
+    height: auto;
+    margin-top: 75px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+/* Contendor de los productos */
+.contProductos{
+    width: 40%;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items:start;
+    justify-content: start;
+    gap: 30px;
+}
+.contProductos h2{
+    margin-right: auto;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+
+
+/* Contenedor del producto especifico */
+.contProducto{
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    border: 1px solid black;
+    padding: 5px;
+}
+.contProductos p{
+    font-size: 2rem;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.contImg{
+    width: 10vw;
+    display: flex;
+    padding: 0;
+    align-items:center;
+    justify-content: center;
+}
+.contImg img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0;
+    border: none;
+}
+.contInfo{
+    position: relative;
+    width: 100%;
+}
+.contInfo h1{
+    margin-left: 30px;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.contInfo p{
+    position: absolute;
+    top: 8px;
+    right: 80px;
+    font-size: 1rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.botonDelete{
+    position: absolute;
+    width: 1.5vw;
+    height: 1.5vw;
+    top: 15px;
+    right: 15px;
+    background-color: rgb(243, 151, 151);
+    border: none;
+    border-radius: 50%;
+    text-align: center;
+    transition: all 0.25s ease-in-out;
+}
+.botonDelete:hover{
+    box-shadow: 3px 3px 0 rgb(248, 66, 66);
+}
+
+.contCantidad{
+    width: 6vw;
+    height: auto;
+    position: absolute;
+    top: 70%;
+    left: 30px;
+    transform: translate(0,-50%);
+    overflow: hidden;
+    padding: 5px;
+}
+
+.contResumen{
+    position: relative;
+    width: 40%;
+    height: 80vh;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+.botonPagar{
+    margin-top: 50px;
+    width: 60%;
+    height: 2.5vw;
+    background-color: #ba70fc;
+    box-shadow: 5px 5px 0 #ebdafa ;
+    border: none;
+    color: white;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.botonPagar:hover{
+    transform: scale(1.03);
+}
+.contResumen h1{
+    width: auto;
+    margin-top: 50px;
+    color: black;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+}
+.contResumen h2{
+    position: absolute;
+    top: 60%;
+    left: 53%;
+    width: 10vw;
+    text-align: center;
+    padding: 5px;
+    background-color: #c99af3;
+    color: white;
+    z-index: 1;
+}
+.contResumen h2::before{
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 3px;
+    left: 3px;
+    position: absolute;
+    border: 1px solid #c99af3;
+    z-index: -1;
+}
