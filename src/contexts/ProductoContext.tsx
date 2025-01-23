@@ -1,8 +1,9 @@
 // Contexto para gestionar productos
-import React, { createContext, ReactNode, useContext, useState } from "react";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico, getHitorial } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
 import { useNotification } from "./NotificacionContext";
 import { Producto, ProductoGet } from "../pages/producto/interfazProducto";
+import Notificaciones from "../components/notificaciones";
 
 interface ProductoContextType {
     fetchProductos: () => void;
@@ -35,6 +36,12 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     const [historial, setHistorial] = useState([])
     const [error, setError] = useState(null);
     const {mostrarMensaje} = useNotification()
+  
+    useEffect(() => {
+      if (!loading) {
+        fetchProductos(); // Solo recargar productos cuando ya no se esté cargando
+      }
+    }, [loading]); 
 //GET
     const fetchProductos = async () => {
         setLoading(true);
@@ -67,17 +74,18 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
       }
     };
 
+    
 //POST
     const postProducto = async (producto: FormData) => {
         try{
             setLoading(true)
             const response = await newProducto(producto) //post
-            mostrarMensaje(`Prodcuto ${response.data.nombre} registrada`) //mensaje
+            Notificaciones.exito(`Prodcuto ${response.data.nombre} registrado`) //mensaje
             await fetchProductos(); //Recargamos las sucursales
         
             }catch(error:any){
                 if (error) {
-                    mostrarMensaje(error.response?.data.errors)
+                    Notificaciones.error(error.response?.data.errors)
                     console.log(error.response?.data.errors);  // Accediendo a 'errors'
                   } else {
                     console.error("Error desconocido", error);
@@ -91,11 +99,11 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     try{
         setLoading(true)
         const response = await putProducto(producto) //post
-        mostrarMensaje(`Prodcuto ${response.data.nombre} modificado`) //mensaje
+        Notificaciones.exito(`Producto ${response.data.nombre} modificado`) //mensaje
         await fetchProductos(); //Recargamos las sucursales
         }catch(error:any){
             if (error) {
-                mostrarMensaje(error.response?.data.errors)
+                Notificaciones.error(error.response?.data.errors)
                 console.log(error.response?.data.errors);  // Accediendo a 'errors'
               } else {
                 console.error("Error desconocido", error);
@@ -112,7 +120,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
           const respuesta = await deleteProducto(id);
           console.log(respuesta.data); 
           fetchProductos();
-          mostrarMensaje('Producto eliminado con exito')
+          Notificaciones.exito('Producto eliminado con exito')
         } catch (error) {
           console.error('Error al eliminar la Sucursal:', error);
         }

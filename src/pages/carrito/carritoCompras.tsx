@@ -1,80 +1,80 @@
-//uso el context y la variable carrito (array de los productos)
-//hacer componente de carrito (este), aplico context y de ahi trigo la variable carrito
-//a esa variable la itero con un maps y ahi lo voy mostrando 
-//en el userContext uso el metodo agregar a carrito y enviarle la informacion que pide del producto 
 import { useCarrito } from '../../contexts/CarritoContext.tsx';
-import style from './carritoCompras.module.css'
+import style from './carritoCompras.module.css';
 import BasicSelect from './Cantidad.tsx';
 import { useEffect, useState } from 'react';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { useNavigate } from 'react-router-dom';
 
-const CarritoCompras = () => {
-    // Usar el contexto para acceder al carrito
-    const { carrito, eliminarDeCarrito, total, productosTotales } = useCarrito();
-    const [carritoVacio, setCarritoVacio] = useState(false)
+
+const CarritoCompras = () => { // Usar el contexto para acceder al carrito
+
+const { carrito, eliminarDeCarrito, total, productosTotales} = useCarrito();
+
+const [carritoVacio, setCarritoVacio] = useState(false);
+
+const navigate = useNavigate(); // Hook para navegar a otras rutas
     
-    useEffect(()=>{
-        if(carrito.length===0){
-            setCarritoVacio(true)
-        }
-    },[carrito])
+const handleNavigation = () => {
+    navigate('/home'); // Navegar a la ruta especificada
+};
 
-    const eliminar = (id:number) =>{
-        eliminarDeCarrito(id)
+useEffect(() => {
+    if (carrito.length === 0) {
+        setCarritoVacio(true);
+    } else {
+        setCarritoVacio(false);
     }
+}, [carrito]);
 
-    const formatearPrecio = (precio: number): string => {
-        return precio.toLocaleString('es-ES');
-    };
-    
+const eliminar = (id: number) => {
+    eliminarDeCarrito(id);
+};
 
+const formatearPrecio = (precio: number): string => {
+    return precio.toLocaleString('es-ES');
+};
 
-    return (
+const [hovered, setHovered] = useState(false);
 
-        <div className={style.contGeneral}>
-            <div className={style.contProductos}>
-                <h2>TU CARRITO</h2>
-                {carritoVacio ? 
-                    <p>Carrito Vacio</p>
-                    :
-                        <>
-                        {(carrito).map((producto) => (
-                            
-                            <div className={style.contProducto} key={producto.id}>
-                                <div className={style.contImg}>
-                                    <img src={producto.imagen} alt="foto producto" />
-                                </div>
-                                
-                                <div className={style.contInfo}>
-                                    <h1>{producto.nombre}</h1>
-                                    <p>${formatearPrecio(producto.precio)}</p>
-        
-                                    <div className={style.contCantidad}>
-                                        <BasicSelect cantidad={producto.cantidad} stockActual={10} idProducto={producto.id} ></BasicSelect>
-                                    </div>
-        
-                                    <button className={style.botonDelete} onClick={()=> eliminar(producto.id)}>X</button>                       
-                                </div>
-                                
-                            </div>
-                        ))}
-                        </>
-                    }
-                
-                
+return (
+    <div className={style.contGeneral}>
+        <h1 className={style.title}>TU CARRITO</h1>
+        {/*Si el carrito no tiene productos*/}
+        {carritoVacio ? (
+            <div>
+                <p className={style.vacio}>No hay productos en tu carrito <SentimentVeryDissatisfiedIcon /></p>
+                <p>¡Te invitamos a visitar nuestro <a className={style.link} onClick={handleNavigation}>catálogo</a>!</p>
             </div>
-            <div className={style.contResumen}>
-                <button className={style.botonPagar}>IR A PAGAR</button>
-                
-                <h1>RESUMEN DEL PEDIDO</h1>
-
-                <div className={style.resumen}>
-                    <h3>{productosTotales} Productos</h3>
-                    <h2>Total ${formatearPrecio(total)}</h2>
+        ) : (
+        carrito.map((producto) => (
+            <div className={style.contProducto} key={producto.id}>
+                <div className={style.contImg}>
+                    <img src={producto.imagen} alt="foto producto" />
                 </div>
+                <BasicSelect cantidad={producto.cantidad} stockActual={10} idProducto={producto.id} />
+                <p className={style.text}>{producto.nombre}</p>
+                <p className={style.text}>${formatearPrecio(producto.precio)}</p>
+                <button className={style.botonDelete} onClick={() => eliminar(producto.id)}> <DeleteForeverIcon /></button>
             </div>
-            
+            ))
+        )}
+        <div className={style.total}>
+            <div className={style.resumen}>
+                <p>TOTAL</p>
+                <p>{productosTotales} Productos</p>
+                <p>${formatearPrecio(total)}</p>
+            </div>
         </div>
-    );
+        {/*Si el carrito tiene productos*/}
+        {!carritoVacio && (
+            <button className={style.button} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+                {hovered ? "INICIAR COMPRA" : <AttachMoneyIcon />}
+            </button>
+            )}
+    </div>
+);
 };
 
 export default CarritoCompras;

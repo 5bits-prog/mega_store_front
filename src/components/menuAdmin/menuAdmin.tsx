@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/LoginContext';
 import CarritoMenuAdmin from '../carritoBarraMenu/CarritoBarraMenu';
 import Accordion2Usage from './acordionUsuario';
+import { useCarrito } from '../../contexts/CarritoContext';
 
 
 
@@ -65,6 +66,8 @@ const Menu = () => {
     const handleEstadisticas=()=>{
         navigate('/appsAbril/opcionesEstadisticas')
     }
+
+   
 
     
     const location = useLocation();
