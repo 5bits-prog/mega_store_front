@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useNotification } from "./NotificacionContext";
+
+import Notificaciones from '../components/notificaciones';
 
 //producto que se va a añadir en el carrito
 type Producto = {
@@ -18,14 +19,27 @@ const CarritoContext = createContext<{
     cambioDeCantidad: (id: number, cantidad:number) => void;
     total: number;
     productosTotales: number;
+   
+    
 } | null>(null);
 
 //Proveedor del contexto
 export const CarritoProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [carrito, setCarrito] = useState<Producto[]>([]);
-    const {mostrarMensaje} = useNotification();
     const [total, setTotal]= useState(0)
     const [productosTotales, setProductosTotales]= useState(0)
+
+    const [mostrarCarrito, setMostrarCarrito] = useState(false); //funcion  para mostrar o no el carrito
+    const toggleCarrito = () => {
+        setMostrarCarrito((prevState) => !prevState);
+       
+        
+      }; //alterna el estado del carrito entre abierto y cerrado
+    
+      useEffect(() => {
+        console.log('Estado actualizado del carrito:', mostrarCarrito);
+    }, [mostrarCarrito]);  // Se ejecuta cada vez que mostrarCarrito cambie
+    
 
     //Función para agregar un producto al carrito
     const agregarAlCarrito = (producto: Producto) => {
@@ -33,7 +47,7 @@ export const CarritoProvider: React.FC<{ children: React.ReactNode }> = ({ child
             const existe = prev.find((item) => item.id === producto.id);
             if (existe) {
                 //Si ya está en el carrito, incrementa la cantidad
-                mostrarMensaje(`${producto.nombre} se añadió una unidad más al carrito.`);
+                Notificaciones.info(`Se añadió una unidad más de ${producto.nombre} al carrito.`);
                 return prev.map((item) =>
                     item.id === producto.id
                         ? { ...item, cantidad: item.cantidad + 1 }
@@ -42,7 +56,7 @@ export const CarritoProvider: React.FC<{ children: React.ReactNode }> = ({ child
                 
             }
             // Si no está, agrégalo
-            mostrarMensaje(`${producto.nombre} ha sido agregado al carrito.`);
+            Notificaciones.info(`${producto.nombre} ha sido agregado al carrito.`);
             
             return [...prev, { ...producto, cantidad: 1 }];
         });

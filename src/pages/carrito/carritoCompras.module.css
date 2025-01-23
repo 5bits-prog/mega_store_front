@@ -1,149 +1,182 @@
+/*Contenedor general*/
 .contGeneral{
     width: 100%;
-    min-height: 83vh;
+    min-height: 100vh;
     overflow: hidden;
     height: auto;
-    margin-top: 75px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    
-}
-/* Contendor de los productos */
-.contProductos{
-    width: 40%;
-    min-height: 80vh;
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
-    align-items:start;
-    justify-content: start;
-    gap: 30px;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center;    /* Centra horizontalmente */
+    text-align: center; 
 }
-.contProductos h2{
-    margin-right: auto;
-    font-family:Georgia, 'Times New Roman', Times, serif;
+
+/*Titulo del carrito*/
+.title{
+    font-size: 26px;
+    text-decoration: underline;
+}
+
+/*Textos en general*/
+.text{
+    margin: 0; 
+    padding: 0; 
+    font-size: 16px; 
+    line-height: 1; 
+    display: flex; 
+    align-items: center; 
+    width:20px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
 }
 
 
 /* Contenedor del producto especifico */
 .contProducto{
-    width: 100%;
-    height: 20vh;
     display: flex;
-    flex-direction: row;
-    justify-content: start;
-    border: 1px solid black;
-    padding: 5px;
+    flex-direction: row; 
+    justify-content: space-between; 
+    align-items: center; 
+    width: 50%;
+    height: 70px;
+    border: solid grey 1px;
+    border-radius: 10px;
+    overflow: hidden; /* Recorta elementos que sobresalgan */
+    gap: 5px; 
+    padding:10px;
+    margin:10px;
 }
-.contProductos p{
-    font-size: 2rem;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-}
-.contImg{
-    width: 10vw;
+  
+/*Contenedor de la imagen de cada producto*/
+.contImg {
+    flex-shrink: 0; /* Evita que se reduzca si el contenedor es pequeño */
+    width: 80px; /* Tamaño cuadrado de la imagen */
+    height: 80px;
+    overflow: hidden; /* Asegura que cualquier contenido extra se recorte */
     display: flex;
-    padding: 0;
-    align-items:center;
     justify-content: center;
+    align-items: center;
+    margin-left:10px;
+    border-radius: 5px; /* Opcional: redondea las esquinas */   
 }
-.contImg img{
-    width: 100%;
+
+/*Imagen especificamente*/
+
+.contImg img {
+    width: 100%; /* La imagen ocupa todo el cuadro */
     height: 100%;
-    object-fit: contain;
-    margin: 0;
-    border: none;
+    object-fit: cover; /* la imagen cubre todo el contenedor,manteniendo su proporción y recortando las áreas sobrantes*/
+    border:none;  
 }
-.contInfo{
-    position: relative;
-    width: 100%;
-}
-.contInfo h1{
-    margin-left: 30px;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-}
-.contInfo p{
-    position: absolute;
-    top: 8px;
-    right: 80px;
-    font-size: 1rem;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
+
+/*Botón para eliminar productos del carrito*/
 .botonDelete{
-    position: absolute;
-    width: 1.5vw;
-    height: 1.5vw;
-    top: 15px;
-    right: 15px;
-    background-color: rgb(243, 151, 151);
+    background-color: white;
     border: none;
-    border-radius: 50%;
-    text-align: center;
-    transition: all 0.25s ease-in-out;
+    padding-top:5px;
+    margin:15px;   
 }
+
 .botonDelete:hover{
-    box-shadow: 3px 3px 0 rgb(248, 66, 66);
+    background-color: rgb(225, 71, 71);
+    cursor: pointer;
+    opacity: 1; /* Hacer visible */
+    border-radius: 50%;
+    padding-top:2px; 
 }
 
 .contCantidad{
-    width: 6vw;
-    height: auto;
-    position: absolute;
-    top: 70%;
-    left: 30px;
-    transform: translate(0,-50%);
-    overflow: hidden;
-    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    width:80px;
+    padding:0px;   
 }
 
 .contResumen{
     position: relative;
-    width: 40%;
-    height: 80vh;   
+    width: 100%;
+    height: 40vh;   
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: start;
 }
-.botonPagar{
-    margin-top: 50px;
-    width: 60%;
-    height: 2.5vw;
-    background-color: #ba70fc;
-    box-shadow: 5px 5px 0 #ebdafa ;
-    border: none;
-    color: white;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-}
-.botonPagar:hover{
-    transform: scale(1.03);
-}
-.contResumen h1{
-    width: auto;
-    margin-top: 50px;
-    color: black;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-}
-.contResumen h2{
-    position: absolute;
-    top: 60%;
-    left: 53%;
-    width: 10vw;
+
+.resumen{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     text-align: center;
-    padding: 5px;
-    background-color: #c99af3;
-    color: white;
-    z-index: 1;
+    justify-content: center;
+    gap:220px;
+    background-color:#b598ed;
+    height:40px;
 }
-.contResumen h2::before{
-    content: '';
-    width: 100%;
-    height: 100%;
-    top: 3px;
-    left: 3px;
-    position: absolute;
-    border: 1px solid #c99af3;
-    z-index: -1;
+
+.total{
+    text-align: center;
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    width: 50%;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden; /* Recorta elementos que sobresalgan */
+    padding:10px;
+    margin:10px;
+    color:white;
+    background-color: #b598ed;
+    font-weight: bold;
+}
+
+/*Ajuste de botones*/
+.button{ 
+    display:flex;
+    background-color:black;
+    color: #ffffff;
+    width:15em;
+    height: 2.9em;
+    border: none;
+    border-radius: 11px;
+    text-align: center;
+    justify-content: center;
+    margin-top:20px;
+    margin-bottom:20px;
+    gap:10px;
+    transition: background-color 1s ease, opacity 0.3s ease, font-size 0.3s ease;
+    align-items: center;
+    margin-bottom:10px;
+
+}
+            
+.button:hover{ /*efecto cuando colocamos el cursor sobre el botón*/
+    background-color: #b598ed;
+    cursor: pointer;
+    opacity: 1; /* Hacer visible */
+    font-size: 13px;
+    font-family: 'Roboto', sans-serif;
+    
+}
+
+/*Texto informativo cuando el carrito está vacío*/
+.vacio{
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    gap: 8px; 
+    font-family: 'Roboto', sans-serif;
+}
+
+/*Link al catálogo*/
+.link{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.link:hover{
+    font-weight: bold;
+
 }

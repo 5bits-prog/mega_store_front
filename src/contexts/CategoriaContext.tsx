@@ -60,8 +60,9 @@ export const CategoriaProvider: React.FC<CategoriaProviderProps> = ({ children }
     try{
         setLoading(true)
         const response = await newCategoria(dato) //post
-        Notificaciones.exito(`Categoria ${response.data.nombre} registrada`) //mensaje
+       
         await fetchCategorias(); //Recargamos 
+        Notificaciones.exito(`Categoria ${response.data.nombre} registrada`) //mensaje
 
     }catch(error:any){
         if (error) {
