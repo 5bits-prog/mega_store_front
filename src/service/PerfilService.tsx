@@ -6,8 +6,8 @@ const api = axios.create({
     baseURL: API_ROUTES.BASE,
 })
 
-export async function getDatosPerfil() {
-        const {data : respuesta} = await api.get(API_ROUTES.GET_DATOS_PERFIL); 
+export async function getDatosPerfil(id: string) {
+        const {data : respuesta} = await api.get(API_ROUTES.GET_DATOS_PERFIL(id)); 
         return respuesta;
 }
 
