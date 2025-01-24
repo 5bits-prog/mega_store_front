@@ -44,9 +44,13 @@ export const API_ROUTES = {
      //ESTADISTICAS
 
      //PERFIL
-     GET_DATOS_PERFIL: '/auth/usuario/id/24',
+     GET_DATOS_PERFIL:(id:string)=> `/auth/usuario/id/${id}`,
      PUT_DATOS_PERFIL: '/auth/usuario',
      
+    //REGISTER
+    POST_USUARIO:'/auth/usuario',
+    REENVIAR_CODIGO:'/auth/usuario/reenviar-codigo',
+    VERIFICAR:'/auth/usuario/verificar',
     //El resto de URLS...
 
   };

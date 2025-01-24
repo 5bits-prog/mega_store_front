@@ -167,24 +167,32 @@ body {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 50px; 
-    left: 90.1%; 
-    transform: translateX(-50%); 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, 30%); 
     width: 140px;
     border: none;
     background-color: white;
     z-index: 10;
     font-family: arial;
 }
-.dropdownContent2::before { /*es la flecha que se ve sobre el boton de registrar*/
+.dropdownContent2::before { 
     content: '';
-    position: absolute;
-    top: -10px; /* Posiciona la flecha justo encima del menú */
-    left: 50%; /* Coloca la flecha en el centro del menú */
-    transform: translateX(-50%); /* Ajusta para que la flecha esté alineada al centro */
+    top: 50%; 
+    left: 50%; 
+    transform: translate(290%, -200%); 
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 10px solid white; /* Color de la flecha */
+    border-bottom: 10px solid white; 
     width: 0;
     height: 0;
+}
+
+.iconoUser{
+    display: flex;
+    position: relative;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }

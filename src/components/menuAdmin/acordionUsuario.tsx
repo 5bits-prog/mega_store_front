@@ -16,10 +16,10 @@ export default function Accordion2Usage() {
   const [rolG, setRol] = useState<string | null>(null);
   
   // Recupera el valor del rol desde localStorage
-  useEffect(() => {
-    const rolGuardado = localStorage.getItem("rol");
-    setRol(rolGuardado); // Guarda el rol en el estado local
-  }, [rol]);
+  // useEffect(() => {
+  //   const rolGuardado = localStorage.getItem("rol");
+  //   setRol(rolGuardado); // Guarda el rol en el estado local
+  // }, [rol]);
 
   //Función para cerrar sesión
   const cerrarSesion=()=>{
@@ -47,11 +47,8 @@ export default function Accordion2Usage() {
     }).then(({ isConfirmed }) => {
       if (isConfirmed) {
         // Acciones al confirmar
-        setRol(null);
         logout();
         Notificaciones.exito(`Has cerrado sesión exitosamente.`);
-        
-          
         
       }
     });
@@ -72,7 +69,7 @@ export default function Accordion2Usage() {
   
   return (
     <div >
-      <Accordion expanded sx={{backgroundColor:'red'}}>
+      <Accordion expanded >
         {entidades.map((entidad)=>(
         <AccordionDetails key={entidad.id} sx={{ color:'white',backgroundColor: 'white', padding: '15px', textAlign:'center', '&:hover': {backgroundColor: '#c99af3'} }}>
         <Button 

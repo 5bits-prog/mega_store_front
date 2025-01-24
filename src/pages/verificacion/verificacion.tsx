@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import style from './verificacion.module.css';
+import { useRegister } from '../../contexts/RegisterContext';
+import { Reenviar } from '../../service/RegisterService';
 
 // Definición del componente StyledWrapper
 const StyledWrapper = styled.div`
@@ -11,6 +13,8 @@ interface Props {
 }
 
 const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
+
+    const {VerificarUsuario, loading, email, reenviarCodi}=useRegister()
     //Función para que el cursor cambie al siguiente input cuando se ingresa un numero.
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
         const currentInput = e.target;
@@ -43,9 +47,31 @@ const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
         }
     };
 
+    const obtenerCodigo = () => {
+
+        const codigoVerificacion = Array.from({ length: 6 }, (_, i) => {
+            const input = document.getElementById(`otp-input${i + 1}`) as HTMLInputElement | null;
+            return input ? input.value : '';
+        }).join('');
+
+    
+        const datosUsuario = {
+            email: email,
+            codigoVerificacion: codigoVerificacion
+        };
+    
+        console.log('Datos a verificar:', datosUsuario);
+        VerificarUsuario(datosUsuario);
+    };
+
+    const reenviar = ()=>{
+        const datos: Reenviar = { email };  // Crear un objeto con la estructura de la interfaz
+        reenviarCodi(datos);
+    }
+
     return (
         <StyledWrapper>
-        <form className={style.verif}>
+        <form className={style.verif} onSubmit={(e) => { e.preventDefault(); obtenerCodigo(); }}>
             <span className={style.mainHeading}>Código de verificación</span>
             <p className={style.otpSubheading}>Te enviamos un código de verificación al mail registrado.</p>
             <div className={style.inputContainer}>
@@ -118,7 +144,7 @@ const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
             </div>
             <button className={style.verifyButton} type="submit">Verificar</button>
             <button className={style.exitBtn} onClick={onCerrar}>×</button>
-            <p className={style.resendNote}>¿No recibiste el código? <button className={style.resendBtn}>Reenviar Código</button></p>
+            <p className={style.resendNote}>¿No recibiste el código? <button className={style.resendBtn} onClick={()=>reenviar()}>Reenviar Código</button></p>
         </form>
         </StyledWrapper>
     );

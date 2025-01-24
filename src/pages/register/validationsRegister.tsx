@@ -13,7 +13,7 @@ const validationsRegister=z.object({
       .email({message:"Formato inválido de email"})
       .regex(/^(?!.*\s{2,}).*$/, { message: "Email no puede contener espacios consecutivos"})
       .refine((val) => !(val.length === 1 && val === ' '), { message: 'Email no puede estar vacío.' }) ,
-    contrasena:z
+    password:z
       .string()
       .min(1, { message: 'Contraseña no puede estar vacío.' })
       .min(8, { message: 'Contraseña debe tener al menos 8 caracteres.' })
@@ -24,10 +24,10 @@ const validationsRegister=z.object({
       .refine((value) => /[A-Z]/.test(value), { message: "La contraseña debe contener al menos una letra mayúscula." }) 
       .refine((value) => /[a-z]/.test(value), { message: "La contraseña debe contener al menos una letra minúscula." }) 
       .refine((value) => /\d/.test(value), { message: "La contraseña debe contener al menos un número." }), 
-    envio:z
+    direccionEnvio:z
       .string()
       .max(100, { message: 'No debe superar los 100 caracteres.' }),
-    numeroTelefono:z
+    telefono:z
      .string()
      .regex(/^\+?[0-9]+$/, { message: 'Teléfono debe ser un número' })
      .min(8, { message: 'Debe tener al menos 8 dígitos.' })
@@ -39,10 +39,10 @@ const validationsRegister=z.object({
       .max(100, { message: 'Contraseña no debe superar los 100 caracteres.' })
     }).superRefine((data, ctx) => {
       // Guardar el valor de la contraseña en una variable para mayor claridad
-      const contrasena = data.contrasena;
+      const password = data.password;
       const confirmacion = data.confirmacion;
       // Validar si coinciden
-      if (contrasena !== confirmacion) {
+      if (password !== confirmacion) {
         ctx.addIssue({
           code: 'custom',
           path: ['confirmacion'],

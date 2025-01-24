@@ -80,7 +80,7 @@ const Menu = () => {
             
             <img src='/logo.png' alt="Logo" width="100" height="60" /> {/* Ajusta el tamaño según sea necesario */}
             <div className={styles.container2}>
-                {rolG=='4' ?
+                {rolG=='5' ?
                     <button className={styles.options} onMouseEnter={toggleMenu}><DensityMediumIcon/>{/* Agrega el ícono dentro del botón */}
                     </button>
                 :''}
@@ -97,28 +97,46 @@ const Menu = () => {
 
             <div className={styles.components}>
                 <a className={styles.seleccion2} onClick={handleNosotros} >Nosotros</a>
-                {rolG == '4'? 
+                {rolG == '5'? 
                 <>
                 <a className={styles.seleccion2} onClick={handleCatalogo}>Productos</a>
                 <a className={styles.seleccion2} onClick={handleEstadisticas}>Estadísticas</a>
                 {/*<a className={styles.seleccion2} onClick={ ()=> cerrarSesion()}>Cerrar Sesion</a>*/}
-                <a className={styles.seleccion2} onMouseEnter={toggleMenu2}> < PersonIcon /></a>
+                <div className={styles.iconoUser}>
+                    <a className={styles.seleccion2} onMouseEnter={toggleMenu2}> < PersonIcon /></a>
+                    {/* Contenido del menú que se muestra/oculta según el estado */}
+                    {isMenu2Open && (
+                        <a className={styles.dropdownContent2} onMouseLeave={closeMenu2}>
+                        <Accordion2Usage />
+                        </a>   
+                    )}
+                </div>
                 <a className={styles.seleccion2} onClick={handleNavigationCarrito}> < CarritoMenuAdmin /></a>
-                {/* Contenido del menú que se muestra/oculta según el estado */}
-                {isMenu2Open && (
-                    <a className={styles.dropdownContent2} onMouseLeave={closeMenu2}>
-                    <Accordion2Usage />
-                    </a>   
-                )}
                 </>
                 :''}
+                
                 {/**Si no está logueado, no se muestran las opciones de perfil */}
-                {rolG != '4'?
+                {rolG != '5'?
                 <>
-                    <a className={styles.seleccion2} onClick={handleNavigation}> < PersonIcon /></a>
+                    {rolG==null ? 
+                        <a className={styles.seleccion2} onClick={handleNavigation}> < PersonIcon /></a>
+                    :
+                    <div className={styles.iconoUser}> 
+
+                        <a className={styles.seleccion2} onMouseEnter={toggleMenu2}> < PersonIcon /> </a>
+
+                        {isMenu2Open && (
+                            <a className={styles.dropdownContent2} onMouseLeave={closeMenu2}>
+                             <Accordion2Usage />
+                            </a>   
+                        )}
+                    </div>  
+                    }
+                    
+                    
 
                     <a className={styles.seleccion2} onClick={handleNavigationCarrito}> < CarritoMenuAdmin /></a>
-                    </>
+                </>
                 :''}
 
             </div>
