@@ -40,7 +40,7 @@ const CatalogoProducto =()=> {
 
     return (
         <div className={styles.container} style={{marginTop: isAdmin ? '75px' : '0'}}>
-            <h2>| Catálogo de Productos |</h2>
+            <h2>CÁTALOGO DE PRODUCTOS </h2>
 
             {isProducto && 
             <div className={styles.contBotonProductoNew}> 

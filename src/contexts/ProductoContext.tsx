@@ -35,13 +35,9 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     const [loading, setLoading] = useState<boolean>(false);
     const [historial, setHistorial] = useState([])
     const [error, setError] = useState(null);
-    const {mostrarMensaje} = useNotification()
+   
   
-    useEffect(() => {
-      if (!loading) {
-        fetchProductos(); // Solo recargar productos cuando ya no se esté cargando
-      }
-    }, [loading]); 
+    
 //GET
     const fetchProductos = async () => {
         setLoading(true);

@@ -18,7 +18,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { styled } from "@mui/material/styles";
 
 export default function CardPrducto(props:ProductoGet) {
 const {eliminarProducto, obtenerHistorial, loading, historial }= useProductos()
@@ -65,36 +65,46 @@ const closeHistorial=()=>{
     setOpenHistorial(false)
 }
 
+const SmallIconButton = styled(IconButton)(({ theme }) => ({
+   color: theme.palette.grey[600], // Color gris
+   padding:"5px",
+   marginBottom:"50px",
+
+    
+   // Asegúrate de usar flexbox dentro del botón
+    
+   
+    "& svg": {
+      fontSize: "1.4rem", // Tamaño del ícono
+      
+    },
+  }));
+
 return (
     <>
-    <Card sx={{ maxWidth: 345 }} className={style.card} key={props.id} >
-        <CardHeader
-            className={style.header}
-            avatar={
-                    <Avatar sx={{ bgcolor: "#a27eea" }} aria-label="recipe">
-                        Ro
-                    </Avatar>
-                    }
+    <Card sx={{ maxWidth: 300, fontSize:"1rem"}} className={style.card} key={props.id} >
+        <CardHeader className={style.header}
+            
+            
             action={
-                <>
-                   <IconButton color="primary" onClick={() => modalProducto()}>
-                        <EditIcon />
-                    </IconButton>
+                <>  <SmallIconButton onClick={() => modalProducto()}>
+                <EditIcon />
+              </SmallIconButton>
 
-                    <IconButton color="primary" onClick={() =>eliminar(props) }>
+                    <SmallIconButton onClick={() =>eliminar(props) }>
                        <DeleteIcon />
-                    </IconButton>
+                    </SmallIconButton>
 
-                    <IconButton color="primary" onClick={() =>handleHistorial(props.id) }>
+                    <SmallIconButton onClick={() =>handleHistorial(props.id) }>
                         
                         {!loading ? <HistoryIcon /> 
                             : 
-                            <Stack spacing={2} direction="row" alignItems="center">
-                                <CircularProgress size="20px" />
+                            <Stack spacing={2} direction="row" alignItems="left">
+                               
                             </Stack>
                         }   
                         
-                    </IconButton>
+                    </SmallIconButton>
 
                 </>
                 }

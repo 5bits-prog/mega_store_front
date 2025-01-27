@@ -57,7 +57,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         
     }catch(error: unknown){
         if (error instanceof AxiosError) {
-            mostrarMensaje(error.response?.data.errors)
+            Notificaciones.error(error.response?.data.errors)
             console.log(error.response?.data.errors);  // Accediendo a 'errors'
           } else {
             console.error("Error desconocido", error);
