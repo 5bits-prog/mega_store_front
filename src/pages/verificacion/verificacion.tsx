@@ -67,7 +67,7 @@ const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
     const reenviar = ()=>{
         const datos: Reenviar = { email };  // Crear un objeto con la estructura de la interfaz
         reenviarCodi(datos);
-    }
+    } 
 
     return (
         <StyledWrapper>
@@ -143,9 +143,10 @@ const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
                 /> 
             </div>
             <button className={style.verifyButton} type="submit">Verificar</button>
-            <button className={style.exitBtn} onClick={onCerrar}>×</button>
+            
             <p className={style.resendNote}>¿No recibiste el código? <button className={style.resendBtn} onClick={()=>reenviar()}>Reenviar Código</button></p>
         </form>
+        <button className={style.exitBtn} onClick={() =>  onCerrar()}>X</button>
         </StyledWrapper>
     );
 }

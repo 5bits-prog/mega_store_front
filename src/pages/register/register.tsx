@@ -13,7 +13,7 @@ import { useRegister} from "../../contexts/RegisterContext";
 
 
 const Register: React.FC = () => {
-    const {Registrar, VerificarUsuario,loading, loadingVerificacion, setearEmail}=useRegister()
+    const {Registrar, VerificarUsuario,loading, loadingVerificacion, setearEmail, cerrarModal}=useRegister()
     
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -36,7 +36,7 @@ const Register: React.FC = () => {
 
     // Función para manejar el envío del formulario de registro
     const onSubmitRegister = (data: any) => {
-        const dataWithRole = { ...data, rol: 4 };  // Agrega el atributo rol con valor 4
+        const dataWithRole = { ...data, rolId: 4 };  // Agrega el atributo rol con valor 4
         console.log('data', dataWithRole);
         const email = data.email; 
         Registrar(dataWithRole)
@@ -44,13 +44,10 @@ const Register: React.FC = () => {
         console.log('email register', email)
     };
     
-    //Funcion para que aparezca el dialog del codigo de verificacion
-    const modalCodigoVerificacion=()=>{
-        setDialogOpen(!isDialogOpen)
-    }
+   
 
     const handleCerrarForm = () => {
-        setDialogOpen(false);
+        cerrarModal()
     };
     
     return (
@@ -158,7 +155,8 @@ const Register: React.FC = () => {
                 type="text" 
                 {...registerRegister('direccionEnvio')} // Registrar el campo nombre
             />
-            {errorsRegister.envio && typeof errorsRegister.envio.message === 'string' && (<p className={Style.alerts}>{errorsRegister.envio.message}</p>)}
+            {errorsRegister.direccionEnvio && typeof errorsRegister.direccionEnvio.message === 'string' && (<p className={Style.alerts}>{errorsRegister.direccionEnvio.message}</p>)}
+
             </Box> 
                 
             {/*TELÉFONO*/}
@@ -177,7 +175,7 @@ const Register: React.FC = () => {
             </Box> 
             
             </div>
-            {errorsRegister.numeroTelefono && typeof errorsRegister.numeroTelefono.message === 'string' && (<p className={Style.alertsTel}>{errorsRegister.numeroTelefono.message}</p>)}
+            {errorsRegister.telefono && typeof errorsRegister.telefono.message === 'string' && (<p className={Style.alertsTel}>{errorsRegister.telefono.message}</p>)}
             
             </div>
         </div>

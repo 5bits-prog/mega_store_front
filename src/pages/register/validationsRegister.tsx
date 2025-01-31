@@ -18,7 +18,7 @@ const validationsRegister=z.object({
       .min(1, { message: 'Contraseña no puede estar vacío.' })
       .min(8, { message: 'Contraseña debe tener al menos 8 caracteres.' })
       .max(100,{message: 'Contraseña no puede superar los 100 caracteres'})
-      .regex(/^[A-Za-z0-9áéíóúÁÉÍÓÚ\s]+$/,{ message: 'Contraseña contiene caracteres no permitidos.' })
+      // .regex(/^[A-Za-z0-9áéíóúÁÉÍÓÚ\s]+$/,{ message: 'Contraseña contiene caracteres no permitidos.' })
       .regex(/^(?!.*\s{2,}).*$/, { message: "Contraseña no puede contener espacios consecutivos"})
       .refine((val) => !(val.length === 1 && val === ' '), { message: 'Contraseña no puede estar vacío.' })
       .refine((value) => /[A-Z]/.test(value), { message: "La contraseña debe contener al menos una letra mayúscula." }) 
@@ -28,10 +28,17 @@ const validationsRegister=z.object({
       .string()
       .max(100, { message: 'No debe superar los 100 caracteres.' }),
     telefono:z
-     .string()
-     .regex(/^\+?[0-9]+$/, { message: 'Teléfono debe ser un número' })
-     .min(8, { message: 'Debe tener al menos 8 dígitos.' })
-     .max(15,{message: 'No debe superar los 15 dígitos'}),
+      .string()
+      .optional() // Permite que el campo sea opcional
+      .refine((value) => !value || /^\+?[0-9]+$/.test(value), {
+        message: 'Teléfono debe ser un número',
+      })
+      .refine((value) => !value || value.length >= 8, {
+        message: 'Debe tener al menos 8 dígitos.',
+      })
+      .refine((value) => !value || value.length <= 15, {
+        message: 'No debe superar los 15 dígitos.',
+      }),
      
     confirmacion:z
       .string()

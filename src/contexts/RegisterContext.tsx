@@ -15,6 +15,7 @@ interface RegisterContextType {
     email: string;
     setearEmail: (email:string)=>void;
     reenviarCodi: (email:Reenviar)=>void;
+    cerrarModal: ()=>void;
 }
 
 // Crea el contexto con un valor inicial vacío
@@ -103,11 +104,14 @@ const setearEmail=async(email:string)=>{
     }
     
   };
+  const cerrarModal = ()=>{
+    setLoadingVerificacion(false)
+  }
 
 
 
   return (
-    <RegisterContext.Provider value={{ loading, Registrar , VerificarUsuario , loadingVerificacion, email, setearEmail, reenviarCodi}}>
+    <RegisterContext.Provider value={{ loading, Registrar , VerificarUsuario , loadingVerificacion, email, setearEmail, reenviarCodi, cerrarModal}}>
       {children}
     </RegisterContext.Provider>
   );
