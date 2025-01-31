@@ -142,7 +142,7 @@ body {
     color:white;
     display:flex; /*el link abarcará todo el ancho de la pantalla*/
     height: 100%;
-    width:33%;
+    width:40%;
     font-family: lato, arial;
     font-size: clamp(0.5rem, 1vw,1.3rem);
     align-items: center;
@@ -155,15 +155,14 @@ body {
     cursor: pointer;
     transition: background-color 0.3s;
     box-sizing: border-box; /* Incluye padding y borde en el ancho total */
-    width: 9vw; /* Asegúrate de que ocupe el ancho completo del contenedor */
+    width: 8vw; /* Asegúrate de que ocupe el ancho completo del contenedor */
     align-items: center;
     justify-content: center;
     color: white;
     text-decoration: none;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
-    padding-left:10px;
-    padding-right:10px;
+   
     
     
 }
@@ -175,7 +174,7 @@ body {
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 50%; 
+    top: 10%; 
     left: 50%; 
     transform: translate(-50%, 30%); 
     width: 140px;
@@ -186,12 +185,13 @@ body {
 }
 .dropdownContent2::before { 
     content: '';
-    top: 50%; 
-    left: 50%; 
-    transform: translate(290%, -200%); 
+    position: absolute;
+    top: -9px; /* Posiciona la flecha justo encima del menú */
+    left: 50%; /* Coloca la flecha en el centro del menú */
+    transform: translateX(-50%); /* Ajusta para que la flecha esté alineada al centro */
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 10px solid white; 
+    border-bottom: 10px solid white; /* Color de la flecha */
     width: 0;
     height: 0;
 }

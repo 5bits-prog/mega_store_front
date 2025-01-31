@@ -93,7 +93,7 @@ const Menu = () => {
                     </a>   
                 )}
             </div> 
-            <h1  className={styles.title} onClick={()=>handleHome()}>{isHome ? 'MEGASTORE': 'PANEL DE ADMINISTRADOR'} </h1> 
+            <h1  className={styles.title} onClick={()=>handleHome()}>{isHome ? 'MEGASTORE': 'MEGASTORE'} </h1> 
 
             <div className={styles.components}>
 

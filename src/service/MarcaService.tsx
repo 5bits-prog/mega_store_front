@@ -13,15 +13,40 @@ export async function getMarcas() {
 }
 
 export async function newMarca(marca: Marca) {
-    const {data : respuesta} = await api.post(API_ROUTES.POST_MARCA, marca); 
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('Token no disponible. El usuario no está autenticado.');
+    }
+
+    const { data: respuesta } = await api.post(
+        API_ROUTES.POST_MARCA,
+        marca,
+        {
+            headers: {
+                Authorization: `Token ${token}`,
+            },
+        }
+    );
+
     return respuesta;
-    
 }
 
+
 export async function putMarca(marca: Marca) {
-    const {data : respuesta} = await api.put(API_ROUTES.POST_MARCA, marca); 
-    return respuesta;
-}
+   
+    const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('Token no disponible. El usuario no está autenticado.');
+        }
+        
+        const {data : respuesta} = await api.put(API_ROUTES.POST_MARCA, marca ,{
+            headers: {
+                Authorization: `Token ${token}`,
+            },  
+        }); 
+        return respuesta;
+    }
+    
 
 export const deleteMarca = async (id: string) => {
     const response = await api.delete(API_ROUTES.DELETE_MARCA(id)); 
