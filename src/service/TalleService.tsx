@@ -12,14 +12,32 @@ export async function getTalles(){
 }
 
 export async function newTalle(data :Talle) {
-    const {data : respuesta} = await api.post(API_ROUTES.POST_TALLE, data); 
-    return respuesta;   
-}
+    
+      const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('Token no disponible. El usuario no está autenticado.');
+        }
+        const {data : respuesta} = await api.post(API_ROUTES.POST_TALLE, data,{ 
+            headers: {
+                Authorization: `Token ${token}`,
+            },  
+        }); 
+        return respuesta;
+    } 
 
 export async function putTalle(data : Talle) {
-    const {data : respuesta} = await api.put(API_ROUTES.PUT_TALLE, data); 
+   
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('Token no disponible. El usuario no está autenticado.');
+    }
+    const {data : respuesta} = await api.put(API_ROUTES.PUT_TALLE, data,{
+        headers: {
+            Authorization: `Token ${token}`,
+        },  
+    }); 
     return respuesta;
-}
+} 
 
 export const deleteTalle = async (id: string) => {
     const response = await api.delete(API_ROUTES.DELETE_TALLE(id)); 

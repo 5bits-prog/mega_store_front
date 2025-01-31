@@ -12,12 +12,29 @@ export async function getColores(){
 }
 
 export async function newColor(color :Color) {
-    const {data : respuesta} = await api.post(API_ROUTES.POST_COLOR, color); 
-    return respuesta;   
-}
-
+   
+    const token = localStorage.getItem('token');
+           if (!token) {
+               throw new Error('Token no disponible. El usuario no está autenticado.');
+           }
+           const {data : respuesta} = await api.post(API_ROUTES.POST_COLOR, color,{
+               headers: {
+                   Authorization: `Token ${token}`,
+               },  
+           }); 
+           return respuesta;
+       }
 export async function putColor(color :Color) {
-    const {data : respuesta} = await api.put(API_ROUTES.PUT_COLOR, color); 
+   
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('Token no disponible. El usuario no está autenticado.');
+    }
+    const {data : respuesta} = await api.put(API_ROUTES.PUT_COLOR, color,{ 
+        headers: {
+            Authorization: `Token ${token}`,
+        },  
+    }); 
     return respuesta;
 }
 

@@ -113,9 +113,14 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
   //DELETE
   const eliminarProducto = async (objeto: ProductoGet) => {
     try {
+         
           const id = String(objeto.id)
+          console.log(objeto.id)
           const respuesta = await deleteProducto(id);
-          console.log(respuesta.data); 
+          if (respuesta.status !== 200) {
+            throw new Error(`Error al eliminar el producto. Status: ${respuesta.status}`);
+        }
+          console.log("producto eliminado"); 
           fetchProductos();
           Notificaciones.exito('Producto eliminado con exito')
         } catch (error) {

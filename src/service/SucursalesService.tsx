@@ -12,13 +12,31 @@ export async function getSucursales (){
 }
 
 export async function newSucursal(sucursal: Sucursal) {
-    const {data : respuesta} = await api.post(API_ROUTES.POST_SUCURSAL, sucursal); 
-    return respuesta;
+    const token = localStorage.getItem('token');
+        if (!token) {
+            throw new Error('Token no disponible. El usuario no está autenticado.');
+        }
+        const {data : respuesta} = await api.post(API_ROUTES.POST_SUCURSAL, sucursal,{
+            headers: {
+                Authorization: `Token ${token}`,
+            },  
+        }); 
+        return respuesta;
+    }
     
-}
+    
 
 export async function putSucursal(sucursal: Sucursal) {
-    const {data : respuesta} = await api.put(API_ROUTES.PUT_SUCURSAL, sucursal); 
+   
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('Token no disponible. El usuario no está autenticado.');
+    }
+    const {data : respuesta} = await api.put(API_ROUTES.PUT_SUCURSAL, sucursal,{ 
+        headers: {
+            Authorization: `Token ${token}`,
+        },  
+    }); 
     return respuesta;
 }
 
