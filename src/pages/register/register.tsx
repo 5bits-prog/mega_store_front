@@ -9,9 +9,11 @@ import CodigoVerificacion from "../verificacion/verificacion";
 import Dialog from '@mui/material/Dialog'; // Dialog (se usa como un modal)
 import DialogContent from '@mui/material/DialogContent'; // Contenido del modal de Material UI
 import '../verificacion/verificacion.module.css';
+import { useRegister} from "../../contexts/RegisterContext";
 
 
 const Register: React.FC = () => {
+    const {Registrar, VerificarUsuario,loading, loadingVerificacion, setearEmail, cerrarModal}=useRegister()
     
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -31,22 +33,26 @@ const Register: React.FC = () => {
     const { register: registerRegister, handleSubmit: handleSubmitRegister, formState: { errors: errorsRegister } } = useForm({
         resolver: zodResolver(validationsRegister), // Usar el esquema de validación para el registro
     });
+
     // Función para manejar el envío del formulario de registro
     const onSubmitRegister = (data: any) => {
-        console.log(data); // Manejar datos del formulario de registro
+        const dataWithRole = { ...data, rolId: 4 };  // Agrega el atributo rol con valor 4
+        console.log('data', dataWithRole);
+        const email = data.email; 
+        Registrar(dataWithRole)
+        setearEmail(email)
+        console.log('email register', email)
     };
     
-    //Funcion para que aparezca el dialog del codigo de verificacion
-    const modalCodigoVerificacion=()=>{
-        setDialogOpen(!isDialogOpen)
-    }
+   
 
     const handleCerrarForm = () => {
-        setDialogOpen(false);
+        cerrarModal()
     };
     
     return (
     <div className={Style.screen}>
+
         <div className={Style.container}>
         {/* FORMULARIO DE REGISTRO */}
         <form className={Style.registerForm} onSubmit={handleSubmitRegister(onSubmitRegister)}>
@@ -102,10 +108,10 @@ const Register: React.FC = () => {
                 </IconButton>
             </InputAdornment>
         }
-        {...registerRegister('contrasena')} // Registrar el campo contraseña
+        {...registerRegister('password')} // Registrar el campo contraseña
     />
 </FormControl>
-{errorsRegister.contrasena && typeof errorsRegister.contrasena.message === 'string' && (<p className={Style.alerts}>{errorsRegister.contrasena.message}</p>)}
+{errorsRegister.password && typeof errorsRegister.password.message === 'string' && (<p className={Style.alerts}>{errorsRegister.password.message}</p>)}
                 
             {/*CONFIRMACIÓN CONTRASEÑA*/}
             <div className={Style.container2}>
@@ -128,7 +134,8 @@ const Register: React.FC = () => {
                 </IconButton>
             </InputAdornment>
         }
-        {...registerRegister('confirmacion')} // Registrar el campo contraseña
+        {...registerRegister('confirmacion')}
+        
     />
 </FormControl>
 {errorsRegister.confirmacion && typeof errorsRegister.confirmacion.message === 'string' && (<p className={Style.alerts}>{errorsRegister.confirmacion.message}</p>)}
@@ -146,9 +153,10 @@ const Register: React.FC = () => {
                 variant="standard"
                 label="Dir envío"
                 type="text" 
-                {...registerRegister('envio')} // Registrar el campo nombre
+                {...registerRegister('direccionEnvio')} // Registrar el campo nombre
             />
-            {errorsRegister.envio && typeof errorsRegister.envio.message === 'string' && (<p className={Style.alerts}>{errorsRegister.envio.message}</p>)}
+            {errorsRegister.direccionEnvio && typeof errorsRegister.direccionEnvio.message === 'string' && (<p className={Style.alerts}>{errorsRegister.direccionEnvio.message}</p>)}
+
             </Box> 
                 
             {/*TELÉFONO*/}
@@ -162,22 +170,23 @@ const Register: React.FC = () => {
                 variant="standard"
                 label="Teléfono"
                 type="text" 
-                {...registerRegister('numeroTelefono')} // Registrar el campo nombre
+                {...registerRegister('telefono')} // Registrar el campo nombre
             />
             </Box> 
             
             </div>
-            {errorsRegister.numeroTelefono && typeof errorsRegister.numeroTelefono.message === 'string' && (<p className={Style.alertsTel}>{errorsRegister.numeroTelefono.message}</p>)}
+            {errorsRegister.telefono && typeof errorsRegister.telefono.message === 'string' && (<p className={Style.alertsTel}>{errorsRegister.telefono.message}</p>)}
             
             </div>
         </div>
-            <button type="submit" className={Style.button} onClick={() => modalCodigoVerificacion()}>Registrar</button>
+            <button type="submit" className={Style.button}>Registrar</button>
         </form>
     </div> 
 
     {/* Dialog para el formulario del codigo de verificacion */}
+
     <Dialog 
-    open={isDialogOpen}
+    open={loadingVerificacion}
     onClose={() => setDialogOpen(false)} 
     PaperProps={{
         className: 'verif', // se aplican los estilos CSS de .verif

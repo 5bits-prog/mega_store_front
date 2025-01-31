@@ -95,6 +95,7 @@
     color: black;
     font-size: 1.1em;
     cursor: pointer;
+    z-index: 3;
 }
 .exitBtn:hover{
     background-color: #c99af3;

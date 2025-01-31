@@ -19,6 +19,7 @@ import { ColorProvider } from './contexts/ColorContext';
 import { TalleProvider } from './contexts/TalleContext';
 import { CategoriaProvider } from './contexts/CategoriaContext';
 import { ProductoProvider } from './contexts/ProductoContext';
+import { RegisterProvider } from './contexts/RegisterContext';
 import Nosotros from './pages/nosotros/nosotros';
 import './App.css'
 import AppsRami from './subApps/AppsRami'; //  apps rami
@@ -79,7 +80,14 @@ export function App() {
                     } 
                   />
                   <Route path="/login" element={<Login />} />
-                  <Route path="/sesion" element={<Sesion />} />
+
+                  <Route path="/sesion" 
+                  element={
+                  <RegisterProvider>
+                  <Sesion />
+                  </RegisterProvider>
+                  } />
+
                   <Route path="/catalogoProductos" 
                     element={
                       

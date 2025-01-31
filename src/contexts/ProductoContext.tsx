@@ -35,9 +35,10 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     const [loading, setLoading] = useState<boolean>(false);
     const [historial, setHistorial] = useState([])
     const [error, setError] = useState(null);
-   
+
+    const {mostrarMensaje} = useNotification()
   
-    
+  
 //GET
     const fetchProductos = async () => {
         setLoading(true);

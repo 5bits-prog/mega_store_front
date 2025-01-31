@@ -19,7 +19,7 @@ const CarritoContext = createContext<{
     cambioDeCantidad: (id: number, cantidad:number) => void;
     total: number;
     productosTotales: number;
-    
+
    
     
 } | null>(null);

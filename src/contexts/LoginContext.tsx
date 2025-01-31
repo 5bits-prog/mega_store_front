@@ -41,15 +41,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         const response = await LogionService(username) //le paso los datos del usuario al service
         console.log(response)
         console.log('tokenn se inicio S',response.data.token)
-        setUser(response)
+        setUser(response.data.usuario_id)
         setRol(response.data.rol_id)
         setNombre(response.data.usuario_nombre)
         setToken(response.data.token)
         localStorage.setItem('rol', response.data.rol_id);
         localStorage.setItem('nombre', response.data.usuario_nombre);
-
         localStorage.setItem('token', response.data.token);
-        // mostrarMensaje('Sesion iniciada ')
+        localStorage.setItem('idUser', response.data.usuario_id);
         navigate("/home");
         Notificaciones.exito(`Bienvenido ${response.data.usuario_nombre}, has iniciado sesión exitosamente.`);
 
@@ -70,7 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    setRol('')
+    setRol('0')
     setToken('')
     localStorage.setItem('rol', 'null');
     localStorage.removeItem('rol');  // Elimina el valor de 'rol' de localStorage
