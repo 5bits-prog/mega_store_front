@@ -26,7 +26,11 @@ const validationsRegister=z.object({
       .refine((value) => /\d/.test(value), { message: "La contraseña debe contener al menos un número." }), 
     direccionEnvio:z
       .string()
-      .max(100, { message: 'No debe superar los 100 caracteres.' }),
+      .optional() // Permite que el campo sea opcional
+      .refine((value) => !value || value.length <= 100, {
+      message: 'No debe superar los 100 caracteres.',
+    }),
+    
     telefono:z
       .string()
       .optional() // Permite que el campo sea opcional
