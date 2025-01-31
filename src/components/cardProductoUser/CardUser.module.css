@@ -6,63 +6,69 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    justify-content: center;
+    text-align: center;
     overflow: hidden;
-    border: 1px solid transparent;
+    border: 1px solid grey;
+    border-radius:10px;
     transition: all 0.3s ease-in-out;
+    
     
 }
 .contGeneral:hover{
-    border: 1px solid black;
-    transform:  scale(1.1);
-   
+    border:none;
+
+    transform:  scale(1.05);
     cursor: pointer;
+    box-shadow: 0 0 10px rgba(214, 177, 214, 0.765); /* Agrega una sombra suave */
 }
 .contImg{
-    width: 100%;
+    width: 80%;
+    height:50%;
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    
 }
 .imgProducto{
-    min-width: 80%;
-    width: auto;
-    height:auto;
-    max-height: 45vh;
-    border: none;
+    width: 100%;           /* La imagen ocupará todo el ancho del contenedor */
+    height: 100%;          /* Establece la altura de la imagen relativa al viewport */
+    object-fit: cover;     /* Asegura que la imagen cubra completamente el contenedor sin distorsionarse */
     margin-top: 0px;
-    object-fit: cover;
     border-radius: 0px;
+    border:none;
 }
-
-.contTexto{
+.contDescripcion{
     width: 100%;
-    height: 5vw;
+    max-height: 15vw;
     min-height: 3vw;
     display: flex;
     flex-direction: column;
     overflow: hidden;
     align-items: center; /* Centra horizontalmente */
     justify-content: center; /* Centra verticalmente */
-    margin: auto;
+    border: none;
+  
 }
-.contTexto p{
-    text-align: center;
-    width: 5vw;
-    border: 1px solid #8668c1;
-    box-shadow: -3px 3px 0 #a27eea83;
+
+
+
+.descripcion{
+    font-size: 0.9rem;
+    margin-top:10px;
+    font-family: 'Roboto', sans-serif;
+
+
 }
-.contTexto h1 {
-    width: 100%;
-    max-height: 10vh;
-    padding: 0px 10px 0px 30px;
-    font-size: 1rem;
-    margin: 0;
+
+.precio{
+    font-size:1rem;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    
 }
-.contTexto span {
-    font-size: 0.8rem;
-    /* margin: 0; */
-}
+
 .contCarrito{
     width: 100%;
     height: 2vw;
@@ -75,11 +81,17 @@
 }
 
 .carritoIcon {
-    color: #333; /* Cambia el color del ícono */
+    color: white; /* Cambia el color del ícono */
     font-size: 24px; /* Tamaño del ícono */
     cursor: pointer; /* Cambia el cursor al pasar por encima */
     transition: transform 0.2s; /* Animación opcional */
 }
 .contCarrito:hover .carritoIcon {
     transform: scale(1.2); /* Efecto al pasar el mouse */
+}
+
+.title{
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
 }

@@ -19,6 +19,7 @@ const CarritoContext = createContext<{
     cambioDeCantidad: (id: number, cantidad:number) => void;
     total: number;
     productosTotales: number;
+
    
     
 } | null>(null);
@@ -101,7 +102,7 @@ export const CarritoProvider: React.FC<{ children: React.ReactNode }> = ({ child
     
 
     return (
-        <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDeCarrito,cambioDeCantidad, total, productosTotales }}>
+        <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDeCarrito,cambioDeCantidad, total, productosTotales}}>
             {children}
         </CarritoContext.Provider>
     );

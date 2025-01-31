@@ -10,6 +10,7 @@ body {
     z-index: 100;
     position: relative; /* Asegura que esté por encima */
     align-items: center;
+    justify-content: center;
     justify-content: space-between;
     background-color: #c99af3;
     width: 100%;
@@ -36,7 +37,7 @@ body {
     color: white;
     height: 100%;
     width: 350px;
-    font-size: 18px;
+    font-size: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,8 +45,9 @@ body {
     flex-basis: 100;
     margin: 0px auto 0px auto;
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
-    left: 40%;                   /* Colocar el contenedor en el 50% de la pantalla */
-    font-family:Georgia, 'Times New Roman', Times, serif;
+    left: 37%;                   /* Colocar el contenedor en el 50% de la pantalla */
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
     cursor: pointer;
 }
 
@@ -126,6 +128,8 @@ body {
     padding:0px;
     color:white;
     align-items: center;
+    
+    
 }
 
 .options:hover{
@@ -156,6 +160,10 @@ body {
     justify-content: center;
     color: white;
     text-decoration: none;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    padding-left:10px;
+    padding-right:10px;
     
     
 }

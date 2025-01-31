@@ -6,6 +6,16 @@ import Stack from '@mui/material/Stack';
 import CircularProgress from '@mui/material/CircularProgress';
 import style from './ProductoEspecifico.module.css'
 import { useCarrito } from "../../contexts/CarritoContext";
+import Accordion from '@mui/material/Accordion';
+import AccordionActions from '@mui/material/AccordionActions';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Button from '@mui/material/Button';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
+
 
 
 const ProductoEspecifico = () => {
@@ -38,48 +48,73 @@ const ProductoEspecifico = () => {
   return (
     <div className={style.contGeneral}>
         <div className={style.contIzq}>
-
           <div className={style.contImg}>
-            {!loading ? 
-                <img src={producto?.foto} alt="foto" /> 
+            {!loading ?<Zoom>
+            <img className={style.contImg} src={producto?.foto} alt="foto"  />
+          </Zoom> 
                 :
                 <Stack spacing={2} direction="row" alignItems="center">
                   <CircularProgress size="3rem" />
                 </Stack>
             }
-            
           </div>
         </div>
+      <div className={style.contDer}>
+      <div className={style.contDerSecundario}>
+          <h1 className={style.title}>{producto?.nombre}</h1>
+          <h2 className={style.precio}>${formatearPrecio(producto?.precio || 0)}</h2>
+          <div className={style.contAcordeon}>
+            <Accordion  sx={{ width: '60%' }}>
+              <AccordionSummary  sx={{ width: '100%' }}
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1-content"
+                id="panel1-header">
+                
+              <Typography component="span">Detalles del producto</Typography>
+            </AccordionSummary>
+            <AccordionDetails sx={{ width: '100%' }}>
+            
+            <p className={style.probando} >Stock : {producto?.stockActual === 0 ? 'Sin stock' : producto?.stockActual}</p>
+            <p className={style.probando}>Talle : {producto?.talleId} </p>
+            <p className={style.probando}>Color : {producto?.colorId}</p>
+            
+          
+        </AccordionDetails>
+      </Accordion>
+      <Accordion sx={{ width: '60%' }}>
+        <AccordionSummary sx={{ width: '100%' }}
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2-content"
+          id="panel2-header"
+        >
+          <Typography component="span">Descripción del producto</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ width: '100%' }}>
+          
+        <p className={style.probando}> {producto?.descripcion} </p>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion sx={{ width: '60%' }}>
+        <AccordionSummary sx={{ width: '100%' }}
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2-content"
+          id="panel2-header"
+        >
+          <Typography component="span">Medios de pago</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ width: '80%' }}>
+          Se acepta transferencia y efectivo con un 10% de descuento en el monto total
+        
+        </AccordionDetails>
+      </Accordion>
+     
+      </div>
+      <button className={style.button} onClick={handleAgregarAlCarrito} >AGREGAR A CARRITO</button>
 
-        <div className={style.contDer}>
-
-            <div className={style.contTitulo}>
-                <h2>
-                  NIKE
-                  {/* {producto?.marcaId} */}
-                  </h2> 
-
-                <h1>{producto?.nombre}</h1> 
-                <h3> ${formatearPrecio(producto?.precio || 0)}</h3>
             </div>
-            <hr />
-            <div className={style.contInfo}>
-              <h2>STOCK</h2>
-              <h3> {producto?.stockActual === 0 ? 'Sin stock' : producto?.stockActual} </h3>
+            
 
-              <h2>TALLE</h2>
-              <h3>{producto?.talleId}</h3> 
-
-              <h2>COLOR</h2>
-              <h3> {producto?.colorId}</h3> 
-
-              <h2> DESCRIPCIÓN</h2>
-              <h3>{producto?.descripcion}</h3> 
-
-            </div>
-
-            <button className={style.botonCarrito} onClick={handleAgregarAlCarrito} >AGREGAR A CARRITO</button>
-
+           
         </div>
     </div>
   )
