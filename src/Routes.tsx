@@ -51,6 +51,9 @@ export const API_ROUTES = {
     POST_USUARIO:'/auth/usuario',
     REENVIAR_CODIGO:'/auth/usuario/reenviar-codigo',
     VERIFICAR:'/auth/usuario/verificar',
+
+    //VENTA
+    POST_VENTA:'/products/venta',
     //El resto de URLS...
 
   };
