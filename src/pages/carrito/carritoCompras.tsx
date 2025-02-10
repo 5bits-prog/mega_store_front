@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 const CarritoCompras = () => { // Usar el contexto para acceder al carrito
-
+   
 const { carrito, eliminarDeCarrito, total, productosTotales} = useCarrito();
 
 const [carritoVacio, setCarritoVacio] = useState(false);
@@ -44,7 +44,7 @@ return (
         {/*Si el carrito no tiene productos*/}
         {carritoVacio ? (
             <div>
-                <p className={style.vacio}>No hay productos en tu carrito <SentimentVeryDissatisfiedIcon /></p>
+                <p className={style.vacio}>Actualmente no hay productos en tu carrito <SentimentVeryDissatisfiedIcon /></p>
                 <p>¡Te invitamos a visitar nuestro <a className={style.link} onClick={handleNavigation}>catálogo</a>!</p>
             </div>
         ) : (

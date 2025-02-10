@@ -1,5 +1,5 @@
 import { Producto } from './interfazProducto';
-import CardPrducto from '../../components/cardProductoAdmin/card';
+import CardProducto from '../../components/cardProductoAdmin/listaProductos';
 import CardUser from '../../components/cardProductoUser/CardUser';
 import styles from './catalogoProductos.module.css'
 import { useLocation } from 'react-router-dom';
@@ -11,6 +11,9 @@ import DialogActions from '@mui/material/DialogActions'; // Acciones como botone
 import Button from '@mui/material/Button'; // Botón de Material UI
 import ZoomBoton from '../../components/transitions/buttomzoom';  
 import { useProductos } from '../../contexts/ProductoContext';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+
+
 
 interface CatalogoProductoProps {
     productos: Producto[]; // Usar la interfaz
@@ -39,37 +42,27 @@ const CatalogoProducto =()=> {
     },[])
 
     return (
+        
         <div className={styles.container} style={{marginTop: isAdmin ? '75px' : '0'}}>
-            <h2>CÁTALOGO DE PRODUCTOS </h2>
-
             {isProducto && 
-            <div className={styles.contBotonProductoNew}> 
-                <Button onClick={() => modalProducto()}
-                sx={{
-                    color: 'BLACK',  // Color del texto del botón
-                    transition: 'background-color 0.3s',
-                    display: 'block',  // Hace que el botón ocupe toda la línea disponible
-                    width: '100%',
-                    '&:hover': {
-                // Color al pasar el ratón sobre el botón
-                        color: 'BLACK'  // Cambia el color del texto cuando el ratón está sobre el botón
-                    }
-                    }}>
-                    Nuevo
-                </Button>
-            </div>}
-            
-
-            <div className={styles.listado}>
-                {(productos || []).map((producto) => (
-
-                    isAdmin ? (
-                        <CardPrducto key={producto.id}  {...producto} />
+            <button className={styles.button} onClick={() => modalProducto()}><AddCircleIcon /></button>}
+                {isAdmin ? (
+                        <div>
+                        <h2>ADMINISTRACIÓN DE PRODUCTOS </h2>
+                        {(productos || []).map((producto) => (
+                        <CardProducto key={producto.id}  {...producto} />
+                        ))}
+                        </div>
                     ) : (
+                        <div className={styles.listado}>
+                        <h2>CATÁLOGO DE PRODUCTOS </h2>
+                        {(productos || []).map((producto) => (
                         <CardUser key={producto.id}  {...producto}/>
-                    )
-                    ))}
-            </div>
+                        ))}
+                        </div>
+                    )}
+                   
+            
 
             {/* Dialog para el formulario de Registrar Producto */}
             <Dialog open={isDialogOpen} onClose={toggleMenu} fullWidth maxWidth="sm">

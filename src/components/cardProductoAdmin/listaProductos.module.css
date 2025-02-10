@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+ .list{  /*  CONTENEDOR GENERAL, define el tamanaño y color*/
+    display:flex;
+    flex-direction: row;
+    width:100% !important;
+    height: auto;
+    max-height: 30vh;
+    background-color:white;
+    overflow: hidden;
+    border-radius: 15px !important;
+    text-align:Center;
+    border: 1.5px solid grey;
+    margin-top:8px  !important;
+    margin-bottom:8px !important;
+  
+    
+    
+
+}
+
+.item{ /*  CONTENEDOR DEl ITEM */
+    height: 5vh !important;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.atributos{
+    padding: 2px 20px;
+    background-color: white;
+    border: solid grey 2px;
+    border-radius: 15px;
+    margin-right:25px;
+    min-width: 25px;  /* Mantiene un ancho mínimo */
+    height: 20px;  /* Fija la altura para todos */
+    white-space: nowrap; /* Evita saltos de línea */
+    text-align: center;
+}
+
+.stock{
+    padding:2px 20px;
+    background-color: white;
+    border: solid grey 2px;
+    border-radius: 15px;
+    margin-right:25px;
+    min-width: 25px;  /* Mantiene un ancho mínimo */
+    height: 20px;  /* Fija la altura para todos */
+    white-space: nowrap; /* Evita saltos de línea */
+    text-align: center;
+
+}
+
+.redBorder {
+    border-color: red;
+    color:Red;
+  }
+  
+  .yellowBorder {
+    border-color: orange;
+    color:orange;
+    
+  }
+  
+  .greenBorder {
+    border-color: green;
+    color:green;
+  }
+
+  .contImg {
+    flex-shrink: 0; 
+    width: 80px; 
+    height: 80px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left:10px;
+    border-radius: 5px;
+}
+
+
+
+/*Imagen especificamente*/
+
+.contImg img {
+    width: 100%; /* La imagen ocupa todo el cuadro */
+    height: 100%;
+    object-fit: cover; /* la imagen cubre todo el contenedor,manteniendo su proporción y recortando las áreas sobrantes*/
+    border:none;  
+}
+
+
+.historialHeader {
+
+  position: sticky; /* Fija el encabezado al inicio del contenedor */
+  top: 0; /* Siempre al principio */
+  width: 100%;
+  height:25px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  background-color: #a27eea; /* Fondo igual al contenedor */
+  margin: 0;
+}
+.historialHeader h1{
+  font-size: 1rem;
+  margin: 0;
+  color: #eee8fa;
+}
+
+.botonClose{
+  margin-right: 5px !important;
+  /* margin-right: 5px !important; */
+  color: #eee8fa !important;
+  
+  
+}
+.historialContent {
+  overflow-y: auto; /* Habilita el scroll solo en el contenido */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin:0;
+  padding:0;
+ 
+
+  
+}
+
+.renglon{
+  border-bottom:1.5px solid grey;
+  
+}
+
+.probando{
+  padding-left:5px;
+
+}
