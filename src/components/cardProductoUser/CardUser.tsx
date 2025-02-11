@@ -29,7 +29,7 @@ const CardUser: React.FC<ProductoGet> = (props) => {
         };
 
     return(
-        <div className={style.contGeneral} onDoubleClick={() => openProducto(props)}>
+        <div className={style.contGeneral} onClick={() => openProducto(props)}>
             <p className={style.title}>{props.nombre}</p>
             <div className={style.contImg}>
                 <img src={props.foto} alt="Remera Negra" className={style.imgProducto} />

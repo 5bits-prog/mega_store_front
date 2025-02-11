@@ -17,7 +17,7 @@ export interface Producto {
     colorId: number;
     fechaCreacion?:string;
 }
-interface Sucursal {
+export interface Sucursal {
     idSucursal?: number;
     nombreSucursal: string;
     fechaDeEliminacion?: string;   

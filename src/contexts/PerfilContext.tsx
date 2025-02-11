@@ -39,14 +39,35 @@ export const PerfilProvider: React.FC<PerfilProviderProps> = ({ children }) => {
   const [error, setError] = useState<string | null>(null); // Estado de error
  
   // GET Función para obtener los datos del perfil
-  const fetchPerfil = async () => {
-    setLoading(true);
-    setError(null); // Limpiamos el error antes de la llamada
-    try {
-      const id = localStorage.getItem("idUser")|| ''
-      
-      const response = await getDatosPerfil(id); // Llama al servicio para obtener los datos
-      console.log("Respuesta obtenida:", response.data);
+const fetchPerfil = async () => {
+  setLoading(true);
+  setError(null); // Limpiamos el error antes de la llamada
+
+  // Verificamos si ya tenemos el perfil almacenado en localStorage
+  const storedPerfil = localStorage.getItem("perfilUsuario");
+
+  if (storedPerfil) {
+    console.log("existe")
+    // Si ya existe el perfil en localStorage, lo cargamos directamente
+    setDatosPerfil(JSON.parse(storedPerfil));
+    setLoading(false);
+    return;  // No realizamos la llamada al backend
+  }
+
+  // Si no encontramos el perfil en localStorage, realizamos la llamada al backend
+  try {
+    console.log("no existe")
+    const id = localStorage.getItem("idUser") || '';
+    console.log(id)
+    if (!id) {
+      setError("Usuario no autenticado");
+      return;
+    }
+    localStorage.removeItem("perfilUsuario");
+    
+    // Llamamos al servicio para obtener los datos del perfil desde el backend
+    const response = await getDatosPerfil(id); 
+    console.log("Respuesta obtenida:", response.data);
 
       //Definimos la data que necesitamos recuperar
       const perfil: Perfil = {
@@ -91,6 +112,7 @@ export const PerfilProvider: React.FC<PerfilProviderProps> = ({ children }) => {
 
       // Actualizamos el perfil en el estado y localStorage
       setDatosPerfil(updatedPerfil);
+       console.log("Datos del perfil enviados al backend");
       localStorage.setItem("perfilUsuario", JSON.stringify(updatedPerfil));
 
     } catch (err: any) {

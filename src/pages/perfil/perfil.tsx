@@ -86,9 +86,11 @@ const manejarSeleccionDeArchivo = async (e: React.ChangeEvent<HTMLInputElement>)
       email: data.email,
       direccionEnvio: data.direccionEnvio,
       telefono: data.numeroTelefono,
+      
     });
+    
   
-    console.log("Datos del perfil enviados al backend");
+   
   };
   
 

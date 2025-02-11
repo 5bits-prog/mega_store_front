@@ -22,7 +22,8 @@
     align-items: center;
     justify-content: center;
     min-width: 25vw;
-    min-height: 18vw;
+    min-height: 10vw;
+    max-height:35vw;
     position: relative;
     overflow: hidden; /* Para evitar que la imagen sobresalga */
     border: none;
