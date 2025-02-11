@@ -6,11 +6,13 @@ import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
+import { useVenta } from '../../contexts/VentaContext.tsx';
 
 
 const CarritoCompras = () => { // Usar el contexto para acceder al carrito
    
 const { carrito, eliminarDeCarrito, total, productosTotales} = useCarrito();
+const {registrarVenta, loading} = useVenta()
 
 const [carritoVacio, setCarritoVacio] = useState(false);
 
@@ -38,6 +40,16 @@ const formatearPrecio = (precio: number): string => {
 
 const [hovered, setHovered] = useState(false);
 
+const venta = () => {
+    const productos = carrito.map(item => ({
+        idProducto: item.id,
+        cantidad: item.cantidad
+    }));
+    console.log('productos', productos)
+    registrarVenta(productos)
+    navigate('/appsRami/mercadoPago')
+}
+
 return (
     <div className={style.contGeneral}>
         <h1 className={style.title}>TU CARRITO</h1>
@@ -48,18 +60,20 @@ return (
                 <p>¡Te invitamos a visitar nuestro <a className={style.link} onClick={handleNavigation}>catálogo</a>!</p>
             </div>
         ) : (
+
         carrito.map((producto) => (
             <div className={style.contProducto} key={producto.id}>
                 <div className={style.contImg}>
                     <img src={producto.imagen} alt="foto producto" />
                 </div>
-                <BasicSelect cantidad={producto.cantidad} stockActual={10} idProducto={producto.id} />
+                <BasicSelect cantidad={producto.cantidad} stockActual={producto.stockActual} idProducto={producto.id} />
                 <p className={style.text}>{producto.nombre}</p>
                 <p className={style.text}>${formatearPrecio(producto.precio)}</p>
                 <button className={style.botonDelete} onClick={() => eliminar(producto.id)}> <DeleteForeverIcon /></button>
             </div>
             ))
         )}
+
         <div className={style.total}>
             <div className={style.resumen}>
                 <p>TOTAL</p>
@@ -67,9 +81,10 @@ return (
                 <p>${formatearPrecio(total)}</p>
             </div>
         </div>
+
         {/*Si el carrito tiene productos*/}
         {!carritoVacio && (
-            <button className={style.button} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
+            <button className={style.button} onClick={()=>venta()} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} >
                 {hovered ? "INICIAR COMPRA" : <AttachMoneyIcon />}
             </button>
             )}
