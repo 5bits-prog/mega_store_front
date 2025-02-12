@@ -8,6 +8,7 @@
     overflow-y: auto; /* Permite el scroll vertical */
     min-height: 70vh;
     margin-top: 75px;
+    width: 100%;
 }
 .container{
     display: flex;

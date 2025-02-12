@@ -29,6 +29,7 @@ import { CarritoProvider } from './contexts/CarritoContext';
 import { PerfilProvider } from './contexts/PerfilContext';
 import { ToastContainer } from 'react-toastify';  // Importa el ToastContainer
 import 'react-toastify/dist/ReactToastify.css';  // Importa los estilos de react-toastify
+import { MovimientoStockProvider } from './contexts/MovimientoStockContext';
 
 export function App() {
   return (
@@ -91,28 +92,32 @@ export function App() {
                   <Route path="/catalogoProductos" 
                     element={
                       
-                      <MarcaProvider>
+                      <MovimientoStockProvider>
+                        <MarcaProvider>
                           <SucursalProvider>
                             <ColorProvider>
                               <TalleProvider>
                                 <CategoriaProvider>
                                   <ProductoProvider>
                                     <CatalogoProducto />
-                                  </ProductoProvider> 
+                                  </ProductoProvider>
                                 </CategoriaProvider>
                               </TalleProvider>
                             </ColorProvider>
                           </SucursalProvider>
-                      </MarcaProvider>
+                        </MarcaProvider>
+                      </MovimientoStockProvider>
                     } 
                   />
 
                   <Route
                     path="/home"
                     element={
-                      <ProductoProvider>
-                        <Home />
-                      </ProductoProvider>
+                      <MovimientoStockProvider>
+                        <ProductoProvider>
+                          <Home />
+                        </ProductoProvider> 
+                      </MovimientoStockProvider>
                     }
                   />
 

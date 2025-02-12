@@ -22,6 +22,7 @@ const Sesion: React.FC = () => {
         }, []); 
 
     return (
+      
     <div className={Style.screen}>
     <div className={Style.container}>
         {/* Botones para cambiar el formulario */}

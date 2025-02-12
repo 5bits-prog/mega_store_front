@@ -45,14 +45,16 @@ body {
     flex-basis: 100;
     margin: 0px auto 0px auto;
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
-    left: 37%;                   /* Colocar el contenedor en el 50% de la pantalla */
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);                   /* Colocar el contenedor en el 50% de la pantalla */
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
     cursor: pointer;
 }
 
 .title:hover{
-    transform: scale(1.1);
+    text-shadow: 0 0 20px #8649ff;
     
 }
 
@@ -91,6 +93,7 @@ body {
     position: absolute;           /* Cambiar a posición absoluta para controlar mejor la ubicación */
     left: 10%;                   /* Colocar el contenedor en el 10% de la pantalla */
     transform: translateX(-50%); /* Ajuste para centrarlo correctamente si es necesario*/
+    font-size: clamp(0.7rem,1vw,0.8rem);  
     
 }
 .dropdownContent {
@@ -162,8 +165,7 @@ body {
     text-decoration: none;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
-   
-    
+    font-size: clamp(0.9rem,1vw,1rem);  
     
 }
 .seleccion2:hover{

@@ -45,7 +45,9 @@ const ProductoEspecifico = () => {
 
   return (
     <div className={style.contGeneral}>
+
         <div className={style.contIzq}>
+
           <div className={style.contImg}>
             {!loading ?<Zoom>
             <img className={style.contImg} src={producto?.foto} alt="foto"  />
@@ -57,63 +59,59 @@ const ProductoEspecifico = () => {
             }
           </div>
         </div>
+
       <div className={style.contDer}>
-      <div className={style.contDerSecundario}>
-          <h1 className={style.title}>{producto?.nombre}</h1>
-          <h2 className={style.precio}>${formatearPrecio(producto?.precio || 0)}</h2>
-          <div className={style.contAcordeon}>
-            <Accordion  sx={{ width: '60%' }}>
-              <AccordionSummary  sx={{ width: '100%' }}
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel1-content"
-                id="panel1-header">
-                
-              <Typography component="span">Detalles del producto</Typography>
-            </AccordionSummary>
-            <AccordionDetails sx={{ width: '100%' }}>
-            
-            <p className={style.probando} >Stock : {producto?.stockActual === 0 ? 'Sin stock' : producto?.stockActual}</p>
-            <p className={style.probando}>Talle : {producto?.talleId} </p>
-            <p className={style.probando}>Color : {producto?.colorId}</p>
-            
-          
-        </AccordionDetails>
-      </Accordion>
-      <Accordion sx={{ width: '60%' }}>
-        <AccordionSummary sx={{ width: '100%' }}
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
-          <Typography component="span">Descripción del producto</Typography>
-        </AccordionSummary>
-        <AccordionDetails sx={{ width: '100%' }}>
-          
-        <p className={style.probando}> {producto?.descripcion} </p>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion sx={{ width: '60%' }}>
-        <AccordionSummary sx={{ width: '100%' }}
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2-content"
-          id="panel2-header"
-        >
-          <Typography component="span">Medios de pago</Typography>
-        </AccordionSummary>
-        <AccordionDetails sx={{ width: '80%' }}>
-          Se acepta transferencia y efectivo con un 10% de descuento en el monto total
+        <h1 className={style.title}>{producto?.nombre}</h1>
+        <h2 className={style.precio}>${formatearPrecio(producto?.precio || 0)}</h2>
         
-        </AccordionDetails>
-      </Accordion>
-     
-      </div>
-      <button className={style.button} onClick={handleAgregarAlCarrito} >AGREGAR A CARRITO</button>
+        <div className={style.contDerSecundario}>
+          <h2>Marca {producto?.marcaId}</h2>
+          <div className={style.contInfo}>
+              <p className={style.probando} >Stock : {producto?.stockActual === 0 ? 'Sin stock' : producto?.stockActual}</p>
+              <p className={style.probando}>Talle : {producto?.talleId} </p>
+              <p className={style.probando}>Color : {producto?.colorId}</p>
 
-            </div>
+          </div>
+              
+
+            <div className={style.contAcordeon}> 
+              
+                
+                <Accordion sx={{ width: '60%' }}>
+                  <AccordionSummary sx={{ width: '100%' }}
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2-content"
+                    id="panel2-header"
+                  >
+                    <Typography component="span">Descripción del producto</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ width: '100%' }}>
+                    
+                  <p className={style.probando}> {producto?.descripcion} </p>
+                  </AccordionDetails>
+                </Accordion>
+                <Accordion sx={{ width: '60%' }}>
+                  <AccordionSummary sx={{ width: '100%' }}
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel2-content"
+                    id="panel2-header"
+                  >
+                    <Typography component="span">Medios de pago</Typography>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ width: '80%' }}>
+                    Se acepta transferencia y efectivo con un 10% de descuento en el monto total
+                  
+                  </AccordionDetails>
+                </Accordion>
             
+              </div>
+              <button className={style.button} onClick={handleAgregarAlCarrito} >AGREGAR A CARRITO</button>
 
-           
-        </div>
+          </div>
+              
+
+            
+          </div>
     </div>
   )
 }

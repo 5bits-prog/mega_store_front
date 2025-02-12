@@ -17,6 +17,8 @@ import { List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import InfoProducto from './infoProducto';
 import Zoom from 'react-medium-image-zoom';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import ModalMovimientoStock from '../modalMovimientoStock/modalMovimientoStock';
 
 
 interface Props extends ProductoGet {
@@ -28,11 +30,18 @@ const CardProducto: React.FC<Props> = (props) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [openHistorial, setOpenHistorial] = useState(false);
+  const [openMovimiento, setOpenMovimiento] = useState(false);
   const [infoProductoOpen, setInfoProductoOpen] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState<ProductoGet | null>(null);
 
+
+
   const modalProducto = () => {
     setDialogOpen(!isDialogOpen);
+  };
+
+  const modalMovimiento = () => {
+    setOpenMovimiento(!openMovimiento);
   };
 
   const toggleMenu = () => {
@@ -65,13 +74,7 @@ const CardProducto: React.FC<Props> = (props) => {
   const closeHistorial=()=>{
     setOpenHistorial(false)
 }
-const handleOpenHistorial = () => {
-  setOpenHistorial(true);
-};
 
-const handleCloseHistorial = () => {
-  setOpenHistorial(false);
-};
 
 
   const abrirInfoProducto = (producto: ProductoGet) => {
@@ -121,27 +124,38 @@ const handleCloseHistorial = () => {
               style.greenBorder}`}>
              {props.stockActual}
         </div>
+
         {/*ICONOS*/}
         <ListItemIcon>
           <SmallIconButton onClick={() => abrirInfoProducto(props)}>
             <InfoIcon />
           </SmallIconButton>
         </ListItemIcon>
+
         <ListItemIcon>
           <SmallIconButton onClick={() => modalProducto()}>
             <EditIcon />
           </SmallIconButton>
         </ListItemIcon>
+
         <ListItemIcon>
           <SmallIconButton onClick={() => eliminar(props)}>
             <DeleteIcon />
           </SmallIconButton>
         </ListItemIcon>
+
         <ListItemIcon>
           <SmallIconButton onClick={() =>handleHistorial(props.id) }>
             <HistoryIcon /> 
           </SmallIconButton>
-          </ListItemIcon>
+        </ListItemIcon>
+          
+        <ListItemIcon>
+          <SmallIconButton onClick={()=> modalMovimiento()}>
+            <AddCircleIcon /> 
+          </SmallIconButton>
+        </ListItemIcon>
+
         </ListItem>
       </List>
 
@@ -165,6 +179,22 @@ const handleCloseHistorial = () => {
           onClose={cerrarInfoProducto}
         />
       )}
+
+
+    {/* MODAL STOCK */}
+    <Dialog open={openMovimiento} onClose={modalMovimiento} fullWidth maxWidth="sm">
+        <DialogContent>
+          <ModalMovimientoStock idProducto={props.id} img={props.foto}/>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={modalMovimiento}>
+            <ZoomBoton />
+          </Button>
+        </DialogActions>
+      </Dialog>
+    
+    
+
 
 {/*MODAL HISTORIAL */}
 

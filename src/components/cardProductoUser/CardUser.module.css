@@ -1,7 +1,7 @@
 .contGeneral{
     position: relative;
     width: 20vw;
-    height: 30vw;
+    height: clamp(28rem,30vw,30vw);  
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -18,24 +18,25 @@
 }
 .contGeneral:hover{
     border:none;
-
     transform:  scale(1.05);
     cursor: pointer;
     box-shadow: 0 0 10px rgba(214, 177, 214, 0.765); /* Agrega una sombra suave */
 }
 .contImg{
-    width: 80%;
-    height:50%;
+    width: 85%;
+    height:clamp(20rem,28vw,25vw);
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    /* background-color: red; */
+    overflow: hidden;
     
 }
 .imgProducto{
-    width: 100%;           /* La imagen ocupará todo el ancho del contenedor */
-    height: 100%;          /* Establece la altura de la imagen relativa al viewport */
-    object-fit: cover;     /* Asegura que la imagen cubra completamente el contenedor sin distorsionarse */
+    width: 90%;           
+    height:auto;          
+    object-fit: contain;     
     margin-top: 0px;
     border-radius: 0px;
     border:none;
@@ -59,6 +60,7 @@
     font-size: 0.9rem;
     margin-top:10px;
     font-family: 'Roboto', sans-serif;
+    color: rgba(89, 89, 89, 0.765);
 
 
 }
@@ -95,4 +97,5 @@
     font-size: 18px;
     font-weight: bold;
     font-family: 'Roboto', sans-serif;
+    font-size: clamp(0.8rem,1vw,1rem);
 }

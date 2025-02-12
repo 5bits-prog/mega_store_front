@@ -12,6 +12,7 @@ import Button from '@mui/material/Button'; // Botón de Material UI
 import ZoomBoton from '../../components/transitions/buttomzoom';  
 import { useProductos } from '../../contexts/ProductoContext';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import { useMovimientoStock } from '../../contexts/MovimientoStockContext';
 
 
 
@@ -23,6 +24,7 @@ interface CatalogoProductoProps {
 
 const CatalogoProducto =()=> {
     const {productos,fetchProductos} = useProductos()
+    const {loading} = useMovimientoStock()
     const location = useLocation();
     const isAdmin = location.pathname === '/catalogoProductos';
     const isProducto = location.pathname === '/catalogoProductos';
@@ -39,7 +41,7 @@ const CatalogoProducto =()=> {
     };
     useEffect (()=>{
         fetchProductos()
-    },[])
+    },[loading])
 
     return (
         

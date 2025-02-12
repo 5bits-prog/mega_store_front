@@ -54,6 +54,9 @@ export const API_ROUTES = {
 
     //VENTA
     POST_VENTA:'/products/venta',
+    
+    //MOVIMIENTO DE STOCK
+    MOVIMIENTO_STOCK: '/products/movimiento-stock',
     //El resto de URLS...
 
   };
