@@ -1,6 +1,7 @@
 import { Producto } from './interfazProducto';
 import CardProducto from '../../components/cardProductoAdmin/listaProductos';
 import CardUser from '../../components/cardProductoUser/CardUser';
+import BarraBusqueda from '../../components/busqueda/barrabusqueda';
 import styles from './catalogoProductos.module.css'
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
@@ -14,13 +15,9 @@ import { useProductos } from '../../contexts/ProductoContext';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useMovimientoStock } from '../../contexts/MovimientoStockContext';
 
-
-
 interface CatalogoProductoProps {
     productos: Producto[]; // Usar la interfaz
 }
-
-
 
 const CatalogoProducto =()=> {
     const {productos,fetchProductos} = useProductos()
@@ -28,7 +25,6 @@ const CatalogoProducto =()=> {
     const location = useLocation();
     const isAdmin = location.pathname === '/catalogoProductos';
     const isProducto = location.pathname === '/catalogoProductos';
-
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [isMenuOpen, setMenuOpen] = useState(false);
 
@@ -51,6 +47,7 @@ const CatalogoProducto =()=> {
                 {isAdmin ? (
                         <div>
                         <h2>ADMINISTRACIÓN DE PRODUCTOS </h2>
+                        <BarraBusqueda></BarraBusqueda>
                         {(productos || []).map((producto) => (
                         <CardProducto key={producto.id}  {...producto} />
                         ))}
@@ -58,22 +55,20 @@ const CatalogoProducto =()=> {
                     ) : (
                         <div className={styles.listado}>
                         <h2>CATÁLOGO DE PRODUCTOS </h2>
+                        <BarraBusqueda></BarraBusqueda>
                         {(productos || []).map((producto) => (
                         <CardUser key={producto.id}  {...producto}/>
                         ))}
                         </div>
                     )}
-                   
-            
 
             {/* Dialog para el formulario de Registrar Producto */}
             <Dialog open={isDialogOpen} onClose={toggleMenu} fullWidth maxWidth="sm">
-                    <DialogContent >
+                    <DialogContent>
                         <RegistrarProducto/>{/* Es el formulario para registrar un producto que se renderiza dentro del Dialog */}
                     </DialogContent>
-                    <DialogActions >
+                    <DialogActions>
                     <Button onClick={modalProducto}>
-
                         <ZoomBoton />
                     </Button>
                     </DialogActions>
@@ -81,5 +76,4 @@ const CatalogoProducto =()=> {
         </div>
     );
 };
-
 export default CatalogoProducto;

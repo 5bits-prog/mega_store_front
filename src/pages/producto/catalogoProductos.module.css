@@ -16,6 +16,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family:  sans-serif, 'Roboto';
 }
 
 .listado{
@@ -44,14 +45,12 @@
     align-items: center;
     font-family: 'Roboto', sans-serif;
     padding-top:5px;
-   
-
 }
             
 .button:hover{ /*efecto cuando colocamos el cursor sobre el botón*/
     background-color: #b598ed;
     cursor: pointer;
     opacity: 1; /* Hacer visible */
-    font-family: 'Roboto', sans-serif;
+    font-family: sans-serif, 'Roboto';
     
 }

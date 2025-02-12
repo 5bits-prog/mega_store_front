@@ -122,7 +122,7 @@ const CardProducto: React.FC<Props> = (props) => {
           <div className={`${style.stock} ${props.stockActual < props.stockMinimo ? style.redBorder : 
               props.stockActual < props.stockMedio ? style.yellowBorder : 
               style.greenBorder}`}>
-             {props.stockActual}
+            {props.stockActual}
         </div>
 
         {/*ICONOS*/}
@@ -205,7 +205,7 @@ const CardProducto: React.FC<Props> = (props) => {
         {/* Encabezado con el botón */}
         <div className={style.historialHeader}>
           <h1>HISTORIAL DE PRECIOS</h1>
-         
+        
         </div>
 
         {/* Contenido desplazable */}

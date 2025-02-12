@@ -59,7 +59,6 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-   
 }
 
 
@@ -76,9 +75,6 @@
     display: flex;
     align-items: left;
     justify-content: center;
-    
-    
-    
 }
 
 .button{ /*Ajuste de botones*/
