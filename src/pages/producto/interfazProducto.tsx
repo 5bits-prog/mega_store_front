@@ -36,9 +36,13 @@ export interface ProductoGet{
     stockMedio: number;
     stockMinimo: number;
     categoriaId: number;
+    categoria: string;
     sucursales?: Sucursal[];
     marcaId: number;
+    marca:string;
     talleId: number;
+    talle:string;
     colorId: number;
+    color:string;
     fechaCreacion?:string;
 }

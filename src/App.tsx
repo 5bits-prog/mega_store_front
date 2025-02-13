@@ -38,8 +38,10 @@ export function App() {
         <AuthProvider>
           <CarritoProvider>
             <PerfilProvider>
+            <ProductoProvider>
               <div className='contenedorDeTodo'>
                 <MenuAdmin /> 
+               
                 <Routes>
                   <Route path="/appsRami/*" element={<AppsRami />} />
                   <Route path="/appsRo/*" element={<AppsRo />} />
@@ -98,9 +100,7 @@ export function App() {
                             <ColorProvider>
                               <TalleProvider>
                                 <CategoriaProvider>
-                                  <ProductoProvider>
                                     <CatalogoProducto />
-                                  </ProductoProvider>
                                 </CategoriaProvider>
                               </TalleProvider>
                             </ColorProvider>
@@ -114,9 +114,7 @@ export function App() {
                     path="/home"
                     element={
                       <MovimientoStockProvider>
-                        <ProductoProvider>
-                          <Home />
-                        </ProductoProvider> 
+                          <Home /> 
                       </MovimientoStockProvider>
                     }
                   />
@@ -126,6 +124,7 @@ export function App() {
                 </Routes>
                 <Footer />
               </div>
+              </ProductoProvider> 
             </PerfilProvider>
           </CarritoProvider>
         </AuthProvider>

@@ -39,9 +39,24 @@ const CatalogoProducto =()=> {
     const toggleMenu = () => { //Función para abrir el desplegable
         setMenuOpen(!isMenuOpen);
     };
-    useEffect (()=>{
-        fetchProductos()
-    },[loading])
+    useEffect(() => {
+        // Verifica la ruta
+        const isHome = location.pathname === '/home';
+        const isCatalogoProductos = location.pathname === '/catalogoProductos';
+    
+        
+        // Si estás en home y productos está vacío, haz el fetch
+        if (isHome && productos.length === 0) {
+            console.log(productos)
+            fetchProductos();
+            console.log('home',isHome)
+        }
+    
+        // Si estás en catalogoProductos, siempre haz el fetch
+        if (isCatalogoProductos) {
+            fetchProductos();
+        }
+    }, [location.pathname, productos.length, loading]);
 
     return (
         

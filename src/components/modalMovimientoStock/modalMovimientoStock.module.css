@@ -55,6 +55,9 @@
     margin-top: 20px;
 
 }
+.botonDelete:hover{
+    box-shadow: inset 0 0 10px rgb(241, 57, 57);
+}
 .generarMove{
     width: 40%;
     height: clamp(2rem,2vw,2rem);
@@ -67,6 +70,6 @@
 
 }
 .generarMove:hover{
-    box-shadow: inset 0 0 10px #fb1b1bcd;
-    border: 1px solid #fb1b1bcd;
+    box-shadow: inset 0 0 10px rgb(151, 233, 151);
+    border: 1px solid rgb(151, 233, 151);
 }

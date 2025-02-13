@@ -42,7 +42,11 @@ const CardUser: React.FC<ProductoGet> = (props) => {
                 <p className={style.precio}>${formatearPrecio(props.precio || 0)}</p>   
             </div>
             
-            <div className={style.contCarrito} onClick={handleAgregarAlCarrito}>
+            <div className={style.contCarrito}  
+                    onClick={(e) => {
+                    e.stopPropagation(); // Detiene la propagación del evento
+                    handleAgregarAlCarrito();}}>
+                        
                 <ShoppingCartIcon className={style.carritoIcon} />
             </div>
         </div>

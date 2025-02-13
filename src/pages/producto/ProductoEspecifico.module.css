@@ -83,7 +83,7 @@
 
 .button{ /*Ajuste de botones*/
     display:flex;
-    background-color:black;
+    background-color:rgb(10, 10, 10);
     color: #ffffff;
     width: 20em;
     height: 2.9em;
@@ -94,14 +94,18 @@
     text-align: center;
     transition: all 0.6s ease;
     margin-top:20px;
+    cursor: pointer;
     
+}
+.button:disabled {
+    background-color: #ccc;  /* Cambia el color de fondo cuando esté deshabilitado */
+    cursor: not-allowed;  /* Cambia el cursor para que se vea que no se puede hacer clic */
+    opacity: 0.5;  /* Opcional: Aplica una ligera opacidad para indicar deshabilitado */
 }
             
 .button:hover{ /*efecto cuando colocamos el cursor sobre el botón*/
     background-color: #b598ed;
-    cursor: pointer;
     opacity: 1; /* Hacer visible */
-   
 }
 
 .title{

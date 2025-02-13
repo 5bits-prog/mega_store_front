@@ -53,8 +53,18 @@ export async function putProducto(producto: Producto) {
 }
 
 export const deleteProducto = async (id: string) => {
-    const response = await api.delete(API_ROUTES.DELETE_PRODUCTO(id)); 
-    return response.data;
+    const token = localStorage.getItem('token');
+    if (!token) {
+        throw new Error('Token no disponible. El usuario no está autenticado.');
+    }
+
+    const {data: response} = await api.delete(API_ROUTES.DELETE_PRODUCTO(id),{
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Token ${token}`,
+        }, 
+    }); 
+    return response;
 }
 
 export async function getHitorial(id: string) {

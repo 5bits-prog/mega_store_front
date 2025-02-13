@@ -1,4 +1,4 @@
-import { ProductoGet } from "./interfazProducto"
+
 import { useProductos } from "../../contexts/ProductoContext"
 import { useEffect } from "react"
 import { useParams } from "react-router-dom";
@@ -65,11 +65,11 @@ const ProductoEspecifico = () => {
         <h2 className={style.precio}>${formatearPrecio(producto?.precio || 0)}</h2>
         
         <div className={style.contDerSecundario}>
-          <h2>Marca {producto?.marcaId}</h2>
+          <h2> {producto?.marca}</h2>
           <div className={style.contInfo}>
-              <p className={style.probando} >Stock : {producto?.stockActual === 0 ? 'Sin stock' : producto?.stockActual}</p>
-              <p className={style.probando}>Talle : {producto?.talleId} </p>
-              <p className={style.probando}>Color : {producto?.colorId}</p>
+              <p className={style.probando} >Stock : {producto?.stockActual === 0 ? <strong>SIN STOCK</strong> : producto?.stockActual}</p>
+              <p className={style.probando}>Talle : {producto?.talle} </p>
+              <p className={style.probando}>Color : {producto?.color}</p>
 
           </div>
               
@@ -105,7 +105,12 @@ const ProductoEspecifico = () => {
                 </Accordion>
             
               </div>
-              <button className={style.button} onClick={handleAgregarAlCarrito} >AGREGAR A CARRITO</button>
+              {producto?.stockActual === 0 ?
+                <button className={style.button} onClick={handleAgregarAlCarrito} disabled >AGREGAR A CARRITO </button>
+                :
+                <button className={style.button} onClick={handleAgregarAlCarrito} >AGREGAR A CARRITO</button>
+              }
+              
 
           </div>
               

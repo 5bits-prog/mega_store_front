@@ -2,7 +2,7 @@
 import React from 'react';
 import { Dialog, DialogActions, DialogContent, Button } from '@mui/material';
 import style from './infoProducto.module.css'; 
-import { Sucursal } from '../../pages/producto/interfazProducto';
+import { Sucursal, ProductoGet } from '../../pages/producto/interfazProducto';
 
 interface Props extends Sucursal {
   // Añadir aquí cualquier otra propiedad necesaria
@@ -10,17 +10,7 @@ interface Props extends Sucursal {
 
 interface InfoProductoProps {
   open: boolean;
-  producto: {
-    descripcion: string;
-    stockActual: number;
-    stockMedio: number;
-    stockMinimo: number;
-    categoriaId: number;
-    marcaId: number;
-    colorId: number;
-    talleId: number;
-    sucursales?: Sucursal[];
-  };
+  producto: ProductoGet;
   onClose: () => void;
 }
 
@@ -62,10 +52,10 @@ const InfoProducto: React.FC<InfoProductoProps> = ({ open, producto, onClose }) 
                         </thead>
                       <tbody>
                         <tr>
-                          <td>{producto.categoriaId}</td>
-                          <td>{producto.marcaId}</td>
-                          <td>{producto.colorId}</td>
-                          <td>{producto.talleId}</td>
+                          <td>{producto.categoria}</td>
+                          <td>{producto.marca}</td>
+                          <td>{producto.color}</td>
+                          <td>{producto.talle}</td>
                         </tr>
                       </tbody>
                     </table>

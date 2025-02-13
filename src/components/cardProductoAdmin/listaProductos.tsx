@@ -19,6 +19,9 @@ import InfoProducto from './infoProducto';
 import Zoom from 'react-medium-image-zoom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ModalMovimientoStock from '../modalMovimientoStock/modalMovimientoStock';
+import { boolean } from 'zod';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 
 interface Props extends ProductoGet {
@@ -33,6 +36,8 @@ const CardProducto: React.FC<Props> = (props) => {
   const [openMovimiento, setOpenMovimiento] = useState(false);
   const [infoProductoOpen, setInfoProductoOpen] = useState(false);
   const [productoSeleccionado, setProductoSeleccionado] = useState<ProductoGet | null>(null);
+  const [atributos] = useState<('categoria' | 'marca' | 'talle')[]>(['categoria', 'marca', 'talle']);
+  const [confEliminar, setEliminar] = useState(false)
 
 
 
@@ -53,8 +58,12 @@ const CardProducto: React.FC<Props> = (props) => {
     obtenerHistorial(id)
     setOpenHistorial(true)
 }
-  const eliminar = (producto: ProductoGet) => {
-    eliminarProducto(producto);
+const confirmarElminacion= (producto: ProductoGet) =>{
+  eliminarProducto(producto);
+}
+  const eliminar = (conf:boolean ) => {
+    setEliminar(conf)
+    
   };
 
   const formatearPrecio = (precio: number): string => {
@@ -115,9 +124,16 @@ const CardProducto: React.FC<Props> = (props) => {
               </>
             }
           />
-          <div className={style.atributos}>{props.categoriaId}</div>
-          <div className={style.atributos}>{props.marcaId}</div>
-          <div className={style.atributos}>T {props.talleId}</div>
+          <div className={style.contAtributos}>
+            {atributos.map((item,idx)=>(
+              <div className={style.contAtributoPart}>
+                  <div key={idx} className={style.atributos}>{props[item]}</div>
+              </div>
+              
+            ))}
+            
+          </div>
+          
           {/*CONDICION PARA QUE EL STOCK DE ALERTAS*/}
           <div className={`${style.stock} ${props.stockActual < props.stockMinimo ? style.redBorder : 
               props.stockActual < props.stockMedio ? style.yellowBorder : 
@@ -139,9 +155,22 @@ const CardProducto: React.FC<Props> = (props) => {
         </ListItemIcon>
 
         <ListItemIcon>
-          <SmallIconButton onClick={() => eliminar(props)}>
-            <DeleteIcon />
+        {!confEliminar ? 
+          <SmallIconButton onClick={() => eliminar(true)}>
+            <DeleteIcon />            
           </SmallIconButton>
+          :
+          <>
+            <SmallIconButton onClick={() => confirmarElminacion(props)}>
+              <CheckIcon style={{color: 'green'}}></CheckIcon>
+            </SmallIconButton>
+            
+            <SmallIconButton onClick={()=> eliminar(false)} >
+              <CloseIcon style={{color: 'red'}}></CloseIcon>
+            </SmallIconButton>
+            
+          </>
+          }
         </ListItemIcon>
 
         <ListItemIcon>

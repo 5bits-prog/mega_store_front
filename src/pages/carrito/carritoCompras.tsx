@@ -41,15 +41,26 @@ const formatearPrecio = (precio: number): string => {
 const [hovered, setHovered] = useState(false);
 
 const venta = () => {
+    // Crea el array de productos con idProducto y cantidad
     const productos = carrito.map(item => ({
         idProducto: item.id,
         cantidad: item.cantidad
     }));
-    console.log('productos', productos)
-    registrarVenta(productos)
-    navigate('/appsRami/mercadoPago')
-}
 
+    // Crea el objeto con la clave "detalles" que contiene el array de productos
+    const ventaData = {
+        detalles: productos
+    };
+
+    // Imprime para verificar la estructura
+    console.log('ventaData', ventaData);
+
+    // Llama a la función que registra la venta con el formato correcto
+    registrarVenta(ventaData);
+
+    // Redirige al pago
+    navigate('/appsRami/mercadoPago');
+}
 return (
     <div className={style.contGeneral}>
         <h1 className={style.title}>TU CARRITO</h1>

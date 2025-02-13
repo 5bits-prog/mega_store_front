@@ -124,7 +124,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
           fetchProductos();
           Notificaciones.exito('Producto eliminado con exito')
         } catch (error) {
-          console.error('Error al eliminar la Sucursal:', error);
+          console.error('Error al eliminar el Producto:', error);
         }
     } 
     //GET HISTORIAL

@@ -19,6 +19,7 @@ const CarritoContext = createContext<{
     cambioDeCantidad: (id: number, cantidad:number) => void;
     total: number;
     productosTotales: number;
+    LimpiarCarrito: ()=>void;
 
    
     
@@ -41,7 +42,12 @@ export const CarritoProvider: React.FC<{ children: React.ReactNode }> = ({ child
         console.log('Estado actualizado del carrito:', mostrarCarrito);
     }, [mostrarCarrito]);  // Se ejecuta cada vez que mostrarCarrito cambie
     
-
+    //limpiar Carrito
+    const LimpiarCarrito = () =>{
+        setCarrito([])
+        setTotal(0);     // Si también necesitas reiniciar el total
+        setProductosTotales(0); 
+    }
     //Función para agregar un producto al carrito
     const agregarAlCarrito = (producto: Producto) => {
         setCarrito((prev) => {
@@ -102,7 +108,7 @@ export const CarritoProvider: React.FC<{ children: React.ReactNode }> = ({ child
     
 
     return (
-        <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDeCarrito,cambioDeCantidad, total, productosTotales}}>
+        <CarritoContext.Provider value={{ carrito, agregarAlCarrito, eliminarDeCarrito,cambioDeCantidad, total, productosTotales ,LimpiarCarrito}}>
             {children}
         </CarritoContext.Provider>
     );
