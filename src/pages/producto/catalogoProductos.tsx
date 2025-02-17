@@ -20,7 +20,7 @@ interface CatalogoProductoProps {
 }
 
 const CatalogoProducto =()=> {
-    const {productos,fetchProductos} = useProductos()
+    const {productos,fetchProductos,productosFiltrados} = useProductos()
     const {loading} = useMovimientoStock()
     const location = useLocation();
     const isAdmin = location.pathname === '/catalogoProductos';
@@ -47,7 +47,6 @@ const CatalogoProducto =()=> {
                 {isAdmin ? (
                         <div>
                         <h2>ADMINISTRACIÓN DE PRODUCTOS </h2>
-                        <BarraBusqueda></BarraBusqueda>
                         {(productos || []).map((producto) => (
                         <CardProducto key={producto.id}  {...producto} />
                         ))}
@@ -56,9 +55,9 @@ const CatalogoProducto =()=> {
                         <div className={styles.listado}>
                         <h2>CATÁLOGO DE PRODUCTOS </h2>
                         <BarraBusqueda></BarraBusqueda>
-                        {(productos || []).map((producto) => (
-                        <CardUser key={producto.id}  {...producto}/>
-                        ))}
+                        {(productosFiltrados.length > 0 ? productosFiltrados : productos).map((producto) => (
+                        <CardUser key={producto.id} {...producto} />
+                    ))}
                         </div>
                     )}
 

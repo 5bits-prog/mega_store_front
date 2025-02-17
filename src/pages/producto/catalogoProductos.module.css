@@ -11,19 +11,19 @@
     
 }
 .container h2 {
-    color:black;
+    color:#c99af3;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family:  sans-serif, 'Roboto';
+    font-family:  'Roboto', sans-serif;
 }
 
 .listado{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 30px;
+    gap: 40px;
     padding: 10px 10px 10px 10px;
     flex-wrap: wrap;
     width: 100%;
@@ -51,6 +51,6 @@
     background-color: #b598ed;
     cursor: pointer;
     opacity: 1; /* Hacer visible */
-    font-family: sans-serif, 'Roboto';
+    font-family: 'Roboto', sans-serif;
     
 }
