@@ -11,18 +11,19 @@
     
 }
 .container h2 {
-    color:black;
+    color:#c99af3;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family:  'Roboto', sans-serif;
 }
 
 .listado{
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 30px;
+    gap: 40px;
     padding: 10px 10px 10px 10px;
     flex-wrap: wrap;
     width: 100%;
@@ -44,8 +45,6 @@
     align-items: center;
     font-family: 'Roboto', sans-serif;
     padding-top:5px;
-   
-
 }
             
 .button:hover{ /*efecto cuando colocamos el cursor sobre el botón*/
