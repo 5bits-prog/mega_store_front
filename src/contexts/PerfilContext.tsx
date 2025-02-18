@@ -37,7 +37,7 @@ export const PerfilProvider: React.FC<PerfilProviderProps> = ({ children }) => {
 
   const [loading, setLoading] = useState<boolean>(false); // Estado de carga
   const [error, setError] = useState<string | null>(null); // Estado de error
- 
+
   // GET Función para obtener los datos del perfil
 const fetchPerfil = async () => {
   setLoading(true);
@@ -80,7 +80,6 @@ const fetchPerfil = async () => {
 
       // Guardar el perfil en Local Storage
       localStorage.setItem("perfilUsuario", JSON.stringify(perfil));
-     
 
       // Actualizamos el estado
       setDatosPerfil(perfil);
@@ -112,19 +111,17 @@ const fetchPerfil = async () => {
 
       // Actualizamos el perfil en el estado y localStorage
       setDatosPerfil(updatedPerfil);
-       console.log("Datos del perfil enviados al backend");
+      console.log("Datos del perfil enviados al backend");
       localStorage.setItem("perfilUsuario", JSON.stringify(updatedPerfil));
 
     } catch (err: any) {
       setError("Error al actualizar los datos del perfil");
       Notificaciones.error('Tus datos no puedieron ser actualizados. Intente nuevamente'); // Notificación adicional
-     
+    
     } finally {
       setLoading(false);
       Notificaciones.exito('Tus datos fueron actualizados.'); // Notificación adicional
-     
-      
-      
+
     }
   };
 

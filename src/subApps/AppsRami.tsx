@@ -28,7 +28,7 @@ const AppsRami = () => {
             } 
       />
       <Route path='/mercadoPago' element={<MercadoPago/>} />
-     
+    
     </Routes>
   );
 };

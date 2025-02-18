@@ -11,7 +11,7 @@ export interface Producto {
     stockMedio: number;
     stockMinimo: number;
     categoriaId: number;
-    sucursales?: number[];
+    sucursales?: Sucursal[];
     marcaId: number;
     talleId: number;
     colorId: number;
@@ -23,7 +23,7 @@ export interface Sucursal {
     fechaDeEliminacion?: string;   
     idProducto?: number;
     cantidad?: number;    
-  }
+}
 
 export interface ProductoGet{
     id: number,

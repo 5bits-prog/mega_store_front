@@ -17,8 +17,14 @@ interface ProductoContextType {
     error: string | null;
     producto?: ProductoGet;
     historial:any[];
+    filtrarProductosPorNombre: (termino: string) => void; 
+    productosFiltrados: Producto[];
 }
 
+
+//funcion que reciba un string para comparar con los productos existentes
+
+//almacenar en una const productosFiltrados 
 
 
 // Crear el contexto
@@ -35,7 +41,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     const [loading, setLoading] = useState<boolean>(false);
     const [historial, setHistorial] = useState([])
     const [error, setError] = useState(null);
-
+    const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]); 
     const {mostrarMensaje} = useNotification()
   
   
@@ -46,7 +52,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         try {
             const response = await getProductos();
             setProductos(response.data); 
-             
+
         } catch (err: any) {
              console.error(err);
         } finally {
@@ -142,7 +148,17 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
           setLoading(false);
       }
     };
-
+    const filtrarProductosPorNombre = (termino: string) => {
+      if (!termino.trim()) {
+        setProductosFiltrados(productos); // Si no hay término, devolvemos todos los productos
+      } else {
+        const productosFiltrados = productos.filter(producto =>
+          producto.nombre.toLowerCase().includes(termino.toLowerCase()) // Comparación sin distinción de mayúsculas/minúsculas
+        );
+        setProductosFiltrados(productosFiltrados); // Actualizamos el estado con los productos filtrados
+      }
+    };
+  
     return (
     <ProductosContext.Provider
       value={{
@@ -157,6 +173,8 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         eliminarProducto,
         fetchProductoEspe,
         obtenerHistorial,
+        filtrarProductosPorNombre,
+        productosFiltrados,
       }}
     >
       {children}
