@@ -126,8 +126,8 @@ const confirmarElminacion= (producto: ProductoGet) =>{
           />
           <div className={style.contAtributos}>
             {atributos.map((item,idx)=>(
-              <div className={style.contAtributoPart}>
-                  <div key={idx} className={style.atributos}>{props[item]}</div>
+              <div className={style.contAtributoPart} key={idx}>
+                  <div  className={style.atributos}>{props[item]}</div>
               </div>
               
             ))}

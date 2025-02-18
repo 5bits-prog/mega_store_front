@@ -13,6 +13,7 @@ import ZoomBoton from '../../components/transitions/buttomzoom';
 import { useProductos } from '../../contexts/ProductoContext';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useMovimientoStock } from '../../contexts/MovimientoStockContext';
+import img from '../home/imagenes/fotoCargaProductos.webp'
 
 
 
@@ -39,6 +40,7 @@ const CatalogoProducto =()=> {
     const toggleMenu = () => { //Función para abrir el desplegable
         setMenuOpen(!isMenuOpen);
     };
+
     useEffect(() => {
         // Verifica la ruta
         const isHome = location.pathname === '/home';
@@ -47,9 +49,9 @@ const CatalogoProducto =()=> {
         
         // Si estás en home y productos está vacío, haz el fetch
         if (isHome && productos.length === 0) {
-            console.log(productos)
+            
             fetchProductos();
-            console.log('home',isHome)
+            
         }
     
         // Si estás en catalogoProductos, siempre haz el fetch
@@ -72,10 +74,13 @@ const CatalogoProducto =()=> {
                         </div>
                     ) : (
                         <div className={styles.listado}>
-                        <h2>CATÁLOGO DE PRODUCTOS </h2>
-                        {(productos || []).map((producto) => (
-                        <CardUser key={producto.id}  {...producto}/>
-                        ))}
+                            <div className={styles.fondo}>
+                                <h1>CATÁLOGO DE PRODUCTOS </h1>
+                            </div>
+                            
+                            {(productos || []).map((producto) => (
+                            <CardUser key={producto.id}  {...producto}/>
+                            ))}
                         </div>
                     )}
                    

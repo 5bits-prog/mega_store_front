@@ -35,10 +35,10 @@ export function App() {
   return (
     <NotificationProvider>
       <Router>
+        <CarritoProvider>
         <AuthProvider>
-          <CarritoProvider>
-            <PerfilProvider>
             <ProductoProvider>
+            <PerfilProvider>
               <div className='contenedorDeTodo'>
                 <MenuAdmin /> 
                
@@ -124,10 +124,10 @@ export function App() {
                 </Routes>
                 <Footer />
               </div>
-              </ProductoProvider> 
             </PerfilProvider>
-          </CarritoProvider>
+              </ProductoProvider> 
         </AuthProvider>
+          </CarritoProvider>
       </Router>
       <ToastContainer />
     </NotificationProvider>

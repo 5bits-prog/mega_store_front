@@ -55,3 +55,39 @@
     font-family: 'Roboto', sans-serif;
     
 }
+
+.fondo{
+    position: relative;
+    width: 100%;
+    height: 20vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../home/imagenes/fotoCargaProductos.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 100% 50%;
+    margin-top: 30px;
+    z-index: 0;
+    cursor: default;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, rgb(5, 5, 5) 30%, rgba(0, 0, 0, 0) 100%);
+}
+.fondo::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.42);
+    z-index: -1;
+}
+.fondo h1{
+    font-size: 2rem;
+    color:white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.721);
+    z-index: 1;
+}
+

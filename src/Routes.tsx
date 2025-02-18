@@ -1,6 +1,6 @@
 export const API_ROUTES = {
     //BASE
-    BASE: "http://localhost:8080",
+    BASE: "https://megastore.dealbera.online",
     //LOGIN
     LOGIN:"/auth/login",
 
@@ -36,7 +36,7 @@ export const API_ROUTES = {
 
      //PRODUCTO
      POST_PRODUCTO :'/products/producto',
-     GET_PRODUCTO:'/products/productos',
+     GET_PRODUCTO:'/products/productosAll',
      PUT_PRODUCTO:'/products/producto',
      DELETE_PRODUCTO: (id: string) => `/products/producto/${id}`,
      GET_PRODUCTO_ESPECIFICO: (id: string) => `/products/producto/${id}`,
