@@ -67,6 +67,12 @@ export const API_ROUTES = {
     GET_PRODUCTOS: (fechaDesde: string, fechaHasta: string): string => 
     `/estadisticas-ventas/productos-mas-vendidos?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&limite=10`,
 
+    //ESTADISTICAS FRECUENCIA VENTAS
+    GET_FREC_VENTAS:'/estadisticas-clientes/frecuencia-ventas',
+
+    //ESTADISTICA VENTAS PROMEDIO
+
+    GET_PROM_VENTAS:'estadisticas-clientes/montos-ventas',
     //El resto de URLS...
 
   

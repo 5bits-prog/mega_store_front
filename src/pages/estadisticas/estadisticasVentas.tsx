@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import Grafico from "../../components/graficos/componenteGrafico";
-import style from "./estadisticasVentasBarra.module.css";
+import style from "./estadisticas.module.css";
 import ExportarPdf from "../../components/pdf/exportarPdf";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -16,6 +16,8 @@ import FormLabel from '@mui/material/FormLabel';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import { useEstadisticas } from '../../contexts/EstadisticasContext';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+
 
 
 const EstadisticasVentas: React.FC = () => {
@@ -30,6 +32,8 @@ const EstadisticasVentas: React.FC = () => {
   const [data, setData] = useState<number[]>([]); // Para almacenar las ventas
   const [totalMontoVentas, setTotalMontoVentas] = useState<number>(0);
   const [totalVentas, setTotalVentas]=useState<number>(0);
+
+
   // Manejar cambio de fecha de inicio
   const handleStartDateChange = (newDate: Dayjs | null) => {
     setStartDate(newDate);
@@ -56,6 +60,7 @@ const EstadisticasVentas: React.FC = () => {
   const handleVisualizacionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setOpcionVisualizacionSeleccionada(event.target.value); // Actualiza el estado con el valor seleccionado
   };
+
  
   //Manejar el envio del form (botón submit)
   const handleSubmitForm = (e: React.FormEvent) => {
@@ -72,7 +77,7 @@ const EstadisticasVentas: React.FC = () => {
       return; // Detener el envío
     }
     // Verificación de los días entre las fechas (deben ser busquedas menores a 40 dias)
-    if (startDate && endDate && opcionVisualizacionSeleccionada === "Diario") {
+    if (startDate && endDate && opcionVisualizacionSeleccionada === "D") {
       const diffDays = endDate.diff(startDate, "day"); // Calcula la diferencia en días
       if (diffDays >= 40) {
         Notificaciones.error("El rango de fechas no puede ser mayor o igual a 40 días.");
@@ -81,7 +86,7 @@ const EstadisticasVentas: React.FC = () => {
     }
 
   //Verificación de los meses entre las fechas (deben ser búsquedas menores a 40 meses)
-  if (startDate && endDate && opcionVisualizacionSeleccionada === "Mensual") {
+  if (startDate && endDate && opcionVisualizacionSeleccionada === "M") {
     const diffMonths = endDate.diff(startDate, "month"); // Calcula la diferencia en meses
     if (diffMonths >= 40) {
       Notificaciones.error("El rango de fechas no puede ser mayor o igual a 40 meses.");
@@ -95,29 +100,14 @@ const EstadisticasVentas: React.FC = () => {
     }
 
     setError(null); // Reseteamos el error si todo está bien
-    console.log("Formulario enviado");
+    //console.log("Formulario enviado");
 
     //Comienzo de petición a backend
     
    //convertir las fechas al formato esperado por el backend
    const fechaDesde = startDate.format("YYYY-MM-DD");
    const fechaHasta = endDate.format("YYYY-MM-DD");
-
-   //convertimos la frecuencia en el formato esperado por el backend
-   let frecuencia: string = "";
-  switch (opcionVisualizacionSeleccionada) {
-    case "Anual":
-      frecuencia = "A";
-      break;
-    case "Mensual":
-      frecuencia = "M";
-      break;
-    case "Diario":
-      frecuencia = "D";
-      break;
-    default:
-      undefined;
-  }
+   const frecuencia=opcionVisualizacionSeleccionada;
   // Validamos qué opción de estadística fue seleccionada
 if (opcionEstadisticaSeleccionada === "Ventas totales") {
   if (!opcionVisualizacionSeleccionada) {
@@ -125,6 +115,7 @@ if (opcionEstadisticaSeleccionada === "Ventas totales") {
     return; // Evitar que continúe la ejecución
   }
   // Llamamos al backend solo si hay una opción de visualizacion seleccionada
+  console.log(frecuencia)
   fetchVentas(fechaDesde, fechaHasta, frecuencia);
 } else {
   // Si no es "Ventas totales", llamamos a fetchProductos
@@ -135,7 +126,6 @@ if (opcionEstadisticaSeleccionada === "Ventas totales") {
 
   //extraemos los datos para visualizarlos en el gráfico
   useEffect(() => {
-    console.log(ventasData.length)
     if (ventasData.length > 0) { //validamos que existan datos
       const newLabels = ventasData.map((item) => item.fecha); // Extraemos las fechas
       const newData = ventasData.map((item) => item.total_ventas); // Extraemos las ventas
@@ -149,7 +139,7 @@ if (opcionEstadisticaSeleccionada === "Ventas totales") {
     } 
     //caso en que no haya datos en el rango de fechas seleccionadas
     if (ventasData.length === 0 && opcionEstadisticaSeleccionada==="Ventas totales") {
-      console.log("No se encontraron datos de ventas.");
+      //console.log("No se encontraron datos de ventas.");
       Notificaciones.advertencia("No hay datos disponibles. Ingrese otro rango de fecha")
       setLabels([]); //Reseteamos el gráfico
       setData([]);
@@ -179,7 +169,7 @@ useEffect(() => {
     <form className={style.container} onSubmit={handleSubmitForm}>
 
       {/* SELECCIÓN DE FECHAS */}
-      <p className={style.message}>Por favor, seleccione un rango de fecha y la estadística que desee visualizar:</p>
+      <p className={style.message}>Por favor, seleccione un rango de fecha y la estadística que desea visualizar:</p>
       <div className={style.selectsFechas}>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={["DatePicker"]}>
@@ -208,6 +198,7 @@ useEffect(() => {
 
       {/*SELECCION DE TIPO DE VISUALIZACION*/}
       <FormLabel id="visualizacion"> </FormLabel>
+      <div className={style.radioContainer}>
       {opcionEstadisticaSeleccionada === "Ventas totales" && (
       <RadioGroup
         row
@@ -216,11 +207,12 @@ useEffect(() => {
         value={opcionVisualizacionSeleccionada} // El valor controlado del radio group
         onChange={handleVisualizacionChange} // Manejador de cambios
       >
-        <FormControlLabel value="Anual" control={<Radio />} label="Anual" />
-        <FormControlLabel value="Mensual" control={<Radio />} label="Mensual" />
-        <FormControlLabel value="Diario" control={<Radio />} label="Diario" />
+        <FormControlLabel value="A" control={<Radio />} label="Anual" />
+        <FormControlLabel value="M" control={<Radio />} label="Mensual" />
+        <FormControlLabel value="D" control={<Radio />} label="Diario" />
       </RadioGroup>
       )}
+      </div>
     </FormControl>
     </div>
 
@@ -261,6 +253,16 @@ useEffect(() => {
           labels={labels} // Etiquetas de fechas
           data={data} // Datos de ventas
           labelTitle={opcionEstadisticaSeleccionada === "Ventas totales" ? "Ventas" : "Unidades Vendidas"}
+          xTitle={opcionEstadisticaSeleccionada === "Ventas totales" 
+            ? "Tiempo" 
+            : opcionEstadisticaSeleccionada === "Productos más vendidos"
+            ?"Productos"
+              :""}
+          yTitle={opcionEstadisticaSeleccionada === "Ventas totales" 
+            ? "Ventas" 
+            : opcionEstadisticaSeleccionada === "Productos más vendidos" 
+              ? "Unidades Vendidas" 
+              : ""}
         />
         </div>
       </div>
@@ -268,7 +270,7 @@ useEffect(() => {
       {/* EXPORTACIÓN A PDF */}
       <ExportarPdf ref={exportarRef} id={contenidoId} title={tituloPdf} />
         <button className={style.buttonPdf} onClick={handleExport}>
-          Generar PDF
+        Generar PDF <PictureAsPdfIcon style={{ fontSize: "20px", marginLeft:"4px", marginBottom:"4px" }}/>
         </button>
     </form>
   );
