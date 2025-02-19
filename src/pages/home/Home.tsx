@@ -61,6 +61,7 @@ const Home = () =>{
                         <div className={style.frente}>
                             {foto.descripcion}
                         </div>
+
                     </div>
 
                     ))}
@@ -68,24 +69,26 @@ const Home = () =>{
             </div>
 
             {/* CARGA Y CATALOGO */}
-            {!loading ? 
-            <CatalogoProducto></CatalogoProducto>
-            :
-            <div className={style.carga}> 
-              <h1>CARGANDO PRODUCTOS</h1>  
-                <Stack sx={{ width: '50%', color: 'grey.500' }} spacing={2}>
-                    <LinearProgress color="secondary" />
-                </Stack>
-            </div>
-            }
+            <div className={style.contCatalogo}> 
+                {!loading ? 
+                <CatalogoProducto></CatalogoProducto>
+                :
+                <div className={style.carga}> 
+                <h1>CARGANDO PRODUCTOS</h1>  
+                    <Stack sx={{ width: '50%', color: 'grey.500' }} spacing={2}>
+                        <LinearProgress color="secondary" />
+                    </Stack>
+                </div>
+                }
 
-            {isVisible && (
-                <Link
-                    to={'imagen'} smooth={true} 
-                        duration={500} className={style.botonRetorno}>
-                            <ArrowUpwardIcon className={style.flecha}></ArrowUpwardIcon>
-                </Link>
-            )}
+                {isVisible && (
+                    <Link
+                        to={'imagen'} smooth={true} 
+                            duration={500} className={style.botonRetorno}>
+                                <ArrowUpwardIcon className={style.flecha}></ArrowUpwardIcon>
+                    </Link>
+                )}
+            </div>
         </div>
     )
 }

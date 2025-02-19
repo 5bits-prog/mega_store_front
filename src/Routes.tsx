@@ -37,6 +37,7 @@ export const API_ROUTES = {
      //PRODUCTO
      POST_PRODUCTO :'/products/producto',
      GET_PRODUCTO:'/products/productosAll',
+     GET_PRODUCTO_PAGINACION: (page: number, size: number, sort: string) => `/products/productos?page=${page}&size=${size}&sort=${sort}`,
      PUT_PRODUCTO:'/products/producto',
      DELETE_PRODUCTO: (id: string) => `/products/producto/${id}`,
      GET_PRODUCTO_ESPECIFICO: (id: string) => `/products/producto/${id}`,

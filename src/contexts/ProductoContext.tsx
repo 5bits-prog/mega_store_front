@@ -1,12 +1,12 @@
 // Contexto para gestionar productos
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico, getHitorial } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
+import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico, getHitorial, getProductosPaginacion } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
 import { useNotification } from "./NotificacionContext";
 import { Producto, ProductoGet } from "../pages/producto/interfazProducto";
 import Notificaciones from "../components/notificaciones";
 
 interface ProductoContextType {
-    fetchProductos: () => void;
+    fetchProductos: (page: number, size: number, sort: string) => void;
     postProducto: (producto: FormData) => void;
     modificarProducto:(producto:Producto)=>void;
     eliminarProducto:(producto:ProductoGet)=>void;
@@ -17,6 +17,9 @@ interface ProductoContextType {
     error: string | null;
     producto?: ProductoGet;
     historial:any[];
+    goToPage: (page: number) => void;
+    totalPages:number;
+    currentPage:number;
 }
 
 
@@ -31,6 +34,9 @@ interface ProductoProviderProps {
 
 export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) => {
     const [productos, setProductos] = useState<Producto[]>([]);
+    const [totalPages, setTotalPages] = useState<number>(0); // Para almacenar el número total de páginas
+    const [currentPage, setCurrentPage] = useState<number>(0); // Para llevar la página actual
+    
     const [producto, setProducto] = useState<ProductoGet>();
     const [loading, setLoading] = useState<boolean>(false);
     const [historial, setHistorial] = useState([])
@@ -40,19 +46,28 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
   
   
 //GET
-    const fetchProductos = async () => {
-        setLoading(true);
-        setError(null); // Limpiamos el error antes de la llamada
-        try {
-            const response = await getProductos();
-            setProductos(response.data); 
-             
-        } catch (err: any) {
-             console.error(err);
-        } finally {
-             setLoading(false);
-        }
-    };
+    const fetchProductos = async  (page = currentPage, size :number, sort = "id,asc") => {
+      setLoading(true);
+      try {
+          const response = await getProductosPaginacion(page, size, sort);
+          setProductos(response.data.content); 
+          console.log('contex', response)
+          setTotalPages(response.data.totalPages);  // Suponiendo que la API devuelve esta propiedad
+
+          } catch (err: any) {
+              
+              console.error(err);
+          } finally {
+              setLoading(false);
+          }
+      };
+  
+  // Función para cambiar de página
+  const goToPage = (page: number) => {
+      setCurrentPage(page);
+      fetchProductos(page, 12);
+  };
+
 
 //GET ESPECIFICO
     const fetchProductoEspe = async (id: string) => {
@@ -157,6 +172,9 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         eliminarProducto,
         fetchProductoEspe,
         obtenerHistorial,
+        goToPage,
+        totalPages,
+        currentPage,
       }}
     >
       {children}

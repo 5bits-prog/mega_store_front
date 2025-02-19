@@ -24,7 +24,7 @@ interface CatalogoProductoProps {
 
 
 const CatalogoProducto =()=> {
-    const {productos,fetchProductos} = useProductos()
+    const {productos,fetchProductos, goToPage, totalPages, currentPage} = useProductos()
     const {loading} = useMovimientoStock()
     const location = useLocation();
     const isAdmin = location.pathname === '/catalogoProductos';
@@ -32,6 +32,7 @@ const CatalogoProducto =()=> {
 
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [isMenuOpen, setMenuOpen] = useState(false);
+    // const [currentPage, setCurrentPage] = useState(0); 
 
     const modalProducto=()=>{
         setDialogOpen(!isDialogOpen)
@@ -49,21 +50,27 @@ const CatalogoProducto =()=> {
         
         // Si estás en home y productos está vacío, haz el fetch
         if (isHome && productos.length === 0) {
-            
-            fetchProductos();
-            
+            fetchProductos(currentPage, 12, "id,asc"); // Paginación por defecto con 5 productos por página
         }
     
         // Si estás en catalogoProductos, siempre haz el fetch
         if (isCatalogoProductos) {
-            fetchProductos();
+            fetchProductos(currentPage, 12, "id,asc");
         }
     }, [location.pathname, productos.length, loading]);
+    
+
+    // Función para manejar el cambio de página
+    const handlePageChange = (newPage: number) => {
+        goToPage(newPage); // Usamos la función goToPage para navegar a la nueva página
+    }
 
     return (
         
-        <div className={styles.container} style={{marginTop: isAdmin ? '75px' : '0'}}>
+        <div className={styles.container} style={{marginTop: isAdmin ? '75px' : '0px'}}>
+
             {isProducto && 
+            
             <button className={styles.button} onClick={() => modalProducto()}><AddCircleIcon /></button>}
                 {isAdmin ? (
                         <div>
@@ -83,6 +90,23 @@ const CatalogoProducto =()=> {
                             ))}
                         </div>
                     )}
+            
+            {/* Paginación */}
+            {totalPages > 1 && (
+                <div className={styles.pagination}>
+                    <button 
+                        disabled={currentPage === 0} 
+                        onClick={() => handlePageChange(currentPage - 1)}>
+                        Anterior
+                    </button>
+                    <span>Página {currentPage + 1} de {totalPages}</span>
+                    <button 
+                        disabled={currentPage === totalPages - 1} 
+                        onClick={() => handlePageChange(currentPage + 1)}>
+                        Siguiente
+                    </button>
+                </div>
+            )}
                    
             
 
