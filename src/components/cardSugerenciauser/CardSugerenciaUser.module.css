@@ -1,19 +1,18 @@
 .contGeneral{
     position: relative;
     width: 20vw;
-    height: clamp(28rem,30vw,30vw);  
+    height: 20vw;  
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
     align-items: center;
     justify-content: center;
     text-align: center;
     overflow: hidden;
-    /* border: 1px solid grey; */
     box-shadow: 0 0 10px rgba(214, 177, 214, 0.332);
     border-radius:10px;
     transition: all 0.4s ease-in-out;
-    background-color: white;
+   background-color: white;
+    padding-bottom: 10px;
     
 }
 .contGeneral:hover{
@@ -23,47 +22,21 @@
     box-shadow: 0 0 20px rgba(214, 177, 214, 0.765); /* Agrega una sombra suave */
 }
 .contImg{
-    width: 85%;
-    height:clamp(20rem,28vw,25vw);
+    width: 70%;
     flex-grow: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* background-color: red; */
     overflow: hidden;
     
 }
-.imgProducto{
-    width: 90%;           
-    height:auto;          
-    object-fit: contain;     
+.imgProducto{                    
+    object-fit: cover;     
     margin-top: 0px;
     border-radius: 0px;
     border:none;
 }
-.contDescripcion{
-    width: 100%;
-    max-height: 15vw;
-    min-height: 3vw;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    align-items: center; /* Centra horizontalmente */
-    justify-content: center; /* Centra verticalmente */
-    border: none;
-  
-}
 
-
-
-.descripcion{
-    font-size: 0.9rem;
-    margin-top:10px;
-    font-family: 'Roboto', sans-serif;
-    color: rgba(89, 89, 89, 0.765);
-
-
-}
 
 .precio{
     font-size:1rem;
@@ -73,7 +46,10 @@
 }
 
 .contCarrito{
-    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 20px;
+    width: auto;
     height: 2vw;
     padding: 5px;
     display: flex;
@@ -82,9 +58,13 @@
     margin-top: auto;
     transition: all 0.4s ease-in-out;
     z-index: 2;
-}
-.contGeneral:hover  .contCarrito{
     background-color: #a27eea;
+    border-bottom-left-radius: 10px; /* Esquina inferior izquierda */
+    border-bottom-right-radius: 10px; /* Esquina inferior derecha */
+}
+
+.contGeneral:hover  .contCarrito{
+    box-shadow: 3px 3px 5px #b08ef5fb;
 }
 .carritoIcon {
     color: rgb(1, 1, 1); /* Cambia el color del ícono */

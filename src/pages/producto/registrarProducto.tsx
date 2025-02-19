@@ -141,7 +141,7 @@ const RegistrarProducto = () => {
         }
     
     postProducto(formData);
-    fetchProductos()
+    fetchProductos(0,12,"id,asc")
     }
 
     // Función para manejar la carga de imagen y la previsualización

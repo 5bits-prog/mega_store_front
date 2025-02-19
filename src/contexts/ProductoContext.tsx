@@ -7,12 +7,16 @@ import Notificaciones from "../components/notificaciones";
 
 interface ProductoContextType {
     fetchProductos: (page: number, size: number, sort: string) => void;
+    fetchProductosAll: () => void;
     postProducto: (producto: FormData) => void;
     modificarProducto:(producto:Producto)=>void;
     eliminarProducto:(producto:ProductoGet)=>void;
     fetchProductoEspe:(id: string)=>void;
     obtenerHistorial:(id: string)=>void;
-    productos: Producto[];
+    setProductosFiltrados: (p:ProductoGet[])=>void;
+    productos: ProductoGet[];
+    productosAll: ProductoGet[];
+    productosFiltrados: ProductoGet[];
     loading: boolean;
     error: string | null;
     producto?: ProductoGet;
@@ -20,6 +24,8 @@ interface ProductoContextType {
     goToPage: (page: number) => void;
     totalPages:number;
     currentPage:number;
+    actualizarProducEspecifico:() => void;
+    cambioProducto: boolean;
 }
 
 
@@ -33,7 +39,9 @@ interface ProductoProviderProps {
 // Proveedor del contexto
 
 export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) => {
-    const [productos, setProductos] = useState<Producto[]>([]);
+    const [productos, setProductos] = useState<ProductoGet[]>([]);
+    const [productosAll, setProductosAll] = useState<ProductoGet[]>([]);
+    const [productosFiltrados, setProductosFiltrados] = useState<ProductoGet[]>([]);
     const [totalPages, setTotalPages] = useState<number>(0); // Para almacenar el número total de páginas
     const [currentPage, setCurrentPage] = useState<number>(0); // Para llevar la página actual
     
@@ -41,6 +49,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     const [loading, setLoading] = useState<boolean>(false);
     const [historial, setHistorial] = useState([])
     const [error, setError] = useState(null);
+    const [cambioProducto, setCambioProducto] =useState(false) //Variable para volver a llamar al fecht en producto especifico
 
     const {mostrarMensaje} = useNotification()
   
@@ -53,6 +62,22 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
           setProductos(response.data.content); 
           console.log('contex', response)
           setTotalPages(response.data.totalPages);  // Suponiendo que la API devuelve esta propiedad
+
+          } catch (err: any) {
+              
+              console.error(err);
+          } finally {
+              setLoading(false);
+          }
+      };
+
+      //GET ALL
+    const fetchProductosAll = async  () => {
+      setLoading(true);
+      try {
+          const response = await getProductos();
+          setProductosAll(response.data); 
+          console.log('contex', response)
 
           } catch (err: any) {
               
@@ -93,7 +118,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
             setLoading(true)
             const response = await newProducto(producto) //post
             Notificaciones.exito(`Prodcuto ${response.data.nombre} registrado`) //mensaje
-            await fetchProductos(); //Recargamos las sucursales
+            await fetchProductos(0,12,"id,asc"); //Recargamos las sucursales
         
             }catch(error:any){
                 if (error) {
@@ -112,7 +137,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         setLoading(true)
         const response = await putProducto(producto) //post
         Notificaciones.exito(`Producto ${response.data.nombre} modificado`) //mensaje
-        await fetchProductos(); //Recargamos las sucursales
+        await fetchProductos(0,12,"id,asc"); //Recargamos las sucursales
         }catch(error:any){
             if (error) {
                 Notificaciones.error(error.response?.data.errors)
@@ -136,7 +161,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
             throw new Error(`Error al eliminar el producto. Status: ${respuesta.status}`);
         }
           console.log("producto eliminado"); 
-          fetchProductos();
+          fetchProductos(0,12,"id,asc");
           Notificaciones.exito('Producto eliminado con exito')
         } catch (error) {
           console.error('Error al eliminar el Producto:', error);
@@ -157,16 +182,21 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
           setLoading(false);
       }
     };
+    const actualizarProducEspecifico = ()=>{
+      setCambioProducto(!cambioProducto)
+    }
 
     return (
     <ProductosContext.Provider
       value={{
         productos,
+        productosAll,
         loading,
         error,
         producto,
         historial,
         fetchProductos,
+        fetchProductosAll,
         postProducto,
         modificarProducto,
         eliminarProducto,
@@ -175,6 +205,10 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         goToPage,
         totalPages,
         currentPage,
+        actualizarProducEspecifico,
+        cambioProducto,
+        setProductosFiltrados,
+        productosFiltrados
       }}
     >
       {children}

@@ -7,19 +7,27 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/LoginContext';
 import CarritoMenuAdmin from '../carritoBarraMenu/CarritoBarraMenu';
 import Accordion2Usage from './acordionUsuario';
-import { useCarrito } from '../../contexts/CarritoContext';
+
 
 
 
 const Menu = () => {
     const{rol} = useAuth()
     const [rolG, setRol] = useState<string | null>(null);
+    const [isVisible, setIsVisible] = useState(false);
+    const location = useLocation();
+    const isHome = location.pathname === '/home';
 
     // Recupera el valor del rol desde localStorage
     useEffect(() => {
         const rolGuardado = localStorage.getItem("rol");
         setRol(rolGuardado); // Guarda el rol en el estado local
     }, [rol]);
+
+    //Effect par que siempre se cargue desde el principio de la pag
+    useEffect(() =>(
+        window.scrollTo(0, 0)
+    ),[location])
 
 
     //estado para contrlar la visibilidad del Menu desplegable
@@ -67,16 +75,30 @@ const Menu = () => {
         navigate('/appsAbril/opcionesEstadisticas')
     }
 
-   
-
     
-    const location = useLocation();
-    const isHome = location.pathname === '/home';
+    
+
+    useEffect(() => {
+        const handleScroll = () => {
+          if (window.scrollY > 100) { // Mostrar el botón después de desplazarse 100px
+            setIsVisible(true);
+          } else {
+            setIsVisible(false);
+          }
+        };
+    
+        window.addEventListener("scroll", handleScroll);
+    
+        return () => {
+          window.removeEventListener("scroll", handleScroll);
+        };
+      }, []);
     
 
     return (
     <div className={styles.container1}>
-        <div className={styles.header}>
+
+        <div className={!isVisible ? styles.header : styles.header2}>
             
             <img src='/logo.png' alt="Logo" width="100" height="60" /> {/* Ajusta el tamaño según sea necesario */}
             <div className={styles.container2}>

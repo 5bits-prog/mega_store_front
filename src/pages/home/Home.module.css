@@ -52,6 +52,7 @@
     transition: text-shadow 0.5s ease;
     text-shadow: -5px 5px 0 #ffffff81; /* Blanco inicial */
     animation: changeTextShadow 5s infinite reverse;
+    user-select: none;
 }
 @keyframes changeTextShadow {
     0% {
@@ -180,6 +181,7 @@
     transition: all 0.4s ease-in-out;
     cursor: default;
     border-radius: 10px;
+    user-select: none;
 }
 .img:hover{ 
     box-shadow:  15px 15px 5px #ca9af3a5;

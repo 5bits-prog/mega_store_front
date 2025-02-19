@@ -13,22 +13,28 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
-
+import CardSugerenciaUser from "../../components/cardSugerenciauser/CardSugerenciaUser";
+import { useNavigate} from 'react-router-dom';
 
 
 const ProductoEspecifico = () => {
     const { id } = useParams();
     const { agregarAlCarrito } = useCarrito();
-    const {fetchProductoEspe, producto, loading}= useProductos()
-    console.log(producto)
+    const {fetchProductoEspe, producto, loading, fetchProductos, productos, cambioProducto}= useProductos()
+    const navigate = useNavigate();
+   
+   
     useEffect(()=>{
         fetchProductoEspe(String(id))
-    },[])
+        fetchProductos(0,4,"id,asc")
+        window.scrollTo(0, 0);
+    },[cambioProducto])
 
     const formatearPrecio = (precio: number): string => {
       return precio.toLocaleString('es-ES');
   };
-  console.log(producto)
+
+  
   // Función para manejar el click en el carrito
   const handleAgregarAlCarrito = () => {
     if (producto) {
@@ -41,12 +47,18 @@ const ProductoEspecifico = () => {
           stockActual: producto.stockActual,
       });
   }
-};
+}; 
+
+  const handleHome=()=>{
+    navigate('/home')
+  }
 
   return (
     <div className={style.contGeneral}>
 
-        <div className={style.contIzq}>
+      <div className={style.contSuperior}>
+
+      <div className={style.contIzq}>
 
           <div className={style.contImg}>
             {!loading ?<Zoom>
@@ -60,23 +72,20 @@ const ProductoEspecifico = () => {
           </div>
         </div>
 
-      <div className={style.contDer}>
-        <h1 className={style.title}>{producto?.nombre}</h1>
-        <h2 className={style.precio}>${formatearPrecio(producto?.precio || 0)}</h2>
-        
-        <div className={style.contDerSecundario}>
-          <h2> {producto?.marca}</h2>
-          <div className={style.contInfo}>
-              <p className={style.probando} >Stock : {producto?.stockActual === 0 ? <strong>SIN STOCK</strong> : producto?.stockActual}</p>
-              <p className={style.probando}>Talle : {producto?.talle} </p>
-              <p className={style.probando}>Color : {producto?.color}</p>
+        <div className={style.contDer}>
+          <h1 className={style.title}>{producto?.nombre}</h1>
+          <h2 className={style.precio}>${formatearPrecio(producto?.precio || 0)}</h2>
 
-          </div>
+            <div className={style.contDerSecundario}>
+              <h2> {producto?.marca}</h2>
+              <div className={style.contInfo}>
+                <p className={style.probando} >Stock : {producto?.stockActual === 0 ? <strong>SIN STOCK</strong> : producto?.stockActual}</p>
+                <p className={style.probando}>Talle : {producto?.talle} </p>
+                <p className={style.probando}>Color : {producto?.color}</p>
+              </div>
               
 
-            <div className={style.contAcordeon}> 
-              
-                
+              <div className={style.contAcordeon}> 
                 <Accordion sx={{ width: '60%' }}>
                   <AccordionSummary sx={{ width: '100%' }}
                     expandIcon={<ExpandMoreIcon />}
@@ -112,11 +121,22 @@ const ProductoEspecifico = () => {
               }
               
 
+            </div>  
           </div>
-              
+      </div>
+      
+      
+      <div className={style.contInferior}>
+              <h1>Otros Productos</h1>
+              <div className={style.contProductos}>
+                  {(productos || []).map((producto) => (
+                                    <CardSugerenciaUser key={producto.id}  {...producto}/>    
+                ))}
+              </div>
+              <button className={style.botonMas} onClick={() => handleHome()}>Ver más</button>
+           
+      </div>
 
-            
-          </div>
     </div>
   )
 }
