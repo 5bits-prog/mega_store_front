@@ -30,8 +30,9 @@ import { PerfilProvider } from './contexts/PerfilContext';
 import { ToastContainer } from 'react-toastify';  // Importa el ToastContainer
 import 'react-toastify/dist/ReactToastify.css';  // Importa los estilos de react-toastify
 import { MovimientoStockProvider } from './contexts/MovimientoStockContext';
+import { EstadisticasProvider } from './contexts/EstadisticasContext';
 
-export function App() {
+export default function App() {
   return (
     <NotificationProvider>
       <Router>
@@ -47,83 +48,75 @@ export function App() {
                   <Route path="/appsRo/*" element={<AppsRo />} />
                   <Route path="/appsAbril/*" element={<AppsAbril />} />
 
-                  <Route path="/registrarMarca" 
-                    element={
-                      <MarcaProvider>
-                        <RegistrarMarca />
-                      </MarcaProvider>
-                    } 
-                  />
-                  <Route path="/registrarSucursal" 
-                    element={
-                      <SucursalProvider>
-                        <RegistrarSucursal />
-                      </SucursalProvider>
-                    } 
-                  />
-                  <Route path="/registrarTalle" 
-                    element={
-                      <TalleProvider>
-                        <RegistrarTalle />
-                      </TalleProvider>
-                    } 
-                  />
-                  <Route path="/registrarColor" 
-                    element={
-                      <ColorProvider>
-                        <RegistrarColor />
-                      </ColorProvider>
-                    } 
-                  />
-                  <Route path="/registrarCategoria" 
-                    element={
-                      <CategoriaProvider>
-                        <RegistrarCategoria />
-                      </CategoriaProvider>
-                    } 
-                  />
-                  <Route path="/login" element={<Login />} />
 
-                  <Route path="/sesion" 
-                  element={
-                  <RegisterProvider>
-                  <Sesion />
-                  </RegisterProvider>
-                  } />
-
-                  <Route path="/catalogoProductos" 
-                    element={
-                      
-                      <MovimientoStockProvider>
-                        <MarcaProvider>
-                          <SucursalProvider>
+                        <Route path="/registrarMarca" 
+                          element={
+                            <MarcaProvider>
+                              <RegistrarMarca />
+                            </MarcaProvider>
+                          } 
+                        />
+                        <Route path="/registrarSucursal" 
+                          element={
+                            <SucursalProvider>
+                              <RegistrarSucursal />
+                            </SucursalProvider>
+                          } 
+                        />
+                        <Route path="/registrarTalle" 
+                          element={
+                            <TalleProvider>
+                              <RegistrarTalle />
+                            </TalleProvider>
+                          } 
+                        />
+                        <Route path="/registrarColor" 
+                          element={
                             <ColorProvider>
-                              <TalleProvider>
-                                <CategoriaProvider>
-                                    <CatalogoProducto />
-                                </CategoriaProvider>
-                              </TalleProvider>
+                              <RegistrarColor />
                             </ColorProvider>
-                          </SucursalProvider>
-                        </MarcaProvider>
-                      </MovimientoStockProvider>
-                    } 
-                  />
+                          } 
+                        />
+                        <Route path="/registrarCategoria" 
+                          element={
+                            <CategoriaProvider>
+                              <RegistrarCategoria />
+                            </CategoriaProvider>
+                          } 
+                        />
+                        <Route path="/login" element={<Login />} />
 
-                  <Route
-                    path="/home"
-                    element={
-                      <MovimientoStockProvider>
-                          <Home /> 
-                      </MovimientoStockProvider>
-                    }
-                  />
+                        <Route path="/sesion" 
+                          element={
+                            <RegisterProvider>
+                              <Sesion />
+                            </RegisterProvider>
+                          } 
+                        />
+
+                        <Route path="/catalogoProductos" 
+                          element={
+                            <MarcaProvider>
+                              <SucursalProvider>
+                                <ColorProvider>
+                                  <TalleProvider>
+                                    <CategoriaProvider>
+                                      <CatalogoProducto />
+                                    </CategoriaProvider>
+                                  </TalleProvider>
+                                </ColorProvider>
+                              </SucursalProvider>
+                            </MarcaProvider>
+                          } 
+                        />
+
 
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/nosotros" element={<Nosotros />} />
                 </Routes>
                 <Footer />
               </div>
+
             </PerfilProvider>
               </ProductoProvider> 
         </AuthProvider>
@@ -133,9 +126,3 @@ export function App() {
     </NotificationProvider>
   );
 }
-
-export default App;
-
-
-
-

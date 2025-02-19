@@ -26,8 +26,15 @@ interface ProductoContextType {
     currentPage:number;
     actualizarProducEspecifico:() => void;
     cambioProducto: boolean;
+    filtrarProductosPorNombre: (termino: string) => void; 
+    productosFiltrados: Producto[];
+
 }
 
+
+//funcion que reciba un string para comparar con los productos existentes
+
+//almacenar en una const productosFiltrados 
 
 
 // Crear el contexto
@@ -49,12 +56,17 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     const [loading, setLoading] = useState<boolean>(false);
     const [historial, setHistorial] = useState([])
     const [error, setError] = useState(null);
+
     const [cambioProducto, setCambioProducto] =useState(false) //Variable para volver a llamar al fecht en producto especifico
+
+
+    const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]); 
 
     const {mostrarMensaje} = useNotification()
   
   
 //GET
+
     const fetchProductos = async  (page = currentPage, size :number, sort = "id,asc") => {
       setLoading(true);
       try {
@@ -182,9 +194,22 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
           setLoading(false);
       }
     };
+
     const actualizarProducEspecifico = ()=>{
       setCambioProducto(!cambioProducto)
     }
+
+
+    const filtrarProductosPorNombre = (termino: string) => {
+      if (!termino.trim()) {
+        setProductosFiltrados(productos); // Si no hay término, devolvemos todos los productos
+      } else {
+        const productosFiltrados = productos.filter(producto =>
+          producto.nombre.toLowerCase().includes(termino.toLowerCase()) // Comparación sin distinción de mayúsculas/minúsculas
+        );
+        setProductosFiltrados(productosFiltrados); // Actualizamos el estado con los productos filtrados
+      }
+    };
 
     return (
     <ProductosContext.Provider
@@ -202,6 +227,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         eliminarProducto,
         fetchProductoEspe,
         obtenerHistorial,
+
         goToPage,
         totalPages,
         currentPage,
@@ -209,6 +235,10 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         cambioProducto,
         setProductosFiltrados,
         productosFiltrados
+
+        filtrarProductosPorNombre,
+        productosFiltrados,
+
       }}
     >
       {children}
