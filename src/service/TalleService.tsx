@@ -1,4 +1,5 @@
 import axios from "axios";
+import Notificaciones from "../components/notificaciones";
 import { API_ROUTES } from "../Routes";
 import { Talle } from "../contexts/TalleContext";
 
@@ -40,6 +41,23 @@ export async function putTalle(data : Talle) {
 } 
 
 export const deleteTalle = async (id: string) => {
-    const response = await api.delete(API_ROUTES.DELETE_TALLE(id)); 
-    return response.data;
-} 
+    const token = localStorage.getItem("token");
+    if (!token) {
+        throw new Error("Token no disponible. El usuario no está autenticado.");
+    }
+
+    try {
+        // Realiza la solicitud DELETE para eliminar el talle
+        const response = await api.delete(API_ROUTES.DELETE_TALLE(id), {
+            headers: {
+                Authorization: `Token ${token}`,
+            },
+        });
+        Notificaciones.exito('¡Talle eliminado con éxito!')
+        return response.data;
+    } catch (error) {
+        console.error("Error al eliminar el talle:", error);
+        Notificaciones.error('No fue posible eliminar este Talle')
+        throw error;
+    }
+};
