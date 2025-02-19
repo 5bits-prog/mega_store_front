@@ -12,8 +12,8 @@ const handleNavigate = (ruta: string) => {
 
     return (
         <div className={style.container}>
-            <button className={style.buttons} onClick={() => handleNavigate('/appsAbril/estadisticas')} >VENTAS <AttachMoneyIcon style={{ marginTop: '8px' }} /></button>
-            <button className={style.buttons}>CLIENTES <FaceIcon style={{ marginTop: '8px' }}/></button>
+            <button className={style.buttons} onClick={() => handleNavigate('/appsAbril/estadisticasVentas')} >VENTAS <AttachMoneyIcon style={{ marginTop: '8px' }} /></button>
+            <button className={style.buttons} onClick={()=>handleNavigate('/appsAbril/estadisticasClientes')}> CLIENTES <FaceIcon style={{ marginTop: '8px' }}/></button>
 
         </div>
 

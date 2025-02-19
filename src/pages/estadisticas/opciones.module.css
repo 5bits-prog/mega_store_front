@@ -18,11 +18,13 @@
     text-align: center;
     padding:50px;
     margin:10px;
-    border-radius: 15px;
+    border-radius: 20px;
     border:solid 1px grey;
     background-color: white;
     outline: none;          /* Elimina el borde de enfoque (cuando se hace clic en el botón) */
     box-shadow: none;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
 }
 
 button:hover{
@@ -32,4 +34,5 @@ button:hover{
     opacity: 1; /* Hacer visible */
     color:white;
     border:none;
+    box-shadow: 0 0 20px rgba(214, 177, 214, 0.765); /* Agrega una sombra suave */
 }

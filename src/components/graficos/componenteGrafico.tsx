@@ -9,11 +9,13 @@ interface DatosGrafico {
   labels: string[];
   data: number[];
   labelTitle: string;
+  yTitle: string;
+  xTitle:string;
 
   
 }
 
-const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle}) => {
+const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle,yTitle, xTitle}) => {
   // Estado para los datos del gráfico
   const [chartData, setChartData] = useState<any>(null);
 
@@ -24,6 +26,8 @@ const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle}) => {
       labels: labels,
       data: data, // Aquí pasamos los datos reales
       labelTitle:labelTitle,
+      yTitle:yTitle,
+      xTitle:xTitle,
     
     };
     setChartData(mockData);
@@ -56,9 +60,24 @@ const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle}) => {
   const options = {
     scales: {
         y: {
+          title: {
+            display: true, // Activa el título del eje X
+            text: chartData.yTitle, // Texto del título
+            font: {
+              size: 14, // Tamaño de la fuente
+            },
+          },
           min: 0
+          
         },
         x: {
+          title: {
+            display: true, // Activa el título del eje X
+            text: chartData.xTitle, // Texto del título
+            font: {
+              size: 14, // Tamaño de la fuente
+            },
+          },
           ticks: {
             color: 'black'
           }
