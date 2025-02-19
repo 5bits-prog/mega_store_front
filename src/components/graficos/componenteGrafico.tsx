@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bar, Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, LineElement } from 'chart.js';
 
 // Registrar los componentes de Chart.js
@@ -9,11 +9,11 @@ interface DatosGrafico {
   labels: string[];
   data: number[];
   labelTitle: string;
-  title:string[];
+
   
 }
 
-const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle, title}) => {
+const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle}) => {
   // Estado para los datos del gráfico
   const [chartData, setChartData] = useState<any>(null);
 
@@ -24,10 +24,10 @@ const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle, title}) => 
       labels: labels,
       data: data, // Aquí pasamos los datos reales
       labelTitle:labelTitle,
-      title:title,
+    
     };
     setChartData(mockData);
-  }, [labels, data, labelTitle, title]); // El efecto depende de 'labels' y 'data' para actualizar el gráfico cuando cambian
+  }, [labels, data, labelTitle]); // El efecto depende de 'labels' y 'data' para actualizar el gráfico cuando cambian
 
   // Si chartData está vacío, no renderices el gráfico
   if (!chartData) {
@@ -45,7 +45,7 @@ const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle, title}) => 
         borderColor: 'white',
         backgroundColor: "#b598ed",
         borderRadius: 5, 
-        maxBarThickness: 500, // Limita el grosor máximo de las barras
+        maxBarThickness: 200, // Limita el grosor máximo de las barras
         
        
       },
@@ -65,20 +65,14 @@ const Grafico: React.FC<DatosGrafico> = ({ labels, data, labelTitle, title}) => 
         }
       },
       plugins: {
-        title:{
-            display:true,
-            text: chartData.title,
-            font:{
-                size:30,
-            },
-        },
+       
         legend: {
           display: false
         }
       }
     };
   
-    return <Bar data={datos} options={options} />;
+    return <Bar data={datos} options={options} width={650} height={450} />;
   
 };
 

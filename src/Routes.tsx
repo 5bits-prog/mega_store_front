@@ -57,6 +57,17 @@ export const API_ROUTES = {
     
     //MOVIMIENTO DE STOCK
     MOVIMIENTO_STOCK: '/products/movimiento-stock',
+
+    //ESTADISTICAS DE VENTAS
+    GET_VENTAS : (fechaDesde: string, fechaHasta: string, frecuencia: string): string => 
+      `/estadisticas-ventas/ventas-por-periodo?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&frecuencia=${frecuencia}`,
+    
+    //ESTADISTICAS DE PRODUCTOS
+    GET_PRODUCTOS: (fechaDesde: string, fechaHasta: string): string => 
+    `/estadisticas-ventas/productos-mas-vendidos?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&limite=10`,
+
     //El resto de URLS...
+
+  
 
   };
