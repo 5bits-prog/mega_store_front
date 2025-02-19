@@ -13,10 +13,10 @@ interface ProductoContextType {
     eliminarProducto:(producto:ProductoGet)=>void;
     fetchProductoEspe:(id: string)=>void;
     obtenerHistorial:(id: string)=>void;
-    setProductosFiltrados: (p:ProductoGet[])=>void;
+    setProductosFiltradosAdmin: (p:ProductoGet[])=>void;
     productos: ProductoGet[];
     productosAll: ProductoGet[];
-    productosFiltrados: ProductoGet[];
+    productosFiltradosAdmin: ProductoGet[];
     loading: boolean;
     error: string | null;
     producto?: ProductoGet;
@@ -48,7 +48,7 @@ interface ProductoProviderProps {
 export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) => {
     const [productos, setProductos] = useState<ProductoGet[]>([]);
     const [productosAll, setProductosAll] = useState<ProductoGet[]>([]);
-    const [productosFiltrados, setProductosFiltrados] = useState<ProductoGet[]>([]);
+    const [productosFiltradosAdmin, setProductosFiltradosAdmin] = useState<ProductoGet[]>([]);
     const [totalPages, setTotalPages] = useState<number>(0); // Para almacenar el número total de páginas
     const [currentPage, setCurrentPage] = useState<number>(0); // Para llevar la página actual
     
@@ -233,11 +233,10 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         currentPage,
         actualizarProducEspecifico,
         cambioProducto,
-        setProductosFiltrados,
-        productosFiltrados
-
-        filtrarProductosPorNombre,
+        setProductosFiltradosAdmin,
         productosFiltrados,
+        filtrarProductosPorNombre,
+        productosFiltradosAdmin,
 
       }}
     >
@@ -254,6 +253,3 @@ export const useProductos = (): ProductoContextType => {
   }
   return context;
 };
-
-
-
