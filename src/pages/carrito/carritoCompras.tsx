@@ -12,7 +12,7 @@ import { useVenta } from '../../contexts/VentaContext.tsx';
 const CarritoCompras = () => { // Usar el contexto para acceder al carrito
    
 const { carrito, eliminarDeCarrito, total, productosTotales} = useCarrito();
-const {registrarVenta, loading} = useVenta()
+const {registrarVenta} = useVenta()
 
 const [carritoVacio, setCarritoVacio] = useState(false);
 

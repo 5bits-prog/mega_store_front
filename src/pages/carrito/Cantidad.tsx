@@ -56,8 +56,8 @@ export default function BasicSelect({cantidad, stockActual,idProducto}:Props) {
           }}
           sx={{ width: '80px' }} //Ancho del input
         >
-        {listStock.map((item)=>
-            <MenuItem value={item} key={item} >{item}</MenuItem>
+        {listStock.slice(0, 30).map((item) => 
+            <MenuItem value={item} key={item}>{item}</MenuItem>
         )}
           
         </Select>

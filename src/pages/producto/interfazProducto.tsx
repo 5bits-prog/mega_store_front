@@ -37,7 +37,7 @@ export interface ProductoGet{
     stockMinimo: number;
     categoriaId: number;
     categoria: string;
-    sucursales?: Sucursal[];
+    sucursales: Sucursal[];
     marcaId: number;
     marca:string;
     talleId: number;

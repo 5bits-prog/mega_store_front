@@ -15,6 +15,11 @@ export async function getProductos() {
         return respuesta;
 }
 
+export async function getProductosPaginacion(page = 0, size :number, sort = "id,asc") {
+    const { data: respuesta } = await api.get(API_ROUTES.GET_PRODUCTO_PAGINACION(page, size, sort));
+    return respuesta;
+}
+
 export async function getProductoEspecifico(id: string) {
     const {data : respuesta} = await api.get(API_ROUTES.GET_PRODUCTO_ESPECIFICO(id)); 
     return respuesta;

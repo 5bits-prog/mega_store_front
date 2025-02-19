@@ -20,9 +20,6 @@ const CarritoContext = createContext<{
     total: number;
     productosTotales: number;
     LimpiarCarrito: ()=>void;
-
-   
-    
 } | null>(null);
 
 //Proveedor del contexto
@@ -30,17 +27,6 @@ export const CarritoProvider: React.FC<{ children: React.ReactNode }> = ({ child
     const [carrito, setCarrito] = useState<Producto[]>([]);
     const [total, setTotal]= useState(0)
     const [productosTotales, setProductosTotales]= useState(0)
-
-    const [mostrarCarrito, setMostrarCarrito] = useState(false); //funcion  para mostrar o no el carrito
-    const toggleCarrito = () => {
-        setMostrarCarrito((prevState) => !prevState);
-       
-        
-      }; //alterna el estado del carrito entre abierto y cerrado
-    
-      useEffect(() => {
-        console.log('Estado actualizado del carrito:', mostrarCarrito);
-    }, [mostrarCarrito]);  // Se ejecuta cada vez que mostrarCarrito cambie
     
     //limpiar Carrito
     const LimpiarCarrito = () =>{

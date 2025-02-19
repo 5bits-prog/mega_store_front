@@ -36,18 +36,18 @@ export default function App() {
   return (
     <NotificationProvider>
       <Router>
+        <CarritoProvider>
         <AuthProvider>
-          <CarritoProvider>
+            <ProductoProvider>
             <PerfilProvider>
-              <EstadisticasProvider>
-                <ProductoProvider>
-                  <MovimientoStockProvider>
-                    <div className='contenedorDeTodo'>
-                      <MenuAdmin /> 
-                      <Routes>
-                        <Route path="/appsRami/*" element={<AppsRami />} />
-                        <Route path="/appsRo/*" element={<AppsRo />} />
-                        <Route path="/appsAbril/*" element={<AppsAbril />} />
+              <div className='contenedorDeTodo'>
+                <MenuAdmin /> 
+               
+                <Routes>
+                  <Route path="/appsRami/*" element={<AppsRami />} />
+                  <Route path="/appsRo/*" element={<AppsRo />} />
+                  <Route path="/appsAbril/*" element={<AppsAbril />} />
+
 
                         <Route path="/registrarMarca" 
                           element={
@@ -110,22 +110,17 @@ export default function App() {
                           } 
                         />
 
-                        <Route
-                          path="/home"
-                          element={<Home />} 
-                        />
 
-                        <Route path="/" element={<Navigate to="/home" />} />
-                        <Route path="/nosotros" element={<Nosotros />} />
-                      </Routes>
-                      <Footer />
-                    </div>
-                  </MovimientoStockProvider>
-                </ProductoProvider>
-              </EstadisticasProvider>
+                  <Route path="/" element={<Navigate to="/home" />} />
+                  <Route path="/nosotros" element={<Nosotros />} />
+                </Routes>
+                <Footer />
+              </div>
+
             </PerfilProvider>
-          </CarritoProvider>
+              </ProductoProvider> 
         </AuthProvider>
+          </CarritoProvider>
       </Router>
       <ToastContainer />
     </NotificationProvider>

@@ -1,0 +1,8 @@
+.contGeneral{
+    width: 100%;
+}
+.mensaje{
+    color: rgb(39, 39, 39);
+    text-shadow: 0 0 5px rgba(83, 83, 83, 0.415);
+    font-size: 1rem;
+}

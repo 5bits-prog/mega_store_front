@@ -14,19 +14,23 @@ import ZoomBoton from '../../components/transitions/buttomzoom';
 import { useProductos } from '../../contexts/ProductoContext';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { useMovimientoStock } from '../../contexts/MovimientoStockContext';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import CardCarga from '../../components/cardCargaUser/cardCargaUser';
+import FiltroProductos from '../../components/bucadorConFiltro/BuscadorConFiltro';
 
 interface CatalogoProductoProps {
     productos: Producto[]; // Usar la interfaz
 }
 
 const CatalogoProducto =()=> {
-    const {productos,fetchProductos,productosFiltrados} = useProductos()
+    const {productos,fetchProductos, goToPage, totalPages, currentPage, loading : loadingProducto, productosFiltrados, fetchProductosAll} = useProductos()
     const {loading} = useMovimientoStock()
     const location = useLocation();
     const isAdmin = location.pathname === '/catalogoProductos';
-    const isProducto = location.pathname === '/catalogoProductos';
     const [isDialogOpen, setDialogOpen] = useState(false);
     const [isMenuOpen, setMenuOpen] = useState(false);
+    // const [currentPage, setCurrentPage] = useState(0); 
 
     const modalProducto=()=>{
         setDialogOpen(!isDialogOpen)
@@ -35,6 +39,7 @@ const CatalogoProducto =()=> {
     const toggleMenu = () => { //Función para abrir el desplegable
         setMenuOpen(!isMenuOpen);
     };
+
     useEffect(() => {
         // Verifica la ruta
         const isHome = location.pathname === '/home';
@@ -43,38 +48,85 @@ const CatalogoProducto =()=> {
         
         // Si estás en home y productos está vacío, haz el fetch
         if (isHome && productos.length === 0) {
-            console.log(productos)
-            fetchProductos();
-            console.log('home',isHome)
+            fetchProductos(currentPage, 12, "id,asc"); // Paginación por defecto con 5 productos por página
         }
     
         // Si estás en catalogoProductos, siempre haz el fetch
         if (isCatalogoProductos) {
-            fetchProductos();
+            fetchProductos(currentPage, 12, "id,asc");
+            fetchProductosAll()
         }
     }, [location.pathname, productos.length, loading]);
+    
+
+    // Función para manejar el cambio de página
+    const handlePageChange = (newPage: number) => {
+        goToPage(newPage); // Usamos la función goToPage para navegar a la nueva página
+        
+        const catalogo = document.getElementById("catalogo");
+        if (catalogo) {
+          catalogo.scrollIntoView({ behavior: "smooth" });
+        }
+    }
 
     return (
         
-        <div className={styles.container} style={{marginTop: isAdmin ? '75px' : '0'}}>
-            {isProducto && 
-            <button className={styles.button} onClick={() => modalProducto()}><AddCircleIcon /></button>}
+        <div className={styles.container} style={{marginTop: isAdmin ? '75px' : '0px'}} id='catalogo'>
+
                 {isAdmin ? (
-                        <div>
-                        <h2>ADMINISTRACIÓN DE PRODUCTOS </h2>
-                        {(productos || []).map((producto) => (
-                        <CardProducto key={producto.id}  {...producto} />
-                        ))}
+
+                        <div className={styles.productos}>
+                            <h2 >ADMINISTRACIÓN DE PRODUCTOS </h2>
+                            <div className={styles.contFiltros}>
+                                <FiltroProductos></FiltroProductos>
+                            </div>
+                            
+                            <div className={styles.contItems}>
+                                {(productosFiltrados.length > 0 ? productosFiltrados : productos).map((producto) => (
+                                    <CardProducto key={producto.id} {...producto} />
+                                    ))}
+                            </div>
+                            <button className={styles.button} onClick={() => modalProducto()}><AddCircleIcon /></button>
                         </div>
+
                     ) : (
                         <div className={styles.listado}>
-                        <h2>CATÁLOGO DE PRODUCTOS </h2>
-                        <BarraBusqueda></BarraBusqueda>
-                        {(productosFiltrados.length > 0 ? productosFiltrados : productos).map((producto) => (
-                        <CardUser key={producto.id} {...producto} />
-                    ))}
+
+                            <div className={styles.fondo}>
+                                <h1>CATÁLOGO DE PRODUCTOS </h1>
+                                <BarraBusqueda></BarraBusqueda>
+                            </div>
+                            
+                            {!loadingProducto ? 
+                                (productos || []).map((producto) => (
+                                <CardUser key={producto.id}  {...producto}/>    
+                                ))
+                                :
+                                Array.from({ length: 12 }).map((_, index) => (
+                                    <CardCarga key={index} />
+                                ))
+                            }
+                            
+
                         </div>
                     )}
+            
+            {/* Paginación */}
+            {productosFiltrados.length === 0 && totalPages > 1 && (
+                <Stack spacing={2}>
+                    <Pagination 
+                        count={totalPages} 
+                        page={currentPage + 1} 
+                        onChange={(_, newPage) => handlePageChange(newPage - 1)} 
+                        variant="outlined" 
+                        color="secondary" 
+                    />
+                </Stack>
+            )}
+            
+                   
+            
+
 
             {/* Dialog para el formulario de Registrar Producto */}
             <Dialog open={isDialogOpen} onClose={toggleMenu} fullWidth maxWidth="sm">

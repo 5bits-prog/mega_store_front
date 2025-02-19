@@ -5,20 +5,32 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
-.header {
+.header , .header2 {
     display: flex;
     z-index: 100;
     position: relative; /* Asegura que esté por encima */
     align-items: center;
     justify-content: center;
     justify-content: space-between;
-    background-color: #c99af3;
     width: 100%;
     font-size:14px;
-    height: clamp(3.5rem,4vw,8rem);
-    
+    height: clamp(3.5rem,4vw,8rem); 
 }
-.header img {       
+
+.header{
+    background-color: #c99af3;
+}
+
+.header2 {
+    background-color: #c99af3;
+    opacity: 0.3;
+    transition: all 0.3s ease-in-out;
+}
+.header2:hover{
+    opacity: 1;
+}
+
+.header img , .header2 img {       
     border: none;
     margin-top: 0px;
 }
@@ -30,7 +42,7 @@ body {
     flex-direction: column;  
     position: fixed;
     z-index: 6;
-    
+
 }
 
 .title {

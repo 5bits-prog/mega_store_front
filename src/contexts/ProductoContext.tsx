@@ -1,24 +1,34 @@
 // Contexto para gestionar productos
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
-import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico, getHitorial } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
+import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico, getHitorial, getProductosPaginacion } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
 import { useNotification } from "./NotificacionContext";
 import { Producto, ProductoGet } from "../pages/producto/interfazProducto";
 import Notificaciones from "../components/notificaciones";
 
 interface ProductoContextType {
-    fetchProductos: () => void;
+    fetchProductos: (page: number, size: number, sort: string) => void;
+    fetchProductosAll: () => void;
     postProducto: (producto: FormData) => void;
     modificarProducto:(producto:Producto)=>void;
     eliminarProducto:(producto:ProductoGet)=>void;
     fetchProductoEspe:(id: string)=>void;
     obtenerHistorial:(id: string)=>void;
-    productos: Producto[];
+    setProductosFiltrados: (p:ProductoGet[])=>void;
+    productos: ProductoGet[];
+    productosAll: ProductoGet[];
+    productosFiltrados: ProductoGet[];
     loading: boolean;
     error: string | null;
     producto?: ProductoGet;
     historial:any[];
+    goToPage: (page: number) => void;
+    totalPages:number;
+    currentPage:number;
+    actualizarProducEspecifico:() => void;
+    cambioProducto: boolean;
     filtrarProductosPorNombre: (termino: string) => void; 
     productosFiltrados: Producto[];
+
 }
 
 
@@ -36,29 +46,65 @@ interface ProductoProviderProps {
 // Proveedor del contexto
 
 export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) => {
-    const [productos, setProductos] = useState<Producto[]>([]);
+    const [productos, setProductos] = useState<ProductoGet[]>([]);
+    const [productosAll, setProductosAll] = useState<ProductoGet[]>([]);
+    const [productosFiltrados, setProductosFiltrados] = useState<ProductoGet[]>([]);
+    const [totalPages, setTotalPages] = useState<number>(0); // Para almacenar el número total de páginas
+    const [currentPage, setCurrentPage] = useState<number>(0); // Para llevar la página actual
+    
     const [producto, setProducto] = useState<ProductoGet>();
     const [loading, setLoading] = useState<boolean>(false);
     const [historial, setHistorial] = useState([])
     const [error, setError] = useState(null);
+
+    const [cambioProducto, setCambioProducto] =useState(false) //Variable para volver a llamar al fecht en producto especifico
+
+
     const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]); 
+
     const {mostrarMensaje} = useNotification()
   
   
 //GET
-    const fetchProductos = async () => {
-        setLoading(true);
-        setError(null); // Limpiamos el error antes de la llamada
-        try {
-            const response = await getProductos();
-            setProductos(response.data); 
 
-        } catch (err: any) {
-             console.error(err);
-        } finally {
-             setLoading(false);
-        }
-    };
+    const fetchProductos = async  (page = currentPage, size :number, sort = "id,asc") => {
+      setLoading(true);
+      try {
+          const response = await getProductosPaginacion(page, size, sort);
+          setProductos(response.data.content); 
+          console.log('contex', response)
+          setTotalPages(response.data.totalPages);  // Suponiendo que la API devuelve esta propiedad
+
+          } catch (err: any) {
+              
+              console.error(err);
+          } finally {
+              setLoading(false);
+          }
+      };
+
+      //GET ALL
+    const fetchProductosAll = async  () => {
+      setLoading(true);
+      try {
+          const response = await getProductos();
+          setProductosAll(response.data); 
+          console.log('contex', response)
+
+          } catch (err: any) {
+              
+              console.error(err);
+          } finally {
+              setLoading(false);
+          }
+      };
+  
+  // Función para cambiar de página
+  const goToPage = (page: number) => {
+      setCurrentPage(page);
+      fetchProductos(page, 12);
+  };
+
 
 //GET ESPECIFICO
     const fetchProductoEspe = async (id: string) => {
@@ -84,7 +130,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
             setLoading(true)
             const response = await newProducto(producto) //post
             Notificaciones.exito(`Prodcuto ${response.data.nombre} registrado`) //mensaje
-            await fetchProductos(); //Recargamos las sucursales
+            await fetchProductos(0,12,"id,asc"); //Recargamos las sucursales
         
             }catch(error:any){
                 if (error) {
@@ -103,7 +149,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         setLoading(true)
         const response = await putProducto(producto) //post
         Notificaciones.exito(`Producto ${response.data.nombre} modificado`) //mensaje
-        await fetchProductos(); //Recargamos las sucursales
+        await fetchProductos(0,12,"id,asc"); //Recargamos las sucursales
         }catch(error:any){
             if (error) {
                 Notificaciones.error(error.response?.data.errors)
@@ -127,7 +173,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
             throw new Error(`Error al eliminar el producto. Status: ${respuesta.status}`);
         }
           console.log("producto eliminado"); 
-          fetchProductos();
+          fetchProductos(0,12,"id,asc");
           Notificaciones.exito('Producto eliminado con exito')
         } catch (error) {
           console.error('Error al eliminar el Producto:', error);
@@ -148,6 +194,12 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
           setLoading(false);
       }
     };
+
+    const actualizarProducEspecifico = ()=>{
+      setCambioProducto(!cambioProducto)
+    }
+
+
     const filtrarProductosPorNombre = (termino: string) => {
       if (!termino.trim()) {
         setProductosFiltrados(productos); // Si no hay término, devolvemos todos los productos
@@ -158,23 +210,35 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         setProductosFiltrados(productosFiltrados); // Actualizamos el estado con los productos filtrados
       }
     };
-  
+
     return (
     <ProductosContext.Provider
       value={{
         productos,
+        productosAll,
         loading,
         error,
         producto,
         historial,
         fetchProductos,
+        fetchProductosAll,
         postProducto,
         modificarProducto,
         eliminarProducto,
         fetchProductoEspe,
         obtenerHistorial,
+
+        goToPage,
+        totalPages,
+        currentPage,
+        actualizarProducEspecifico,
+        cambioProducto,
+        setProductosFiltrados,
+        productosFiltrados
+
         filtrarProductosPorNombre,
         productosFiltrados,
+
       }}
     >
       {children}

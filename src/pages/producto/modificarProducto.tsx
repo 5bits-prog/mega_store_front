@@ -164,7 +164,7 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
     
     modificarProducto(jsonData);
     console.log(jsonData)
-    fetchProductos()
+    fetchProductos(0,12,"id,asc")
     }
 
     const handlePrecioChange = (e: React.ChangeEvent<HTMLInputElement>) => {

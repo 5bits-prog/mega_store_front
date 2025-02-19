@@ -4,6 +4,7 @@ import { useNotification } from "./NotificacionContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from 'axios';
 import Notificaciones from "../components/notificaciones";
+import { useCarrito } from "./CarritoContext";
 
 // Define el tipo para el contexto
 interface AuthContextType {
@@ -32,6 +33,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [nombre, setNombre]= useState('')
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
+  const {LimpiarCarrito} = useCarrito()
 
   const login = async (username: LoginData) => {
     try{
@@ -76,6 +78,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem("perfilUsuario");
     localStorage.removeItem("idUser");
     navigate("/home");
+    LimpiarCarrito()
   };
 
   return (
