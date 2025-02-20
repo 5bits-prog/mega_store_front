@@ -15,7 +15,7 @@ import { useEstadisticas } from '../../contexts/EstadisticasContext';
 const EstadisticasClientes: React.FC = () => {
 
   const [opcionEstadisticaSeleccionada, setOpcionEstadisticaSeleccionada] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const exportarRef = useRef<{ exportPdf: () => void } | null>(null);
   //const { frecuenciaData, fetchFrecVentas} = useEstadisticas();
   const [labels, setLabels] = useState<string[]>([]); // Para almacenar las fechas

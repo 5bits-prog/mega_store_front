@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_ROUTES } from "../Routes";
-import { Perfil } from "../contexts/PerfilContext";
+
 
 const api = axios.create({
     baseURL: API_ROUTES.BASE,

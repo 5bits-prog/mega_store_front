@@ -64,9 +64,7 @@ const VerificacionCodigo: React.FC<Props> = ({ onCerrar }) => {
         Verificar(datosUsuario)
     };
 
-    const reenviar = ()=>{
-        const datos = { emailUser };  // Crear un objeto con la estructura de la interfaz
-    } 
+   
 
     return (
         <StyledWrapper>

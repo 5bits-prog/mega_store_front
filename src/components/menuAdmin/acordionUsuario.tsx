@@ -3,7 +3,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { useState, useEffect } from 'react';
+
 import { useAuth } from '../../contexts/LoginContext';
 import Swal from 'sweetalert2';
 import Notificaciones from '../notificaciones';
@@ -11,9 +11,9 @@ import Notificaciones from '../notificaciones';
 
 export default function Accordion2Usage() {
 
-  const{rol, logout} = useAuth()
+  const{ logout} = useAuth()
   
-  const [rolG, setRol] = useState<string | null>(null);
+
   
   // Recupera el valor del rol desde localStorage
   // useEffect(() => {

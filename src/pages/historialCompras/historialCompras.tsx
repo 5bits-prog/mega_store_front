@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { CircularProgress, Typography, List, ListItem, ListItemText, Divider } from "@mui/material";
 import { useHistorialCompras } from "../../contexts/HistorialComprasContext";
-import { Style } from "@mui/icons-material";
+
 import style from "./historialCompras.module.css";
 import WhatsAppButton from "../../components/botonWpp/botonWpp";
 

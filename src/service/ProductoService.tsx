@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_ROUTES } from "../Routes";
 
-import { Producto,ProductoGet } from "../pages/producto/interfazProducto";
+import { Producto } from "../pages/producto/interfazProducto";
 
 
 const api = axios.create({

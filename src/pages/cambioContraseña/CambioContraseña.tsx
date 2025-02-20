@@ -2,7 +2,7 @@ import style from './CambioContraseña.module.css'
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import validationsLogin from "./ValidacionPaso1";
-import React, { useState } from "react";
+import React from "react";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
@@ -42,7 +42,6 @@ const handleCerrarForm = () => {
 const [showPassword, setShowPassword] = React.useState(false);  
 const [showConfirmation, setShowConfirmation] = React.useState(false);
 const handleClickShowConfirmation = () => setShowConfirmation((show) => !show);
-const [isDialogOpen, setDialogOpen] = useState(false);
 const handleClickShowPassword = () => setShowPassword((show) => !show);
 const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {event.preventDefault();};         
 const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {event.preventDefault();};

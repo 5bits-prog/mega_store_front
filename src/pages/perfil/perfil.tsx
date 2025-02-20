@@ -15,7 +15,7 @@ import Notificaciones from '../../components/notificaciones';
 
 const Perfil: React.FC = () => {
 
-  const { fetchPerfil, updatePerfil, datosPerfil, loading, error } = usePerfil();
+  const { fetchPerfil, updatePerfil, datosPerfil, loading} = usePerfil();
 
   const [mostrarBoton, setMostrarBoton] = useState(false); // Estado inicial oculto
   

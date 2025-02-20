@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { getHistorialCompras } from "../service/HistorialComprasService";
 import 'react-toastify/dist/ReactToastify.css';
-import { useAuth } from "./LoginContext";
+
 import Notificaciones from "../components/notificaciones";
 
 // Definimos la estructura del historial de compras
@@ -34,7 +34,7 @@ interface HistorialComprasProviderProps {
 
 // Definimos el Provider para manejar el estado
 export const HistorialComprasProvider: React.FC<HistorialComprasProviderProps> = ({ children }) => {
-    const { user } = useAuth(); // Obtener el usuario autenticado
+    
     const [loading, setLoading] = useState<boolean>(false); // Estado de carga
     const [error, setError] = useState<string | null>(null); // Estado de error
     const [historialCompras, setHistorialCompras] = useState<Array<HistorialCompras>>([]);

@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, ReactNode } from "react";
 import { getDatosPerfil, updateDatosPerfil } from "../service/PerfilService";
 import 'react-toastify/dist/ReactToastify.css';
 import Notificaciones from "../components/notificaciones";
-import { useAuth } from "./LoginContext";
+
 export interface Perfil {
   id?: number;
   nombre: string;
@@ -28,7 +28,7 @@ interface PerfilProviderProps {
 }
 
 export const PerfilProvider: React.FC<PerfilProviderProps> = ({ children }) => {
-  const {user}=useAuth()
+  
   // Lee el perfil desde localStorage al iniciar
   const [datosPerfil, setDatosPerfil] = useState<Perfil | null>(() => {
     const storedPerfil = localStorage.getItem("perfilUsuario");

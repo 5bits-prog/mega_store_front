@@ -1,7 +1,6 @@
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { deleteSucursal, getSucursales, newSucursal, putSucursal } from '../service/SucursalesService';
 
-import { useNotification } from "./NotificacionContext";
 import Notificaciones from '../components/notificaciones';
 
 export interface Sucursal {
@@ -38,7 +37,7 @@ export const SucursalProvider: React.FC<SucursalProviderProps> = ({ children }) 
   const [sucursales, setSucursales] = useState<Sucursal[]>([]);
   const [loading, setLoading] = useState<boolean>(false); // Estado de carga
   const [error, setError] = useState<string | null>(null); // Estado de error
-  const {mostrarMensaje}= useNotification()
+  
 
  //GET
   const fetchSucursales= async () => {

@@ -6,7 +6,6 @@ import RegistrarSucursal from'./pages/sucursal/registrarSucursal';
 import RegistrarTalle from'./pages/talle/registrarTalle'; 
 import RegistrarColor from'./pages/color/registrarColor'; 
 import RegistrarCategoria from'./pages/categoria/registrarCategoria'; 
-import Perfil from'./pages/perfil/perfil'; 
 import Login from'./pages/login/login'; 
 import Home from './pages/home/Home';
 import Sesion from'./pages/sesion/sesion'; 

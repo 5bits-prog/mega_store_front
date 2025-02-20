@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Codigo, VerificarCodigo, Restablecer } from '../service/RestablecerContraseñaService';
 import Notificaciones from '../components/notificaciones';
 import {useNavigate } from 'react-router-dom';
@@ -51,7 +51,7 @@ export const RestablecerContraseñaProvider: React.FC<RestablecerContraseñaProv
         setLoading(true)
         const json={email:email}
         console.log(json)
-        const response = await Codigo(json) //post
+        await Codigo(json) //post
         setEmailUser(email)
         setError1(true)
         setError3(false)
@@ -72,7 +72,7 @@ export const RestablecerContraseñaProvider: React.FC<RestablecerContraseñaProv
   const Verificar= async(data: any)=>{
     try{
         setLoading(true)
-        const response = await VerificarCodigo(data) //post
+        await VerificarCodigo(data) //post
         Notificaciones.exito(`Verificado correctamente`) //mensaje
         setError2(true)
         setError1(false)
@@ -94,7 +94,7 @@ export const RestablecerContraseñaProvider: React.FC<RestablecerContraseñaProv
     try{
         setLoading(true)
         console.log(data)
-        const response = await Restablecer(data) //post
+        await Restablecer(data) //post
         Notificaciones.exito(`Contraseña Restablecida`) //mensaje
         restablecer()
         navigate('/home')

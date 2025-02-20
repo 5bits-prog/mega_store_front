@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
     gap: 8px;
 `;
 interface Props {
-    onCerrar: () => void;
+    onCerrar?: () => void;
 }
 
 const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
@@ -153,7 +153,7 @@ const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
                 </Stack>
             }
         </form>
-        <button className={style.exitBtn} onClick={() =>  onCerrar()}>X</button>
+        <button className={style.exitBtn} onClick={() =>  onCerrar?.()}>X</button>
         </StyledWrapper>
     );
 }

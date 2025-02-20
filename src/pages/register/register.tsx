@@ -15,7 +15,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 
 
 const Register: React.FC = () => {
-    const {Registrar, VerificarUsuario,loading, loadingVerificacion, setearEmail, cerrarModal}=useRegister()
+    const {Registrar, loading, loadingVerificacion, setearEmail, cerrarModal}=useRegister()
     
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -24,7 +24,7 @@ const Register: React.FC = () => {
 
     const handleClickShowConfirmation = () => setShowConfirmation((show) => !show);
       
-    const [isDialogOpen, setDialogOpen] = useState(false);
+    const [, setDialogOpen] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 

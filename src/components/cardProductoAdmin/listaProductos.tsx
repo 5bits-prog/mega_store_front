@@ -19,7 +19,6 @@ import InfoProducto from './infoProducto';
 import Zoom from 'react-medium-image-zoom';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import ModalMovimientoStock from '../modalMovimientoStock/modalMovimientoStock';
-import { boolean } from 'zod';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 

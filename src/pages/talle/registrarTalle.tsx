@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 //importamos los estilos
 import style from "./registrarTalle.module.css";
 //importamos los iconos utilizados desde mui

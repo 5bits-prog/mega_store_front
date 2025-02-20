@@ -3,7 +3,7 @@ import { Register, Verificar, registrarUser, verificarUser, reenviarCodigo, Reen
 import { useNotification } from "./NotificacionContext";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from 'axios';
-import Swal from "sweetalert2";
+
 import Notificaciones from "../components/notificaciones";
 
 // Define el tipo para el contexto

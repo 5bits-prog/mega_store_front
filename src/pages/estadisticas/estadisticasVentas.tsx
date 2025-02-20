@@ -25,7 +25,7 @@ const EstadisticasVentas: React.FC = () => {
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
   const [opcionEstadisticaSeleccionada, setOpcionEstadisticaSeleccionada] = useState<string>("");
   let [opcionVisualizacionSeleccionada, setOpcionVisualizacionSeleccionada] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  const [, setError] = useState<string | null>(null);
   const exportarRef = useRef<{ exportPdf: () => void } | null>(null);
   const { ventasData, fetchVentas, productosData, fetchProductos} = useEstadisticas();
   const [labels, setLabels] = useState<string[]>([]); // Para almacenar las fechas
