@@ -58,7 +58,7 @@ export const deleteSucursal = async (id: string) => {
         return response.data;
     } catch (error) {
         console.error("Error al eliminar la sucursal:", error);
-        Notificaciones.error('No fue posible eliminar esta Sucursal.')
+        Notificaciones.error('No fue posible eliminar esta Sucursal. Tiene un producto asociado')
         throw error;
     }
 };

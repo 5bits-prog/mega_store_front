@@ -61,7 +61,7 @@ export const deleteCategoria = async (id: string) => {
     } catch (error) {
         console.error("Error al eliminar la categoría:", error);
         // Notificación de error si algo falla
-        Notificaciones.error("No fue posible eliminar esta Categoría.");
+        Notificaciones.error("No fue posible eliminar esta Categoría. Tiene un producto asociado");
         throw error;
     }
 };
