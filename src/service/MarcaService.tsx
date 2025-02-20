@@ -65,7 +65,9 @@ export async function putMarca(marca: Marca) {
             return response.data;
         } catch (error) {
             console.error("Error al eliminar la marca:", error);
-            Notificaciones.error("No fue posible eliminar esta Marca.");
+
+            Notificaciones.error("No fue posible eliminar esta Marca. Tiene un producto asociado");
+
             throw error;
         }
     };

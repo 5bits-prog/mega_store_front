@@ -53,7 +53,9 @@ export const deleteColor = async (id: string) => {
         return response.data;
     } catch (error) {
         console.error("Error al eliminar el color:", error);
-        Notificaciones.error('No fue posible eliminar este Color');
+
+        Notificaciones.error('No fue posible eliminar este Color. Tiene un producto asociado');
+
         throw error;
     }
 };
