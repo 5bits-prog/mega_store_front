@@ -146,8 +146,6 @@
 .precio{
     color:black;
     font-size:clamp(0.8rem,1.5vw,1.5rem);
-    margin-right:100px;
-    align-self: flex-end;
 }
 .contInferior{
     height: auto;
@@ -167,14 +165,15 @@
     justify-content: space-around;
 }
 .botonMas{
-    height: 1.5vw;
+    height: clamp(2rem,2vw,2rem);
     background-color: white;
     border-radius: 10px;
     border: 2px solid #b498ed;
     margin-top: 15px;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
+    color: #49307b;
 }
 .botonMas:hover{
     box-shadow: 0 0 10px #b498edde;
-}
+} 
