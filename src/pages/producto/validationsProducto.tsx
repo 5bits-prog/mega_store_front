@@ -5,15 +5,14 @@ export const validarCampoRequerido = (valor: string): string => {
 
 export const validarAlfanumerico = (valor: string): string => {
     if (valor.trim() === '') return ''; // Permite valores vacíos
-    const regex = /^[a-zA-Z0-9\s]+$/;
-    return regex.test(valor) ? '': 'Solo se permiten letras y numeros';
+    const regex = /^[a-zA-Z0-9\s.,¡!áéíóúÁÉÍÓÚñÑ]+$/;
+    return regex.test(valor) ? '': 'Contiene caracteres no permitidos';
 };
 
 export const validarLongitudCaracteres = (valor: string): string => {
      // Si el campo está vacío, no mostrar ningún mensaje de error
     if (valor.trim() === '') return '';
-
-    const regex = /^[A-Za-z0-9 ]{1,100}$/;
+    const regex = /^[a-zA-Z0-9\s.,¡!áéíóúÁÉÍÓÚñÑ]{1,100}$/;
     return regex.test(valor) ? '' : 'Debe tener entre 1 y 100 caracteres'; 
 };
  
