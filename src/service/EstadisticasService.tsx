@@ -48,3 +48,34 @@ export async function getEstadisticasProductos(fechaDesde: string, fechaHasta: s
 
     return respuesta;
 }
+
+//GET ESTADISTICAS CLIENTES (FRECUENCIA VENTA)
+ export async function getEstadisticasFrecVenta(){
+    const token=localStorage.getItem('token');
+    if (!token){
+        throw new Error ("Token no disponible. El usuario no está autenticado")
+    }
+    const url= API_ROUTES.GET_FREC_VENTAS
+    const {data:respuesta}=await api.get(url,{
+        headers:{
+            Authorization: `Token ${token}`,
+        }
+    });
+    return respuesta
+ }
+
+ //GET ESTADISTICAS CLIENTES (MONTO PROMEDIO DE VENTAS)
+
+ export async function getEstadisticasPromVentas(){
+    const token=localStorage.getItem('token');
+    if (!token){
+        throw new Error ("Token no disponible. El usuario no está autenticado")
+    }
+    const url= API_ROUTES.GET_PROM_VENTAS
+    const {data:respuesta}=await api.get(url,{
+        headers:{
+            Authorization: `Token ${token}`,
+        }
+    });
+    return respuesta
+ }

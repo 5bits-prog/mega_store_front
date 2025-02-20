@@ -24,7 +24,7 @@ interface CatalogoProductoProps {
 }
 
 const CatalogoProducto =()=> {
-    const {productos,fetchProductos, goToPage, totalPages, currentPage, loading : loadingProducto, productosFiltrados, fetchProductosAll} = useProductos()
+    const {productos,fetchProductos, goToPage, totalPages, currentPage, loading : loadingProducto, productosFiltradosAdmin, fetchProductosAll} = useProductos()
     const {loading} = useMovimientoStock()
     const location = useLocation();
     const isAdmin = location.pathname === '/catalogoProductos';
@@ -82,7 +82,7 @@ const CatalogoProducto =()=> {
                             </div>
                             
                             <div className={styles.contItems}>
-                                {(productosFiltrados.length > 0 ? productosFiltrados : productos).map((producto) => (
+                                {(productosFiltradosAdmin.length > 0 ? productosFiltradosAdmin : productos).map((producto) => (
                                     <CardProducto key={producto.id} {...producto} />
                                     ))}
                             </div>
@@ -94,9 +94,9 @@ const CatalogoProducto =()=> {
 
                             <div className={styles.fondo}>
                                 <h1>CATÁLOGO DE PRODUCTOS </h1>
-                                <BarraBusqueda></BarraBusqueda>
+                                
                             </div>
-                            
+                            <BarraBusqueda></BarraBusqueda>
                             {!loadingProducto ? 
                                 (productos || []).map((producto) => (
                                 <CardUser key={producto.id}  {...producto}/>    
@@ -112,7 +112,7 @@ const CatalogoProducto =()=> {
                     )}
             
             {/* Paginación */}
-            {productosFiltrados.length === 0 && totalPages > 1 && (
+            {productosFiltradosAdmin.length === 0 && totalPages > 1 && (
                 <Stack spacing={2}>
                     <Pagination 
                         count={totalPages} 

@@ -11,7 +11,7 @@ import { useTalle } from "../../contexts/TalleContext";
 import { useMovimientoStock } from "../../contexts/MovimientoStockContext";
 
 const FiltroProductos = () => {
-    const { productosAll, fetchProductosAll, setProductosFiltrados } = useProductos();
+    const { productosAll, fetchProductosAll, setProductosFiltradosAdmin } = useProductos();
     const {talles, fetchTalles}= useTalle()
     const {colores,fetchColores}= useColor()
     const {marcas, fetchMarcas}= useMarca()
@@ -73,7 +73,7 @@ const FiltroProductos = () => {
     });
     
   
-    setProductosFiltrados(productosFiltrados);
+    setProductosFiltradosAdmin(productosFiltrados);
     setMensaje('Filtros Aplicados')
         setMensajeCarga(true)
         // Después de 3 segundos, oculta el mensaje
@@ -93,7 +93,7 @@ const FiltroProductos = () => {
         talle: [],
         });
         // Limpia los productos filtrados
-        setProductosFiltrados([]);
+        setProductosFiltradosAdmin([]);
 
         setMensaje('Filtros Limpios')
         setMensajeCarga(true)

@@ -38,6 +38,7 @@ export default function App() {
       <Router>
         <CarritoProvider>
         <AuthProvider>
+          <MovimientoStockProvider>
             <ProductoProvider>
             <PerfilProvider>
               <div className='contenedorDeTodo'>
@@ -46,7 +47,13 @@ export default function App() {
                 <Routes>
                   <Route path="/appsRami/*" element={<AppsRami />} />
                   <Route path="/appsRo/*" element={<AppsRo />} />
-                  <Route path="/appsAbril/*" element={<AppsAbril />} />
+                  <Route path="/appsAbril/*" 
+                  element=
+                  {
+                  <EstadisticasProvider>
+                  <AppsAbril />
+                  </EstadisticasProvider>} 
+                  />
 
 
                         <Route path="/registrarMarca" 
@@ -110,16 +117,17 @@ export default function App() {
                           } 
                         />
 
-
+                  <Route path="/home" element={<Home />} />
                   <Route path="/" element={<Navigate to="/home" />} />
                   <Route path="/nosotros" element={<Nosotros />} />
                 </Routes>
                 <Footer />
               </div>
 
-            </PerfilProvider>
-              </ProductoProvider> 
-        </AuthProvider>
+                  </PerfilProvider>
+                </ProductoProvider> 
+              </MovimientoStockProvider>
+            </AuthProvider>
           </CarritoProvider>
       </Router>
       <ToastContainer />
