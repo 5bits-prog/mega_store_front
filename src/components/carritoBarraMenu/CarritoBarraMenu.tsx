@@ -4,6 +4,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useCarrito } from '../../contexts/CarritoContext';
 
 
+
 type ShoppingCartWithBadgeProps = {
     productCount: number; // Especificamos que debe ser un número
   };
@@ -18,7 +19,7 @@ type ShoppingCartWithBadgeProps = {
         horizontal: 'right', // Posiciona el número
       }}
     >
-      <ShoppingCartIcon style={{ fontSize: '1.7rem' }} />
+      <ShoppingCartIcon style={{ fontSize: 'clamp(1.2rem,1.5vw,1.5rem' }} />
     </Badge>
   );
 }
@@ -27,7 +28,7 @@ export default function CarritoMenuAdmin() {
     const {productosTotales} =useCarrito()
 
   return (
-    <div style={{ padding: '10px' }}>
+    <div style={{ padding: '10px' }} >
       <ShoppingCartWithBadge productCount={productosTotales} />
     </div>
   );

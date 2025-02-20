@@ -125,10 +125,10 @@ const Menu = () => {
                 <>
                 <a className={styles.seleccion2} onClick={handleCatalogo}>Productos</a>
                 <a className={styles.seleccion2} onClick={handleEstadisticas}>Estadísticas</a>
-                {/*<a className={styles.seleccion2} onClick={ ()=> cerrarSesion()}>Cerrar Sesion</a>*/}
+    
                 <div className={styles.iconoUser}>
-                    <a className={styles.seleccion2} onMouseEnter={toggleMenu2}> < PersonIcon /></a>
-                    {/* Contenido del menú que se muestra/oculta según el estado */}
+                    <a className={styles.seleccion2} onMouseEnter={toggleMenu2}> < PersonIcon className={styles.icono}/></a>
+                    
                     {isMenu2Open && (
                         <a className={styles.dropdownContent2} onMouseLeave={closeMenu2}>
                         <Accordion2Usage />
@@ -143,11 +143,11 @@ const Menu = () => {
                 {rolG != '5'?
                 <>
                     {rolG==null ? 
-                        <a className={styles.seleccion2} onClick={handleNavigation}> < PersonIcon /></a>
+                        <a className={styles.seleccion2} onClick={handleNavigation}> < PersonIcon className={styles.icono} /></a>
                     :
                     <div className={styles.iconoUser}> 
 
-                        <a className={styles.seleccion2} onMouseEnter={toggleMenu2}> < PersonIcon /> </a>
+                        <a className={styles.seleccion2} onMouseEnter={toggleMenu2}> < PersonIcon className={styles.icono} /> </a>
 
                         {isMenu2Open && (
                             <a className={styles.dropdownContent2} onMouseLeave={closeMenu2}>
@@ -159,7 +159,7 @@ const Menu = () => {
                     
                     
 
-                    <a className={styles.seleccion2} onClick={handleNavigationCarrito}> < CarritoMenuAdmin /></a>
+                    <a className={styles.seleccion2} onClick={handleNavigationCarrito}> < CarritoMenuAdmin/></a>
                 </>
                 :''}
 

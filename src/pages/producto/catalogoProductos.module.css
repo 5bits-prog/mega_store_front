@@ -30,10 +30,13 @@
     flex-direction: row;
     min-height: 80vh;
     height: 90%;
-    justify-content: space-around;
+    justify-content: center;
     margin-top: 10px;
     padding-top:50px ;
-    padding-right: 30px;    
+    padding-right: 30px;
+    gap: 2%; 
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .productos h2{
     position: absolute;
@@ -45,8 +48,15 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-    margin-left: -40px;
+    flex: 2;
+    max-width: 75vw;
 }
+.contFiltros{
+    flex: 1;
+    max-width: 20vw;
+}
+
+
 
 .listado{
     display: flex;
@@ -63,7 +73,9 @@
 
 
 .button{ 
-    
+    position: absolute;
+    top: 10px;
+    right: 30px;
     background-color:black;
     color: #ffffff;
     width: 5em;

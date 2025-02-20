@@ -137,11 +137,11 @@ const FiltroProductos = () => {
               </AccordionDetails>
             </Accordion>
           ))}
-          <Button variant="contained" color="primary" onClick={aplicarFiltros}>
+          <Button variant="contained" className={style.botonFiltro} onClick={aplicarFiltros}>
             Aplicar Filtros
           </Button>
           {/* Botón para limpiar filtros */}
-            <Button variant="outlined" color="secondary" onClick={limpiarFiltros} style={{ marginLeft: 10 }}>
+            <Button variant="outlined" color="secondary" className={style.botonFiltroLimp} onClick={limpiarFiltros} style={{ marginLeft: 10 }}>
                 Limpiar Filtros
             </Button>
 
