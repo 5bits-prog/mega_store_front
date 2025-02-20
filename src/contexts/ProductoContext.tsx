@@ -1,7 +1,7 @@
 // Contexto para gestionar productos
-import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import { getProductos, newProducto, putProducto, deleteProducto, getProductoEspecifico, getHitorial, getProductosPaginacion } from "../service/ProductoService"; // Asegúrate de ajustar la ruta si es necesario
-import { useNotification } from "./NotificacionContext";
+
 import { Producto, ProductoGet } from "../pages/producto/interfazProducto";
 import Notificaciones from "../components/notificaciones";
 
@@ -27,7 +27,7 @@ interface ProductoContextType {
     actualizarProducEspecifico:() => void;
     cambioProducto: boolean;
     filtrarProductosPorNombre: (termino: string) => void; 
-    productosFiltrados: Producto[];
+    productosFiltradosUser: ProductoGet[];
 
 }
 
@@ -60,9 +60,8 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     const [cambioProducto, setCambioProducto] =useState(false) //Variable para volver a llamar al fecht en producto especifico
 
 
-    const [productosFiltrados, setProductosFiltrados] = useState<Producto[]>([]); 
+    const [productosFiltradosUser, setProductosFiltradosUser] = useState<ProductoGet[]>([]); 
 
-    const {mostrarMensaje} = useNotification()
   
   
 //GET
@@ -89,7 +88,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
       try {
           const response = await getProductos();
           setProductosAll(response.data); 
-          console.log('contex', response)
+          // console.log('contex', response)
 
           } catch (err: any) {
               
@@ -200,16 +199,30 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
     }
 
 
-    const filtrarProductosPorNombre = (termino: string) => {
-      if (!termino.trim()) {
-        setProductosFiltrados(productos); // Si no hay término, devolvemos todos los productos
-      } else {
-        const productosFiltrados = productos.filter(producto =>
-          producto.nombre.toLowerCase().includes(termino.toLowerCase()) // Comparación sin distinción de mayúsculas/minúsculas
-        );
-        setProductosFiltrados(productosFiltrados); // Actualizamos el estado con los productos filtrados
+    const filtrarProductosPorNombre = async (termino: string) => {
+      setLoading(true); // Activamos el estado de carga
+  
+      try {
+          // Obtener todos los productos
+          await fetchProductosAll();  
+  
+          // Filtrar los productos si hay un término de búsqueda
+          if (!termino.trim()) {
+              setProductosFiltradosUser([]); // Si el término está vacío, se limpia la lista
+          } else {
+              const productosFiltrados = productosAll.filter(producto =>
+                  producto.nombre.toLowerCase().includes(termino.toLowerCase()) // Comparación sin distinción de mayúsculas/minúsculas
+              );
+              console.log(productosFiltrados)
+              setProductosFiltradosUser(productosFiltrados); // Guardamos los productos filtrados
+          }
+  
+      } catch (err) {
+          console.error("Error al filtrar productos:", err);
+      } finally {
+          setLoading(false); // Desactivamos el estado de carga
       }
-    };
+  };
 
     return (
     <ProductosContext.Provider
@@ -234,7 +247,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({ children }) 
         actualizarProducEspecifico,
         cambioProducto,
         setProductosFiltradosAdmin,
-        productosFiltrados,
+        productosFiltradosUser,
         filtrarProductosPorNombre,
         productosFiltradosAdmin,
 

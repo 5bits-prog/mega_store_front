@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
+
 import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
+
 import NativeSelect from '@mui/material/NativeSelect';
 import InputBase from '@mui/material/InputBase';
 import { Sucursal } from '../../contexts/SucursalContext';
@@ -57,7 +57,7 @@ const [idSucursal, setIdSucursal] = useState<number>(0);
     onChange(value, cantidad); // Notificamos al padre
   };
 
-  const handleCantidadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCantidadChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = parseInt(event.target.value);
     setCantidad(value);
     onChange(idSucursal, value); // Notificamos al padre

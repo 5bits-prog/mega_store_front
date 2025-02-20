@@ -1,14 +1,9 @@
 import style from './cardCargaUser.module.css'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import Stack from '@mui/material/Stack';
-import CircularProgress from '@mui/material/CircularProgress';
+
 
 const CardCarga = () => {
         
-
-        const formatearPrecio = (precio: number): string => {
-            return precio.toLocaleString('es-ES');
-        };
 
     return(
         <div className={style.contGeneral}>

@@ -1,4 +1,4 @@
-import { Producto } from './interfazProducto';
+
 import CardProducto from '../../components/cardProductoAdmin/listaProductos';
 import CardUser from '../../components/cardProductoUser/CardUser';
 import BarraBusqueda from '../../components/busqueda/barrabusqueda';
@@ -19,12 +19,10 @@ import Stack from '@mui/material/Stack';
 import CardCarga from '../../components/cardCargaUser/cardCargaUser';
 import FiltroProductos from '../../components/bucadorConFiltro/BuscadorConFiltro';
 
-interface CatalogoProductoProps {
-    productos: Producto[]; // Usar la interfaz
-}
+
 
 const CatalogoProducto =()=> {
-    const {productos,fetchProductos, goToPage, totalPages, currentPage, loading : loadingProducto, productosFiltradosAdmin, fetchProductosAll} = useProductos()
+    const {productos,fetchProductos, goToPage, totalPages, currentPage, loading : loadingProducto, productosFiltradosAdmin, fetchProductosAll, productosFiltradosUser} = useProductos()
     const {loading} = useMovimientoStock()
     const location = useLocation();
     const isAdmin = location.pathname === '/catalogoProductos';
@@ -97,14 +95,17 @@ const CatalogoProducto =()=> {
                                 
                             </div>
                             <BarraBusqueda></BarraBusqueda>
+
                             {!loadingProducto ? 
-                                (productos || []).map((producto) => (
+
+                                (productosFiltradosUser.length > 0 ? productosFiltradosUser : productos).map((producto) => (
                                 <CardUser key={producto.id}  {...producto}/>    
                                 ))
                                 :
                                 Array.from({ length: 12 }).map((_, index) => (
                                     <CardCarga key={index} />
                                 ))
+
                             }
                             
 
@@ -112,7 +113,7 @@ const CatalogoProducto =()=> {
                     )}
             
             {/* Paginación */}
-            {productosFiltradosAdmin.length === 0 && totalPages > 1 && (
+            {(productosFiltradosAdmin.length === 0 && productosFiltradosUser.length === 0) && totalPages > 1 && (
                 <Stack spacing={2}>
                     <Pagination 
                         count={totalPages} 
@@ -124,9 +125,6 @@ const CatalogoProducto =()=> {
                 </Stack>
             )}
             
-                   
-            
-
 
             {/* Dialog para el formulario de Registrar Producto */}
             <Dialog open={isDialogOpen} onClose={toggleMenu} fullWidth maxWidth="sm">

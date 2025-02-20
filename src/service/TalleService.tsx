@@ -57,7 +57,9 @@ export const deleteTalle = async (id: string) => {
         return response.data;
     } catch (error) {
         console.error("Error al eliminar el talle:", error);
+
         Notificaciones.error('No fue posible eliminar este Talle. Tiene un producto asociado')
+
         throw error;
     }
 };

@@ -5,7 +5,7 @@ import SelectSucursal from './selectSucursal';
 import styles from './modalMovimientoStock.module.css'
 import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from '@mui/material/IconButton';
-import { useProductos } from '../../contexts/ProductoContext';
+
 
 
 interface ModalMovimientoStockProps {
@@ -14,9 +14,9 @@ interface ModalMovimientoStockProps {
     img?:string;
   }
 export default function ModalMovimientoStock({idProducto, img}:ModalMovimientoStockProps) {
-    const{ movimientoStock, loading }=useMovimientoStock()
+    const{ movimientoStock}=useMovimientoStock()
     const{sucursales , fetchSucursales}=useSucursales()
-    const {fetchProductos}= useProductos()
+  
     const [listaMovimientos, setListaMovimientos] = useState<{ id: number; idSucursal: number; cantidad: number }[]>([]);
     const [cantidadMove, setCantidadMove] = useState<{ id: number }[]>([]);
 

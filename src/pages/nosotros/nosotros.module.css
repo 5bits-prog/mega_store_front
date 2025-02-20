@@ -4,6 +4,7 @@
     display: flex;
     text-align: center;
     line-height: 2.6;
+    font-family: 'Roboto', sans-serif;
 }
 .mainContainer{
     height: 1000px;

@@ -2,11 +2,9 @@
 import React from 'react';
 import { Dialog, DialogActions, DialogContent, Button } from '@mui/material';
 import style from './infoProducto.module.css'; 
-import { Sucursal, ProductoGet } from '../../pages/producto/interfazProducto';
+import { ProductoGet } from '../../pages/producto/interfazProducto';
 
-interface Props extends Sucursal {
-  // Añadir aquí cualquier otra propiedad necesaria
-}
+
 
 interface InfoProductoProps {
   open: boolean;

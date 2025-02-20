@@ -73,6 +73,11 @@ export const API_ROUTES = {
     //ESTADISTICA VENTAS PROMEDIO
 
     GET_PROM_VENTAS:'estadisticas-clientes/montos-ventas',
+
+    //CAMBIO DE CONTRASEÑA
+    CODIGO:'/auth/obtener-codigo-password',
+    VERIFICAR_CODIGO:'/auth/verificar-codigo-password',
+    RESTABLECER:'/auth/restablecer-password'
     //El resto de URLS...
 
   

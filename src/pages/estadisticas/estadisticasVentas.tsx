@@ -24,8 +24,8 @@ const EstadisticasVentas: React.FC = () => {
   const [startDate, setStartDate] = useState<Dayjs | null>(dayjs());
   const [endDate, setEndDate] = useState<Dayjs | null>(dayjs());
   const [opcionEstadisticaSeleccionada, setOpcionEstadisticaSeleccionada] = useState<string>("");
-  const [opcionVisualizacionSeleccionada, setOpcionVisualizacionSeleccionada] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
+  let [opcionVisualizacionSeleccionada, setOpcionVisualizacionSeleccionada] = useState<string>("");
+  const [, setError] = useState<string | null>(null);
   const exportarRef = useRef<{ exportPdf: () => void } | null>(null);
   const { ventasData, fetchVentas, productosData, fetchProductos} = useEstadisticas();
   const [labels, setLabels] = useState<string[]>([]); // Para almacenar las fechas
@@ -77,7 +77,7 @@ const EstadisticasVentas: React.FC = () => {
       return; // Detener el envío
     }
     // Verificación de los días entre las fechas (deben ser busquedas menores a 40 dias)
-    if (startDate && endDate && opcionVisualizacionSeleccionada === "D") {
+    if (startDate && endDate && opcionVisualizacionSeleccionada === "D" && opcionEstadisticaSeleccionada === "Ventas totales") {
       const diffDays = endDate.diff(startDate, "day"); // Calcula la diferencia en días
       if (diffDays >= 40) {
         Notificaciones.error("El rango de fechas no puede ser mayor o igual a 40 días.");
@@ -86,7 +86,8 @@ const EstadisticasVentas: React.FC = () => {
     }
 
   //Verificación de los meses entre las fechas (deben ser búsquedas menores a 40 meses)
-  if (startDate && endDate && opcionVisualizacionSeleccionada === "M") {
+ 
+  if (startDate && endDate && opcionVisualizacionSeleccionada === "M" && opcionEstadisticaSeleccionada === "Ventas totales") {
     const diffMonths = endDate.diff(startDate, "month"); // Calcula la diferencia en meses
     if (diffMonths >= 40) {
       Notificaciones.error("El rango de fechas no puede ser mayor o igual a 40 meses.");

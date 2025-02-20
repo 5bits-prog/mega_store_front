@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import  { forwardRef, useImperativeHandle } from "react";
 import html2pdf from "html2pdf.js";
 
 interface ExportarPdfProps{

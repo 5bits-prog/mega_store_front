@@ -10,10 +10,12 @@ import Dialog from '@mui/material/Dialog'; // Dialog (se usa como un modal)
 import DialogContent from '@mui/material/DialogContent'; // Contenido del modal de Material UI
 import '../verificacion/verificacion.module.css';
 import { useRegister} from "../../contexts/RegisterContext";
+import Stack from '@mui/material/Stack';
+import LinearProgress from '@mui/material/LinearProgress';
 
 
 const Register: React.FC = () => {
-    const {Registrar, VerificarUsuario,loading, loadingVerificacion, setearEmail, cerrarModal}=useRegister()
+    const {Registrar, loading, loadingVerificacion, setearEmail, cerrarModal}=useRegister()
     
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -22,7 +24,7 @@ const Register: React.FC = () => {
 
     const handleClickShowConfirmation = () => setShowConfirmation((show) => !show);
       
-    const [isDialogOpen, setDialogOpen] = useState(false);
+    const [, setDialogOpen] = useState(false);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -180,6 +182,14 @@ const Register: React.FC = () => {
             </div>
         </div>
             <button type="submit" className={Style.button}>Registrar</button>
+            
+            {loading && 
+                <Stack sx={{ width: '100%', color: 'grey.500', marginTop:'20px' }} spacing={2}>
+                    <LinearProgress color="secondary" />
+                </Stack>
+            }
+            
+
         </form>
     </div> 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 //Importación de estilos
 import style from "./registrarCategoria.module.css";
 //Importación de los iconos utilizados desde mui

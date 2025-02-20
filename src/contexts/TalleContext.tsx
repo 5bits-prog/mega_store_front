@@ -1,4 +1,4 @@
-import { useNotification } from "./NotificacionContext";
+
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { newTalle, deleteTalle,getTalles,putTalle } from "../service/TalleService";
 import Notificaciones from "../components/notificaciones";
@@ -36,7 +36,7 @@ export const TalleProvider: React.FC<TalleProviderProps> = ({ children }) => {
   const [talles, setTalles] = useState<Talle[]>([]);
   const [loading, setLoading] = useState<boolean>(false); // Estado de carga
   const [error, setError] = useState<string | null>(null); // Estado de error
-  const {mostrarMensaje}= useNotification()
+
 
  //GET
   const fetchTalles= async () => {

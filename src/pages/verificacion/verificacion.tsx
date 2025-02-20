@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import style from './verificacion.module.css';
 import { useRegister } from '../../contexts/RegisterContext';
 import { Reenviar } from '../../service/RegisterService';
+import Stack from '@mui/material/Stack';
+import LinearProgress from '@mui/material/LinearProgress';
 
 // Definición del componente StyledWrapper
 const StyledWrapper = styled.div`
@@ -9,7 +11,7 @@ const StyledWrapper = styled.div`
     gap: 8px;
 `;
 interface Props {
-    onCerrar: () => void;
+    onCerrar?: () => void;
 }
 
 const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
@@ -145,8 +147,13 @@ const CodigoVerificacion: React.FC<Props> = ({ onCerrar }) => {
             <button className={style.verifyButton} type="submit">Verificar</button>
             
             <p className={style.resendNote}>¿No recibiste el código? <button className={style.resendBtn} onClick={()=>reenviar()}>Reenviar Código</button></p>
+            {loading && 
+                <Stack sx={{ width: '100%', color: 'grey.500', marginTop:'0px' }} spacing={2}>
+                    <LinearProgress color="secondary" />
+                </Stack>
+            }
         </form>
-        <button className={style.exitBtn} onClick={() =>  onCerrar()}>X</button>
+        <button className={style.exitBtn} onClick={() =>  onCerrar?.()}>X</button>
         </StyledWrapper>
     );
 }

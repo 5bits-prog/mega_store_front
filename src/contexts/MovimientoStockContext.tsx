@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState,  ReactNode } from 'react';
 import { PostMovimientoStock } from '../service/MovimientoStockService';
 import Notificaciones from '../components/notificaciones';
 
@@ -22,9 +22,9 @@ interface MovimientoStockProviderProps {
 
 export const MovimientoStockProvider: React.FC<MovimientoStockProviderProps> = ({ children }) => { // Estado para almacenar las marcas
   const [loading, setLoading] = useState<boolean>(false); // Estado de carga
-  const [error, setError] = useState<string | null>(null); // Estado de error
+  const [error] = useState<string | null>(null); // Estado de error
   const [open, setOpenModal] = useState<boolean>(false)
-  const [idProducto, setIdProducto] = useState<number | null>(null);
+  const [idProducto] = useState<number | null>(null);
  
 
   //POST

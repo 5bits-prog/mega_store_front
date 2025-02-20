@@ -2,7 +2,7 @@ import style from './registrarProducto.module.css';
 import React, { useEffect, useState } from 'react';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { validarAlfanumerico, validarDecimalPositivo, validarEnteroPositivo, validarStockMedio, validarCampoRequerido, 
-    validarCampoSeleccionado, validarImagenProducto, formatearPrecio, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
+    validarCampoSeleccionado,  formatearPrecio, validarLongitudCaracteres, validarPrecio } from './validationsProducto';
 //import { Producto } from './interfazProducto';
 import InputAdornment from '@mui/material/InputAdornment';
 //import OutlinedInput from '@mui/material/OutlinedInput';
@@ -54,9 +54,9 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
     const [stockActual, setStockActual] = useState('');
     const [stockMedio, setStockMedio] = useState('');
     const [stockMinimo, setStockMinimo] = useState('');
-    const [foto, setFoto] = useState(null);  // Estado para almacenar la imagen
+    const [, setFoto] = useState(null);  // Estado para almacenar la imagen
     const [preview, setPreview] = useState<string | null>(null);  // Estado para la previsualización 
-    const [fileName, setFileName] = useState('');  // Para mostrar el nombre del archivo seleccionado
+    
     const [selectedSucursal, setSelectedSucursal] = useState<Sucursal[] | null>(null);
 
     const [errores, setErrores] = useState({
@@ -276,7 +276,7 @@ const ModificarProducto = ({ producto }: ModificarProductoProps) => {
                         getOptionLabel={(option) => option.nombre}
 
                         value={selectedSucursal || []}
-                        onChange={(event, newValue) => setSelectedSucursal(newValue)} 
+                        onChange={(_, newValue) => setSelectedSucursal(newValue)} 
                         renderInput={(params) => (
                             <TextField {...params} label="Sucursal"/>
                         )}

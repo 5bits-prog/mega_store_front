@@ -1,4 +1,4 @@
-import { useNotification } from "./NotificacionContext";
+
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { postVenta } from "../service/VentaService";
 import Notificaciones from "../components/notificaciones"
@@ -20,8 +20,8 @@ interface VentaProviderProps {
 export const VentaProvider: React.FC<VentaProviderProps> = ({ children }) => {
 
   const [loading, setLoading] = useState<boolean>(false); // Estado de carga
-  const [error, setError] = useState<string | null>(null); // Estado de error
-  const {mostrarMensaje}= useNotification()
+  const [error] = useState<string | null>(null); // Estado de error
+ 
   const {LimpiarCarrito} = useCarrito()
 
 
@@ -30,7 +30,7 @@ export const VentaProvider: React.FC<VentaProviderProps> = ({ children }) => {
     
     try{
         setLoading(true)
-        const response = await postVenta(productos) //post
+        await postVenta(productos) //post
         Notificaciones.exito(`Venta registrada`) //mensaje
         LimpiarCarrito()
         // await fetchTalles(); 

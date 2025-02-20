@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState,  useEffect } from "react";
 import style from './BuscadorPorFiltro.module.css'
 import { useProductos } from "../../contexts/ProductoContext";
 import { Accordion, AccordionSummary, AccordionDetails, Typography, Divider, Checkbox, FormGroup, FormControlLabel, Button } from '@mui/material';
@@ -8,7 +8,7 @@ import { useSucursales } from "../../contexts/SucursalContext";
 import { useColor } from "../../contexts/ColorContext";
 import { useMarca } from "../../contexts/MarcaContext";
 import { useTalle } from "../../contexts/TalleContext";
-import { useMovimientoStock } from "../../contexts/MovimientoStockContext";
+
 
 const FiltroProductos = () => {
     const { productosAll, fetchProductosAll, setProductosFiltradosAdmin } = useProductos();
@@ -17,7 +17,7 @@ const FiltroProductos = () => {
     const {marcas, fetchMarcas}= useMarca()
     const {sucursales, fetchSucursales}= useSucursales()
     const [mensajeCarga, setMensajeCarga]= useState(false)
-    const [mensaje, setMensaje]= useState('')
+    const [, setMensaje]= useState('')
     
 
     useEffect(()=>{
@@ -137,11 +137,11 @@ const FiltroProductos = () => {
               </AccordionDetails>
             </Accordion>
           ))}
-          <Button variant="contained" color="primary" onClick={aplicarFiltros}>
+          <Button variant="contained" className={style.botonFiltro} onClick={aplicarFiltros}>
             Aplicar Filtros
           </Button>
           {/* Botón para limpiar filtros */}
-            <Button variant="outlined" color="secondary" onClick={limpiarFiltros} style={{ marginLeft: 10 }}>
+            <Button variant="outlined" color="secondary" className={style.botonFiltroLimp} onClick={limpiarFiltros} style={{ marginLeft: 10 }}>
                 Limpiar Filtros
             </Button>
 

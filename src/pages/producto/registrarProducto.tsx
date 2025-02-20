@@ -266,7 +266,7 @@ const RegistrarProducto = () => {
                         options={sucursales}
                         getOptionLabel={(option) => option.nombre}
                         value={selectedSucursal || []}
-                        onChange={(event, newValue) => setSelectedSucursal(newValue)} 
+                        onChange={(_, newValue) => setSelectedSucursal(newValue)} 
                         // defaultValue={[opcionesSucursal[2], opcionesSucursal[1]]} // Asegúrate de que el índice sea válido
                         renderInput={(params) => (
                             <TextField {...params} label="Sucursal"/>
