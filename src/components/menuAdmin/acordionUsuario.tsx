@@ -63,8 +63,9 @@ export default function Accordion2Usage() {
   
   //se definen las entidades del menú desplegable
   const entidades = [
-    { id: 1, nombre: "mi Perfil", onClick:() => handleNavigation("/appsAbril/perfil")}, //redirecciona al perfil del usuario
-    { id: 2 , onClick: cerrarSesion, icon:<LogoutIcon  sx={{ color: 'black' ,fontSize: 30  }} />  }, //sirve para cerrar sesión
+    { id: 1, nombre: "Mi Perfil", onClick:() => handleNavigation("/appsAbril/perfil")}, //redirecciona al perfil del usuario
+    { id: 2, nombre: "Mis compras", onClick:() => handleNavigation("/appsAbril/historialCompras")}, //redirecciona al historial de compras del usuario
+    { id: 3 , onClick: cerrarSesion, icon:<LogoutIcon  sx={{ color: 'black' ,fontSize: 30  }} />  }, //sirve para cerrar sesión
   ];
   
   return (
