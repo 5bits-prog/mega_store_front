@@ -181,6 +181,7 @@ return (
                 {...registerRegister('confirmacion')}
                 />
             </FormControl>
+            {errorsRegister.confirmacion && typeof errorsRegister.confirmacion.message === 'string' && (<p className={style.alerts}>{errorsRegister.confirmacion.message}</p>)}
             <div className={style.container3}>
                 <button type="submit" className={style.button}>
                 Enviar
