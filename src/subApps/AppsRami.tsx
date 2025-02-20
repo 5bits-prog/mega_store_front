@@ -5,6 +5,8 @@ import { ProductoProvider } from '../contexts/ProductoContext';
 import CarritoCompras from '../pages/carrito/carritoCompras';
 import MercadoPago from '../pages/mercadoPago/MercadoPago';
 import { VentaProvider } from '../contexts/VentaContext';
+import CambioContraseña from '../pages/cambioContraseña/CambioContraseña';
+import { RestablecerContraseñaProvider } from '../contexts/RestablecerContraseñaContext';
 
 
 const AppsRami = () => {
@@ -28,6 +30,14 @@ const AppsRami = () => {
             } 
       />
       <Route path='/mercadoPago' element={<MercadoPago/>} />
+      
+      <Route path='/cambioContraseña' 
+        element=
+          {
+          <RestablecerContraseñaProvider>
+          <CambioContraseña/>
+          </RestablecerContraseñaProvider>} 
+      />
     
     </Routes>
   );
