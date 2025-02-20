@@ -90,7 +90,9 @@ const fetchPerfil = async () => {
       setLoading(false);
       
     }
+    
   };
+  
 
   // PUT Función para actualizar los datos del perfil
   const updatePerfil = async (newData: { telefono?: string; nombre?: string; email?: string; direccionEnvio?: string }) => {

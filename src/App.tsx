@@ -31,6 +31,7 @@ import { ToastContainer } from 'react-toastify';  // Importa el ToastContainer
 import 'react-toastify/dist/ReactToastify.css';  // Importa los estilos de react-toastify
 import { MovimientoStockProvider } from './contexts/MovimientoStockContext';
 import { EstadisticasProvider } from './contexts/EstadisticasContext';
+import { HistorialComprasProvider } from './contexts/HistorialComprasContext';
 
 export default function App() {
   return (
@@ -41,6 +42,7 @@ export default function App() {
           <MovimientoStockProvider>
             <ProductoProvider>
             <PerfilProvider>
+            <HistorialComprasProvider>
               <div className='contenedorDeTodo'>
                 <MenuAdmin /> 
                
@@ -123,8 +125,8 @@ export default function App() {
                 </Routes>
                 <Footer />
               </div>
-
-                  </PerfilProvider>
+              </HistorialComprasProvider>
+                </PerfilProvider>
                 </ProductoProvider> 
               </MovimientoStockProvider>
             </AuthProvider>

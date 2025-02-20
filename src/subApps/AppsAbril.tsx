@@ -4,6 +4,7 @@ import EstadisticasVentas from '../pages/estadisticas/estadisticasVentas';
 import EstadisticasClientes from '../pages/estadisticas/estadisticasClientes';
 import OpcionesEstadisticas from '../pages/estadisticas/opciones';
 import Perfil from '../pages/perfil/perfil';
+import ListaHistorialCompras from '../pages/historialCompras/historialCompras';
 
 
 
@@ -18,6 +19,7 @@ const AppsAbril = () => {
       <Route path="/estadisticasClientes" element={<EstadisticasClientes />} />
       <Route path="/opcionesEstadisticas" element={<OpcionesEstadisticas />} />
       <Route path="/perfil" element={<Perfil />} />
+      <Route path="/historialCompras" element={<ListaHistorialCompras />} />
     
      
     </Routes>
