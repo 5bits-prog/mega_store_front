@@ -7,10 +7,11 @@ import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDiss
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { useNavigate } from 'react-router-dom';
 import { useVenta } from '../../contexts/VentaContext.tsx';
+import SeleccionFormaPago from '../../components/seleccionFormaPago/seleccionFormaPago.tsx';
 
 
 const CarritoCompras = () => { // Usar el contexto para acceder al carrito
-   
+
 const { carrito, eliminarDeCarrito, total, productosTotales} = useCarrito();
 const {registrarVenta} = useVenta()
 
@@ -65,7 +66,7 @@ return (
     <div className={style.contGeneral}>
         <h1 className={style.title}>TU CARRITO</h1>
         {/*Si el carrito no tiene productos*/}
-        {carritoVacio ? (
+        {carritoVacio ?(
             <div>
                 <p className={style.vacio}>Actualmente no hay productos en tu carrito <SentimentVeryDissatisfiedIcon /></p>
                 <p>¡Te invitamos a visitar nuestro <a className={style.link} onClick={handleNavigation}>catálogo</a>!</p>
@@ -84,7 +85,7 @@ return (
             </div>
             ))
         )}
-
+        
         <div className={style.total}>
             <div className={style.resumen}>
                 <p>TOTAL</p>
@@ -95,9 +96,14 @@ return (
 
         {/*Si el carrito tiene productos*/}
         {!carritoVacio && (
+            <>
+            <div>
+                <SeleccionFormaPago></SeleccionFormaPago>
+            </div>
             <button className={style.button} onClick={()=>venta()} onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} >
                 {hovered ? "INICIAR COMPRA" : <AttachMoneyIcon />}
             </button>
+            </>
             )}
     </div>
 );
