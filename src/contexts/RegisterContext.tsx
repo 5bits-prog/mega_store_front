@@ -43,7 +43,7 @@ export const RegisterProvider: React.FC<RegisterProviderProps> = ({ children }) 
         console.log(response)
         console.log('email',response.data.email)
         setEmail(response.data.email)
-        Notificaciones.exito(`Bienvenido ${response.data.nombre}, has iniciado sesión exitosamente.`);
+        Notificaciones.exito(`Codigo enviado, verifique su correo.`);
         
     }catch(error: unknown){
         if (error instanceof AxiosError) {
@@ -87,9 +87,12 @@ const setearEmail=async(email:string)=>{
   }
 
   const reenviarCodi = async (user: Reenviar) => {
+    
     try{
+        setLoading(true) 
         const response = await reenviarCodigo(user)
          //le paso los datos del usuario al service
+         Notificaciones.exito(`Codigo reenviado`);
         console.log(response)
         
     }catch(error: unknown){
